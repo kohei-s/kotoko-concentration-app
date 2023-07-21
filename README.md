@@ -1,4 +1,4 @@
-#  KoToKO: Japanese concentration game app 
+#  KoToKo: Japanese concentration game app 
 This mobile application (🛠️ in development) is conducted as my personal capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) from May to August 2023.
 ## 1. Concept 📱
  Mobile ceoncentration game app to support Japanese learning especially for [third culture kids](https://en.wikipedia.org/wiki/Third_culture_kid). The name of the app KoToKO (言と言) is a Japanese neologism that could mean Word & Word.
