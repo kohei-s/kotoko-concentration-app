@@ -8,18 +8,18 @@ assignees: ''
 ---
 
 # User story
-As a [User, Service Provider, System Administrator]
-I need ...
-So that I can ...
+**As a [role: User, Service Provider, System Administrator]**
+**I need** [function]
+**So that I can** [benefit]
 
 # Assumptions and Details:
 - Need ...
 - Need ...
 
 # Acceptance Criteria:
-GIVEN:
-WHEN:
-THEN:
+GIVEN:  [some context]
+WHEN: [certain action is taken]
+THEN: [the outcome of action is observed]
 
 # Sprint Ready Checklist 
 1. - [ ] Acceptance criteria defined 
