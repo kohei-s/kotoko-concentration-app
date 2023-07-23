@@ -12,7 +12,7 @@ Children between 5-15 years old learning Japanese as (one of) thier home languag
 ## 5. Core function
   🪄 Personalize game contents with your favorite Japanese characters \
   📖 Add new characters you're about to learn \
-  🔎 Search Japanese character in your strongest language \
+  🔎 Search Japanese character in your strongest language e.g. English or German \
   🗻 Show game records you achieved \
   ❤️ Praise your kids for thier achivements and keep cheering them (feature for parents) \
   🛝 Child friendly design
