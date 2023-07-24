@@ -50,7 +50,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: kotkoapp.jar
+          name: app.jar
           path: backend/target/kotokoapp.jar
 
   push-to-docker-hub:
@@ -61,7 +61,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: kotokoapp.jar
+          name: app.jar
           path: backend/target
 
       - name: Login to DockerHub
@@ -76,7 +76,7 @@ jobs:
         with:
           push: true
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
-          tags: kokoyuyu/kotokoapp
+          tags: kokoyuyu/kotoko-app
           context: .
 
   deploy:
@@ -87,23 +87,23 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: capstone-project.de
-          #Set App Name (replace "example" with "alpha"-"tango")
+          #Set App Name (replace "example" with your ssh user name)
           username: cgn-java-23-2-kohei
           password: ${{ secrets.SSH_PASSWORD }}
-          #Set App Name (replace "example" with "alpha"-"tango")
+          #Set App Name (replace "example" with your ssh user name)
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
-          #Set IP (replace "10.0.1.99" with "10.0.1.1"-"10.0.1.20")
+          #Set IP (replace "10.0.1.99" with your ip address)
           script: |
-            docker stop cgn-java-23-2-kohei
-            docker rm cgn-java-23-2-kohei
-            docker run --pull=always --name cgn-java-23-2-kohei --network capstones --ip 10.0.5.12 --restart always --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotokoapp:latest
+            sudo docker stop cgn-java-23-2-kohei
+            sudo docker rm cgn-java-23-2-kohei
+            sudo docker run --pull=always --name cgn-java-23-2-kohei --network capstones --ip 10.0.5.12 --restart always --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
             sleep 15s
-            docker logs cgn-java-23-2-kohei
+            sudo docker logs cgn-java-23-2-kohei
 
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
-          #Set App Name (replace "example" with "alpha"-"tango")
+          #Set App Name (replace "example" with your ssh user name)
           url: http://cgn-java-23-2-kohei.capstone-project.de
           max-attempts: 3
           retry-delay: 5s
