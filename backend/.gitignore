@@ -31,4 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-.static
+./src/main/resources/static
