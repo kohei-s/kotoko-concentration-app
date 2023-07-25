@@ -9,11 +9,15 @@ import java.util.List;
 @RequestMapping("/api/playing_cards")
 public class PlayingCardsController {
 
-    private final PlayingCardsService playingCardsService = new PlayingCardsService();
+    private final PlayingCardsService playingCardsService;
+
+    PlayingCardsController(PlayingCardsService playingCardsService){
+        this.playingCardsService = playingCardsService;
+    }
 
     @GetMapping("/{size}")
     List<String> getPlayingCards(@PathVariable("size") String size){
-        return playingCardsService.getPlayingCards("size");
+        return playingCardsService.getPlayingCards(size);
     }
 
     @PostMapping()

@@ -11,8 +11,8 @@ import static org.mockito.Mockito.mock;
 
 class PlayingCardsServiceTest {
 
-    PlayingCards playingCards = mock(PlayingCards.class);
-    PlayingCardsService playingCardsService = new PlayingCardsService();
+    PlayingCardsRepository playingCardsRepository = mock(PlayingCardsRepository.class);
+    PlayingCardsService playingCardsService = new PlayingCardsService(playingCardsRepository);
 
     @Test
     void getPlayingCardsWithLargeParameter_thenReturnListOfFiftyTwoCards() {
@@ -29,7 +29,7 @@ class PlayingCardsServiceTest {
         );
 
         //WHEN
-        Mockito.when(playingCards.getPlayingCards("large"))
+        Mockito.when(playingCardsRepository.getPlayingCards("large"))
                 .thenReturn(expected);
         List<String> actual = playingCardsService.getPlayingCards("large");
 
@@ -44,7 +44,7 @@ class PlayingCardsServiceTest {
 
         //WHEN
         Boolean expected = true;
-        Mockito.when(playingCards.checkMatchOfSelectedPlayingCards(twoCards))
+        Mockito.when(playingCardsRepository.checkMatchOfSelectedPlayingCards(twoCards))
                 .thenReturn(expected);
         Boolean actual = playingCardsService.checkMatchOfSelectedPlayingCards(twoCards);
 
