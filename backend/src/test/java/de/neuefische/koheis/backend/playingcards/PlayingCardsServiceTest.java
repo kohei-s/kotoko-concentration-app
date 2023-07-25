@@ -38,6 +38,47 @@ class PlayingCardsServiceTest {
     }
 
     @Test
+    void getPlayingCardsWithMediumParameter_thenReturnListOfTwentySixCards() {
+        //GIVEN
+        List<String> expected = new ArrayList<>(
+                List.of(
+                        "heart13", "heart7", "heart2",  "heart6", "spade12",
+                        "spade3", "heart11", "spade13", "spade9", "heart12", "spade10",
+                        "spade4", "spade5", "spade8", "heart3", "heart9", "spade7",
+                        "spade2", "spade1", "heart10", "spade6",  "spade11", "heart5",
+                        "heart8", "heart4", "heart1"
+                )
+        );
+
+        //WHEN
+        Mockito.when(playingCardsRepository.getPlayingCards("medium"))
+                .thenReturn(expected);
+        List<String> actual = playingCardsService.getPlayingCards("medium");
+
+        //THEN
+        assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
+    void getPlayingCardsWithSmallParameter_thenReturnListOfTwelveCards() {
+        //GIVEN
+        List<String> expected = new ArrayList<>(
+                List.of(
+                        "heart1", "heart2", "heart3", "heart4", "heart5", "heart6",
+                        "spade1", "spade2", "spade3", "spade4", "spade5", "spade6"
+                )
+        );
+
+        //WHEN
+        Mockito.when(playingCardsRepository.getPlayingCards("small"))
+                .thenReturn(expected);
+        List<String> actual = playingCardsService.getPlayingCards("small");
+
+        //THEN
+        assertEquals(expected.size(), actual.size());
+    }
+
+    @Test
     void checkMatchOfSelectedPlayingCardsWithTwoCardsWithSameNumber_thenTrue() {
         //GIVEN
         List<String> twoCards = new ArrayList<>(List.of("heart12", "spade12"));
