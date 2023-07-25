@@ -29,10 +29,10 @@ public class PlayingCards {
         return playingCards;
     }
 
-    public boolean checkMatchOfSelectedPlayingCards(String card1, String card2) {
+    public boolean checkMatchOfSelectedPlayingCards(List<String> twoCards) {
         Pattern numbers = Pattern.compile("\\d{1,2}");
-        String cardNumber1 = String.valueOf(numbers.matcher(card1));
-        String cardNumber2 = String.valueOf(numbers.matcher(card2));
+        String cardNumber1 = String.valueOf(numbers.matcher(twoCards.get(0)));
+        String cardNumber2 = String.valueOf(numbers.matcher(twoCards.get(1)));
 
         return (cardNumber1.equals(cardNumber2));
     }

@@ -1,7 +1,6 @@
 package de.neuefische.koheis.backend.playingcards;
 
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -13,7 +12,7 @@ public class PlayingCardsService {
         return playingCards.getPlayingCards(gameSize);
     }
 
-    public boolean checkMatchOfSelectedPlayingCards(String card1, String card2) {
-        return playingCards.checkMatchOfSelectedPlayingCards(card1, card2);
+    public boolean checkMatchOfSelectedPlayingCards(List<String> twoCards) {
+        return playingCards.checkMatchOfSelectedPlayingCards(twoCards);
     }
 }
