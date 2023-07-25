@@ -1,21 +1,19 @@
 import {useEffect, useState} from "react";
-import {PlayingCard} from "./model/PlayingCard.ts";
 import axios from "axios"
 
 export default function App() {
 
-    const [playingCards, setPlayingCards] = useState<PlayingCard[]>([]);
+
+    const [playingCards, setPlayingCards] = useState<string[]>([""]);
     const gameSize = "large";
 
     function loadPlayingCards() {
-        axios.get(
+         axios.get<string[]>(
             "api/playing_cards/" + gameSize)
-
             .then((response) => {
-                    setPlayingCards(response?.data)
-                }
-            )
-            .catch(console.error)
+                    setPlayingCards(response.data)
+                })
+             .catch(console.error)
     }
 
     useEffect(
@@ -24,13 +22,11 @@ export default function App() {
         }, []
     )
 
-
     return (
         <>
-
             <h2>Concentration</h2>
-            {playingCards.map((playingCard: PlayingCard) => <div key={playingCard}> {playingCard}</div>)}
-
+            {playingCards.map((playingCard: string, index) =>
+                <div key={index}>{playingCard}</div>)}
         </>
     );
 }
