@@ -37,4 +37,20 @@ class PlayingCardsServiceTest {
         assertEquals(expected.size(), actual.size());
     }
 
+    @Test
+    void checkMatchOfSelectedPlayingCardsWithTwoCardsWithSameNumber_thenTrue() {
+        //GIVEN
+        String card1 = "heart12";
+        String card2 = "spade12";
+
+        //WHEN
+        Boolean expected = true;
+        Mockito.when(playingCards.checkMatchOfSelectedPlayingCards(card1, card2))
+                .thenReturn(expected);
+        Boolean actual = playingCardsService.checkMatchOfSelectedPlayingCards(card1, card2);
+
+        //THEN
+        assertEquals(expected, actual);
+    }
+
 }
