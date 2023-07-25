@@ -9,7 +9,7 @@ New concentration game app aims to support learning Japanese for so called [thir
 - Difficulty of staying motivated to learn the Japanese language in non-Japanese speaking countries
 - Frustration of not being properly understood in Japanese by their own families
 ## 3. MVP 💮
-Simple concentration game with elementary Japanese characters ([Hiragana](https://en.wikipedia.org/wiki/Hiragana) & [Katakana](https://en.wikipedia.org/wiki/Katakana))
+Simple concentration game with elementary Japanese [Hiragana](https://en.wikipedia.org/wiki/Hiragana) characters 
 ## 4. Target group 🧒🏾🧒🏼🧒🏿🧒🏻🧒🏽
 Children between 5-15 years old learning Japanese as (one of) thier home language(s), as well as their parents who want to support the learning jouney
 ## 5. Core function
