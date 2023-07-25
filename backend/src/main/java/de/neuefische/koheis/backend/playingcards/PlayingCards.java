@@ -1,10 +1,13 @@
 package de.neuefische.koheis.backend.playingcards;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Component
 public class PlayingCards {
     public List<String> getPlayingCards(String gameSize) {
         ArrayList<String> names = new ArrayList<>(List.of("heart", "spade", "diamond", "club"));
