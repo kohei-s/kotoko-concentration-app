@@ -24,7 +24,7 @@ class CharacterCardIntegrationTest {
         //GIVEN
         //WHEN
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/character_cards")
+                        MockMvcRequestBuilders.get("/api/character_cards/cards")
                 )
                 //THEN
                 .andExpect(status().isOk())
