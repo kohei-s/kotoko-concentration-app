@@ -16,7 +16,7 @@ public class CharacterCardController {
         this.characterCardService = characterCardService;
     }
 
-    @GetMapping
+    @GetMapping("/cards")
     public List<CharacterCard> getAllCharacterCards(){
         return this.characterCardService.getAllCharacterCards();
     }
