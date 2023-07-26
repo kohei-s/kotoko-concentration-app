@@ -30,7 +30,7 @@ class CharacterCardIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
-
+    @DirtiesContext
     @Test
     void whenAddedCharacterCard_thenReturnCharacterCard() throws Exception {
         //WHEN
