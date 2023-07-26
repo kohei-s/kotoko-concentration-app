@@ -10,7 +10,7 @@ export default function App() {
 
     function loadPlayingCards() {
         axios.get<string[]>(
-            "api/playing_cards/" + gameSize)
+            "/api/playing_cards/" + gameSize)
             .then((response) => {
                 setPlayingCards(response.data)
             })
@@ -19,7 +19,7 @@ export default function App() {
 
     function loadCharacterCards() {
         axios.get<CharacterCard[]>(
-            "api/playing_cards/cards")
+            "/api/character_cards")
             .then((response) => {
                 setCharacterCards(response?.data)
             })
@@ -37,13 +37,11 @@ export default function App() {
         <>
             <h2>Concentration</h2>
             <div>
-                {playingCards.map((playingCard: string) =>
-                    <div key={playingCard}>{playingCard}</div>)}
+                {playingCards.map((playingCard: string) => <div key={playingCard}>{playingCard}</div>)}
             </div>
             <div>
                 <button onClick={loadCharacterCards}>CharacterCards</button>
-                {characterCards.map((characterCard: CharacterCard) =>
-                    <div key={characterCard.id}>{characterCard.character}</div>)}
+                {characterCards.map((characterCard: CharacterCard) => <div key={characterCard.id}>{characterCard.character}</div>)}
             </div>
         </>
     );
