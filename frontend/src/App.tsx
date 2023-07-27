@@ -38,7 +38,7 @@ export default function App() {
     return (
         <>
             <div>
-                <h2>Character Cardss</h2>
+                <h2>Character Cards</h2>
                 <div>
                     <NewCharacterCardFrame/>
                     <CharacterCardCollection characterCards={characterCards}></CharacterCardCollection>
