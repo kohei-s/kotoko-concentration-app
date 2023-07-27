@@ -1,27 +1,23 @@
 package de.neuefische.koheis.backend.charactercards;
 
-import de.neuefische.koheis.backend.chractercards.CharacterCard;
-import de.neuefische.koheis.backend.chractercards.CharacterCardRepository;
-import de.neuefische.koheis.backend.chractercards.CharacterCardService;
+import de.neuefische.koheis.backend.chractercards.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import java.util.Collections;
 import java.util.List;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class CharacterCardServiceTest {
 
     CharacterCardRepository characterCardRepository = mock(CharacterCardRepository.class);
-    CharacterCardService characterCardService = new CharacterCardService(characterCardRepository);
+    IdService idService = mock(IdService.class);
+    CharacterCardService characterCardService = new CharacterCardService(characterCardRepository, idService);
+
 
     @Test
     void getAllCharacterCards_thenReturnEmptyList(){
         //GIVEN
-        Mockito.when(characterCardRepository.findAll())
+        when(characterCardRepository.findAll())
                 .thenReturn(Collections.emptyList());
 
         //WHEN
@@ -32,5 +28,27 @@ class CharacterCardServiceTest {
         Assertions.assertThat(actual)
                 .isEmpty();
     }
+
+    @Test
+    void whenCharacterCardAdded_thenReturnCharacterCard(){
+        //GIVEN
+        CharacterCardWithoutId characterCardToBeAdded = new CharacterCardWithoutId("test");
+        CharacterCard characterCardAdded = new CharacterCard("012", "test");
+        CharacterCard expected = new CharacterCard("012", "test");
+
+        //WHEN
+        when(characterCardRepository.insert(characterCardAdded))
+                .thenReturn(characterCardAdded);
+        when(idService.createRandomId())
+                .thenReturn("012");
+        CharacterCard actual = characterCardService.addCharacterCard(characterCardToBeAdded);
+
+        //THEN
+        verify(characterCardRepository).insert(characterCardAdded);
+        verify(idService).createRandomId();
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
+    }
+
 
 }

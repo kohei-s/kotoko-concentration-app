@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios"
-import {CharacterCard} from "./CharacterCard.ts";
+import {CharacterCard} from "./CharacterCard/CharacterCard.ts";
+import CharacterCardCollection from "./CharacterCard/CharacterCardCollection.tsx";
+import NewCharacterCardFrame from "./CharacterCard/NewCharacterCardFrame.tsx";
 
 export default function App() {
 
@@ -26,22 +28,25 @@ export default function App() {
             .catch(console.error)
     }
 
-
     useEffect(
         () => {
             loadPlayingCards()
+            loadCharacterCards()
         }, []
     )
 
     return (
         <>
-            <h2>Concentration</h2>
             <div>
-                {playingCards.map((playingCard: string) => <div key={playingCard}>{playingCard}</div>)}
-            </div>
-            <div>
-                <button onClick={loadCharacterCards}>CharacterCards</button>
-                {characterCards.map((characterCard: CharacterCard) => <div key={characterCard.id}>{characterCard.character}</div>)}
+                <h2>Character Cards</h2>
+                <div>
+                    <NewCharacterCardFrame/>
+                    <CharacterCardCollection characterCards={characterCards}></CharacterCardCollection>
+                </div>
+                <h2>Playing Cards</h2>
+                <div>
+                    {playingCards}
+                </div>
             </div>
         </>
     );
