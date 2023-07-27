@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 class CharacterCardServiceTest {
@@ -27,6 +29,22 @@ class CharacterCardServiceTest {
         verify(characterCardRepository).findAll();
         Assertions.assertThat(actual)
                 .isEmpty();
+    }
+
+    @Test
+    void getCharacterCardWithId_thenReturnCharacterCardWithId(){
+        //GIVEN
+        CharacterCard expected = new CharacterCard("012", "test");
+        when(characterCardRepository.findById("012"))
+                .thenReturn(Optional.of(expected));
+
+        //WHEN
+        CharacterCard actual = characterCardService.getOneCharacterCardById("012");
+
+        //THEN
+        verify(characterCardRepository).findById("012");
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
     }
 
     @Test
