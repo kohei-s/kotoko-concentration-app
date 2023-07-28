@@ -35,10 +35,11 @@ export default function App() {
         }, []
     )
 
+
     return (
         <>
             <div>
-                <h2>Character Cards</h2>
+                <h1>Cards</h1>
                 <div>
                     <NewCharacterCardFrame/>
                     <CharacterCardCollection characterCards={characterCards}></CharacterCardCollection>
