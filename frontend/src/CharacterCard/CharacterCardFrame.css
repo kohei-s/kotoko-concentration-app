@@ -1,0 +1,9 @@
+.characterCardFrame{
+    min-width: 275;
+    margin: 16px;
+}
+
+.buttonEdit:hover {
+    transition: all 0.4s;
+    transform: scale(150%);
+}
