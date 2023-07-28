@@ -2,6 +2,7 @@ package de.neuefische.koheis.backend.charactercards;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.koheis.backend.chractercards.CharacterCard;
+import de.neuefische.koheis.backend.chractercards.CharacterCardWithoutId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,19 +24,19 @@ class CharacterCardIntegrationTest {
 
     @DirtiesContext
     @Test
-    void expectEmptyListOnGet() throws Exception {
+    void whenGetCharacterCards_thenReturnEmptyListOnGet() throws Exception {
         //WHEN
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/character_cards")
                 )
-        //THEN
+                //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
 
     @DirtiesContext
     @Test
-    void whenGetCOneCharacterCardById() throws Exception {
+    void whenGetExistingCharacterCardById_thenReturnCharacterCardWithId() throws Exception {
         //GIVEN
         String actual = mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/character_cards")
@@ -59,16 +60,31 @@ class CharacterCardIntegrationTest {
 
         //WHEN
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/character_cards/" + id))
-                        .andExpect(status().isOk())
+                        MockMvcRequestBuilders.get("/api/character_cards/" + id))
+                .andExpect(status().isOk())
 
-        //THEN
-                        .andExpect(content().json("""
-                                {
-                                "id": "<ID>",
-                                "character": "test"
-                                }
-                                """.replaceFirst("<ID>", id)));
+                //THEN
+                .andExpect(content().json("""
+                        {
+                        "id": "<ID>",
+                        "character": "test"
+                        }
+                        """.replaceFirst("<ID>", id)));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenGetNotExistingCharacterCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingCharacterCard = "invalidId";
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/character_cards/" + idOfNotExistingCharacterCard)
+                )
+
+                //THEN
+                .andExpect(status().isNotFound());
     }
 
     @DirtiesContext
@@ -82,7 +98,7 @@ class CharacterCardIntegrationTest {
                                         {"character": "test"}
                                         """)
                 )
-        //THEN
+                //THEN
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("character").value("test"));
@@ -92,21 +108,108 @@ class CharacterCardIntegrationTest {
     @Test
     void whenUpdatedCharacterCard_thenReturnCharacterCard() throws Exception {
         //GIVEN
-        String id = "012";
+        String existingCharacterCardWithoutId = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/character_cards")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {"character": "test"}
+                                        """)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json("""
+                        {"character": "test"}
+                        """))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        CharacterCard existingCharacterCard = objectMapper.readValue(existingCharacterCardWithoutId, CharacterCard.class);
+        String id = existingCharacterCard.id();
 
         //WHEN
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/api/character_cards/" + id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {"character": "test"}
-                                """
-                        )
-        )
-        //THEN
+                        MockMvcRequestBuilders.put("/api/character_cards/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {"character": "test_updated"}
+                                        """)
+                )
+
+                //THEN
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("id").value("012"))
-                .andExpect(jsonPath("character").value("test"));
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("character").value("test_updated"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenUpdateNotExistingCharacterCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingCharacterCard = "012";
+        CharacterCardWithoutId characterCardWithoutId = new CharacterCardWithoutId("test");
+        String characterCardJson = objectMapper.writeValueAsString(characterCardWithoutId);
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/character_cards/" + idOfNotExistingCharacterCard)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(characterCardJson)
+                )
+
+                //THEN
+                .andExpect(status().isNotFound());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenDeleteExistingCharacterCard_thenReturnEmptyList() throws Exception {
+        //GIVEN
+        String existingCharacterCardWithoutId = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/character_cards")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {"character": "test"}
+                                        """)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json("""
+                        {
+                        "character": "test"
+                        }
+                        """))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        CharacterCard existingCharacterCard = objectMapper.readValue(existingCharacterCardWithoutId, CharacterCard.class);
+        String id = existingCharacterCard.id();
+
+        //WHEN
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/character_cards/" + id)
+        ).andExpect(status().isOk());
+
+        //THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/character_cards")
+                ).andExpect(status().isOk())
+                .andExpect(content().json("[]"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenDeleteNotExistingCharacterCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingCharacterCard = "012";
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/api/character_cards/" + idOfNotExistingCharacterCard)
+                )
+
+        //THEN
+                .andExpect(status().isNotFound());
     }
 
 }

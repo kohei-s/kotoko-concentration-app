@@ -29,7 +29,13 @@ public class CharacterCardService {
     }
 
     public CharacterCard updateCharacterCard(CharacterCardWithoutId characterCardWithoutId, String id){
+        if (!characterCardRepository.existsById(id)) throw new NoSuchElementException();
         return characterCardRepository.save(new CharacterCard(id, characterCardWithoutId.getCharacter()));
+    }
+
+    public void deleteCharacterCard(String id){
+        if (!characterCardRepository.existsById(id)) throw new NoSuchElementException();
+        characterCardRepository.deleteById(id);
     }
 
 }
