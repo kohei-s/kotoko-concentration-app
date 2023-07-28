@@ -28,4 +28,8 @@ public class CharacterCardService {
        return characterCardRepository.insert(new CharacterCard(idService.createRandomId(), characterCardWithoutId.getCharacter()));
     }
 
+    public CharacterCard updateCharacterCard(CharacterCardWithoutId characterCardWithoutId, String id){
+        return characterCardRepository.save(new CharacterCard(id, characterCardWithoutId.getCharacter()));
+    }
+
 }

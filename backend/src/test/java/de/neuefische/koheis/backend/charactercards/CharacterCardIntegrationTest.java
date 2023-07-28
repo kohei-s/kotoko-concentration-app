@@ -28,7 +28,7 @@ class CharacterCardIntegrationTest {
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/character_cards")
                 )
-                //THEN
+        //THEN
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
@@ -61,6 +61,7 @@ class CharacterCardIntegrationTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/character_cards/" + id))
                         .andExpect(status().isOk())
+
         //THEN
                         .andExpect(content().json("""
                                 {
@@ -81,10 +82,30 @@ class CharacterCardIntegrationTest {
                                         {"character": "test"}
                                         """)
                 )
-
-                //THEN
+        //THEN
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
+                .andExpect(jsonPath("character").value("test"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenUpdatedCharacterCard_thenReturnCharacterCard() throws Exception {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/api/character_cards/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"character": "test"}
+                                """
+                        )
+        )
+        //THEN
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value("012"))
                 .andExpect(jsonPath("character").value("test"));
     }
 

@@ -24,11 +24,15 @@ public class CharacterCardController {
         return characterCardService.getOneCharacterCardById(id);
     }
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CharacterCard addCharacterCard(@RequestBody CharacterCardWithoutId characterCardWithoutId){
         return characterCardService.addCharacterCard(characterCardWithoutId);
+    }
+
+    @PutMapping("/{id}")
+    public CharacterCard updateCharacterCard(@PathVariable("id") String id, @RequestBody CharacterCardWithoutId characterCardWithoutId){
+        return characterCardService.updateCharacterCard(characterCardWithoutId, id);
     }
 
 }
