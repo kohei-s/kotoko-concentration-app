@@ -21,7 +21,7 @@ public class CharacterCardService {
     }
 
     public CharacterCard getOneCharacterCardById(String id){
-        return this.characterCardRepository.findById(id).orElseThrow(() -> new NoSuchElementException("CharacterCard with id:" + id + " not found!"));
+        return this.characterCardRepository.findById(id).orElseThrow(() -> new NoSuchElementException("CharacterCard with id:" + id + " is not found!"));
     }
 
     public CharacterCard addCharacterCard(CharacterCardWithoutId characterCardWithoutId){

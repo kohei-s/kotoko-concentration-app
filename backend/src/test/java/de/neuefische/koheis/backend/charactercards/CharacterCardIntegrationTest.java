@@ -76,7 +76,7 @@ class CharacterCardIntegrationTest {
     @Test
     void whenGetNotExistingCharacterCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
-        String idOfNotExistingCharacterCard = "invalidId";
+        String idOfNotExistingCharacterCard = "012";
 
         //WHEN
         mockMvc.perform(
@@ -99,6 +99,7 @@ class CharacterCardIntegrationTest {
                                         """)
                 )
                 //THEN
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("character").value("test"));
@@ -106,7 +107,7 @@ class CharacterCardIntegrationTest {
 
     @DirtiesContext
     @Test
-    void whenUpdatedCharacterCard_thenReturnCharacterCard() throws Exception {
+    void whenUpdateExistingCharacterCard_thenReturnUpdatedCharacterCard() throws Exception {
         //GIVEN
         String existingCharacterCardWithoutId = mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/character_cards")
@@ -208,7 +209,7 @@ class CharacterCardIntegrationTest {
                         MockMvcRequestBuilders.delete("/api/character_cards/" + idOfNotExistingCharacterCard)
                 )
 
-        //THEN
+                //THEN
                 .andExpect(status().isNotFound());
     }
 
