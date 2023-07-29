@@ -1,4 +1,4 @@
-import {FormEvent} from "react";
+import React, {ChangeEvent, FormEvent} from "react";
 import {TextField} from "@mui/material";
 
 type Props = {
@@ -6,12 +6,15 @@ type Props = {
     setCharacter: (event: string) => void,
     submit: (event: FormEvent<HTMLFormElement>) => void
     cancel: () => void
+    delete: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
 export default function CharacterCardUpdate(props: Props) {
-    const handleCharacterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleCharacterChange = (event: ChangeEvent<HTMLInputElement>) => {
         props.setCharacter(event.target.value)
     }
+
 
     return (
         <>
@@ -25,6 +28,7 @@ export default function CharacterCardUpdate(props: Props) {
                 />
                 <button>Save</button>
                 <button onClick={props.cancel}>Cancel</button>
+                <button onClick={props.delete}>Delete</button>
             </form>
         </>
     )

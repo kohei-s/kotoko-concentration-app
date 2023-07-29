@@ -3,9 +3,13 @@ package de.neuefische.koheis.backend.charactercards;
 import de.neuefische.koheis.backend.chractercards.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class CharacterCardServiceTest {
@@ -31,7 +35,7 @@ class CharacterCardServiceTest {
     }
 
     @Test
-    void getCharacterCardWithId_thenReturnCharacterCardWithId() {
+    void getExistingCharacterCardWithId_thenReturnCharacterCardWithId() {
         //GIVEN
         CharacterCard expected = new CharacterCard("012", "test");
         when(characterCardRepository.findById("012"))
@@ -44,6 +48,19 @@ class CharacterCardServiceTest {
         verify(characterCardRepository).findById("012");
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
+    }
+
+    @Test
+    void getNotExistingCharacterCardWithId_thenThrowException() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        when(characterCardRepository.existsById(id))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> characterCardService.getOneCharacterCardById(id));
     }
 
     @Test
@@ -68,7 +85,7 @@ class CharacterCardServiceTest {
     }
 
     @Test
-    void whenUpdatedCharacterCard() {
+    void whenUpdateExistingCharacterCard_thenReturnCharacterCard() {
         //GIVEN
         CharacterCardWithoutId characterCardWithoutId = new CharacterCardWithoutId("test");
         String id = "012";
@@ -76,13 +93,62 @@ class CharacterCardServiceTest {
         //WHEN
         when(characterCardRepository.save(new CharacterCard(id, characterCardWithoutId.getCharacter())))
                 .thenReturn(new CharacterCard("012", "test"));
-        CharacterCard expected = new CharacterCard("012", "test");
-        CharacterCard actual = characterCardService.updateCharacterCard(characterCardWithoutId, id);
+        when(characterCardRepository.existsById(id))
+                .thenReturn(true);
+        CharacterCard actual = characterCardService.updateCharacterCard(characterCardWithoutId, "012");
 
         //THEN
-        verify(characterCardRepository).save(any());
+        CharacterCard expected = new CharacterCard("012", "test");
+        verify(characterCardRepository).save(expected);
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
+    }
+
+    @Test
+    void whenUpdateWithNotExistingId_thenThrowException() {
+        //GIVEN
+        String notExistingId = "012";
+        CharacterCardWithoutId characterCardWithoutId = new CharacterCardWithoutId("test");
+
+        //WHEN
+        when(characterCardRepository.existsById("012"))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> characterCardService.updateCharacterCard(characterCardWithoutId, "012"));
+        verify(characterCardRepository).existsById(notExistingId);
+        verify(characterCardRepository, never()).save(any());
+    }
+
+    @Test
+    void whenDeleteExistingCharacterCard_thenDeleteCharacterCard() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        when(characterCardRepository.existsById(id))
+                .thenReturn(true);
+        doNothing().when(characterCardRepository).deleteById(id);
+        characterCardService.deleteCharacterCard(id);
+
+        //THEN
+        verify(characterCardRepository).existsById(id);
+        verify(characterCardRepository).deleteById(id);
+    }
+
+    @Test
+    void whenDeleteNotExistingCharacterCard_thenThrowException() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        when(characterCardRepository.existsById(id))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> characterCardService.deleteCharacterCard(id));
+        verify(characterCardRepository).existsById(id);
+        verify(characterCardRepository, never()).deleteById(id);
     }
 
 }

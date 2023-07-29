@@ -1,4 +1,4 @@
-import {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import ReactModal from "react-modal";
 import axios from "axios"
 import {CharacterCard} from "./CharacterCard/CharacterCard.ts";
@@ -65,6 +65,13 @@ export default function App() {
             .then(closeModalUpdate)
     }
 
+    function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault()
+        void axios.delete("/api/character_cards/" + id)
+            .then(() => loadCharacterCards())
+            .then(closeModalUpdate)
+    }
+
     function initializeUpdateComponent(characterCardId: string) {
 
         const selectedCharacterCard: CharacterCard | undefined = characterCards.find(item => item.id === characterCardId)
@@ -100,46 +107,48 @@ export default function App() {
 
     return (
         <>
+            <header>
+                <h2>Cards</h2>
+            </header>
+            <main>
+                <CharacterCardCollection characterCards={characterCards}
+                                         update={initializeUpdateComponent}></CharacterCardCollection>
+                <IconButton disableRipple={true} size="small" className={"buttonAdd"}
+                            onClick={openModalAdd}><AddCircle
+                    fontSize={"large"}/></IconButton>
+
+                <ReactModal
+                    isOpen={isModalAddOpen}
+                    onRequestClose={closeModalAdd}
+                    className="modal"
+                    overlayClassName="overlay"
+                >
+                    <CharacterCardUpdate
+                        submit={handleSubmit}
+                        setCharacter={setSelectedCharacter}
+                        character={selectedCharacter}
+                        cancel={closeModalAdd}
+                        delete={handleDelete}
+                    ></CharacterCardUpdate>
+                </ReactModal>
+                <ReactModal
+                    isOpen={isModalUpdateOpen}
+                    onRequestClose={closeModalUpdate}
+                    className="modal"
+                    overlayClassName="overlay"
+                >
+                    <CharacterCardUpdate
+                        submit={handleUpdate}
+                        setCharacter={setSelectedCharacter}
+                        character={selectedCharacter}
+                        cancel={closeModalUpdate}
+                        delete={handleDelete}
+                    ></CharacterCardUpdate>
+                </ReactModal>
+            </main>
+            <h2>Playing Cards</h2>
             <div>
-                <h1>Cards</h1>
-                <div>
-
-                    <IconButton disableRipple={true} size="small" className={"buttonAdd"}
-                                onClick={openModalAdd}><AddCircle
-                        fontSize={"large"}/></IconButton>
-
-                    <ReactModal
-                        isOpen={isModalAddOpen}
-                        onRequestClose={closeModalAdd}
-                        className="modal"
-                        overlayClassName="overlay"
-                    >
-                        <CharacterCardUpdate
-                            setCharacter={setSelectedCharacter}
-                            submit={handleSubmit}
-                            character={selectedCharacter}
-                            cancel={closeModalAdd}/>
-                    </ReactModal>
-                    <ReactModal
-                        isOpen={isModalUpdateOpen}
-                        onRequestClose={closeModalUpdate}
-                        className="modal"
-                        overlayClassName="overlay"
-                    >
-                        <CharacterCardUpdate
-                            setCharacter={setSelectedCharacter}
-                            submit={handleUpdate}
-                            character={selectedCharacter}
-                            cancel={closeModalUpdate}/>
-                    </ReactModal>
-                    <CharacterCardCollection characterCards={characterCards}
-                                             update={initializeUpdateComponent}></CharacterCardCollection>
-
-                </div>
-                <h2>Playing Cards</h2>
-                <div>
-                    {playingCards}
-                </div>
+                {playingCards}
             </div>
         </>
     );

@@ -21,7 +21,7 @@ public class CharacterCardService {
     }
 
     public CharacterCard getOneCharacterCardById(String id){
-        return this.characterCardRepository.findById(id).orElseThrow(() -> new NoSuchElementException("CharacterCard with id:" + id + " not found!"));
+        return this.characterCardRepository.findById(id).orElseThrow(() -> new NoSuchElementException("CharacterCard with id:" + id + " is not found!"));
     }
 
     public CharacterCard addCharacterCard(CharacterCardWithoutId characterCardWithoutId){
@@ -29,7 +29,13 @@ public class CharacterCardService {
     }
 
     public CharacterCard updateCharacterCard(CharacterCardWithoutId characterCardWithoutId, String id){
+        if (!characterCardRepository.existsById(id)) throw new NoSuchElementException();
         return characterCardRepository.save(new CharacterCard(id, characterCardWithoutId.getCharacter()));
+    }
+
+    public void deleteCharacterCard(String id){
+        if (!characterCardRepository.existsById(id)) throw new NoSuchElementException();
+        characterCardRepository.deleteById(id);
     }
 
 }
