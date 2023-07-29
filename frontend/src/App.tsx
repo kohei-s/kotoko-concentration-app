@@ -1,4 +1,4 @@
-import {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import ReactModal from "react-modal";
 import axios from "axios"
 import {CharacterCard} from "./CharacterCard/CharacterCard.ts";
@@ -65,7 +65,7 @@ export default function App() {
             .then(closeModalUpdate)
     }
 
-    function handleDelete(event: FormEvent<HTMLFormElement>) {
+    function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
         void axios.delete("/api/character_cards/" + id)
             .then(() => loadCharacterCards())

@@ -1,17 +1,17 @@
-import {FormEvent} from "react";
+import React, {ChangeEvent, FormEvent} from "react";
 import {TextField} from "@mui/material";
 
 type Props = {
-    id: string,
     character: string,
     setCharacter: (event: string) => void,
     submit: (event: FormEvent<HTMLFormElement>) => void
     cancel: () => void
-    delete: () => void,
+    delete: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
 export default function CharacterCardUpdate(props: Props) {
-    const handleCharacterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleCharacterChange = (event: ChangeEvent<HTMLInputElement>) => {
         props.setCharacter(event.target.value)
     }
 
