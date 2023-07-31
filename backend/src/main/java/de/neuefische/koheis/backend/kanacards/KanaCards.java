@@ -33,7 +33,7 @@ public class KanaCards {
     ));
 
     private final List<String> alphabetCharacters = new ArrayList<>(List.of(
-       "a", "i", "u", "e", "o",
+            "a", "i", "u", "e", "o",
             "ka", "ki", "ku", "ke", "ko",
             "sa", "shi", "su", "se", "so",
             "ta", "chi", "tsu", "te", "to",
@@ -48,33 +48,33 @@ public class KanaCards {
     public Map<String, String> createKanaCards(List<String> listAlphabet, List<String> listKana) {
         Map<String, String> kanaCards = new HashMap<>();
         for (String alphabet : listAlphabet) {
-            for (String kana : listKana) {
-                kanaCards.put(alphabet, kana);
-            }
+            kanaCards.put(alphabet, listKana.get(listAlphabet.indexOf(alphabet)));
         }
 
         return kanaCards;
     }
 
-    public Map<String, String> getRandomNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards){
+    public Map<String, String> getRandomNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards) {
         Map<String, String> randomNumberOfCards = new HashMap<>();
         Set<String> alphabetSet = kanaCards.keySet();
-        for(int i = 0; i < numberOfCards; i++){
-            for(String alphabet: alphabetSet){
-                randomNumberOfCards.put(alphabet, kanaCards.get(alphabet));
-            }
+        List<String> alphabetList = new ArrayList<>();
+        for (String alphabet : alphabetSet) {
+            alphabetList.add(alphabet);
+        }
+        for (int i = 0; i < numberOfCards; i++) {
+            randomNumberOfCards.put(alphabetList.get(i), kanaCards.get(alphabetList.get(i)));
         }
 
         return randomNumberOfCards;
     }
 
-    public Map<String, String> getRandomFourHiraganaCards(){
+    public Map<String, String> getRandomFourHiraganaCards() {
         Map<String, String> kanaCards = createKanaCards(this.alphabetCharacters, this.hiraganaCharacters);
 
         return getRandomNumberOfKanaCards(kanaCards, 4);
     }
 
-    public Map<String, String> getRandomFourKatakanaCards(){
+    public Map<String, String> getRandomFourKatakanaCards() {
         Map<String, String> kanaCards = createKanaCards(this.alphabetCharacters, this.katakanaCharacters);
 
         return getRandomNumberOfKanaCards(kanaCards, 4);
