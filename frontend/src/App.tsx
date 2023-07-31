@@ -6,12 +6,16 @@ import CharacterCardCollection from "./CharacterCard/CharacterCardCollection.tsx
 import CharacterCardUpdate from "./CharacterCard/CharacterCardUpdate.tsx";
 import {IconButton} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
+import {KanaCards} from "./KanaCards.ts";
 
 export default function App() {
+
     const [character, setCharacter] = useState<string>("")
     const [selectedCharacter, setSelectedCharacter] = useState<string>("");
     const [id, setId] = useState<string>("");
     const [playingCards, setPlayingCards] = useState<string[]>([""]);
+    const [hiraganaCards, setHiraganaCards] = useState<KanaCards>();
+    const [katakanaCards, setKatakanaCards] = useState<KanaCards>();
     const [characterCards, setCharacterCards] = useState<CharacterCard[]>([]);
     const [isModalAddOpen, setIsModalAddOpen] = useState<boolean>(false);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
@@ -22,6 +26,26 @@ export default function App() {
             "/api/playing_cards/" + gameSize)
             .then((response) => {
                 setPlayingCards(response.data)
+            })
+            .catch(console.error)
+
+    }
+
+    function loadHiraganaCards() {
+        axios.get<KanaCards>(
+            "/api/kana_cards/hiragana")
+            .then((response) => {
+                setHiraganaCards(response?.data)
+            })
+            .catch(console.error)
+
+    }
+
+    function loadKatakanaCards() {
+        axios.get<KanaCards>(
+            "/api/kana_cards/katakana")
+            .then((response) => {
+                setKatakanaCards(response?.data)
             })
             .catch(console.error)
     }
@@ -39,6 +63,8 @@ export default function App() {
         () => {
             loadPlayingCards()
             loadCharacterCards()
+            loadHiraganaCards()
+            loadKatakanaCards()
         }, []
     )
 
@@ -150,6 +176,12 @@ export default function App() {
             <div>
                 {playingCards}
             </div>
+            <h2>Hiragana Cards</h2>
+            <p>{hiraganaCards?.kana1}</p>
+            <h2>Katakana Cards</h2>
+            <p>{katakanaCards?.kana1}</p>
+
+
         </>
     );
 }
