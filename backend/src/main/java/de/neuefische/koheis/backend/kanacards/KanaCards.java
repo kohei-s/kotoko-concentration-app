@@ -1,7 +1,6 @@
 package de.neuefische.koheis.backend.kanacards;
 
 import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 @Component
@@ -56,11 +55,7 @@ public class KanaCards {
 
     public Map<String, String> getRandomNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards) {
         Map<String, String> randomNumberOfCards = new HashMap<>();
-        Set<String> alphabetSet = kanaCards.keySet();
-        List<String> alphabetList = new ArrayList<>();
-        for (String alphabet : alphabetSet) {
-            alphabetList.add(alphabet);
-        }
+        List<String> alphabetList = List.copyOf(kanaCards.keySet());
         for (int i = 0; i < numberOfCards; i++) {
             randomNumberOfCards.put(alphabetList.get(i), kanaCards.get(alphabetList.get(i)));
         }
