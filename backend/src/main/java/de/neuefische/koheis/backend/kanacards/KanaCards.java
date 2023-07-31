@@ -53,26 +53,26 @@ public class KanaCards {
         return kanaCards;
     }
 
-    public Map<String, String> getRandomNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards) {
-        Map<String, String> randomNumberOfCards = new HashMap<>();
+    public Map<String, String> getSelectedNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards) {
+        Map<String, String> selectedNumberOfKanaCards = new HashMap<>();
         List<String> alphabetList = List.copyOf(kanaCards.keySet());
         for (int i = 0; i < numberOfCards; i++) {
-            randomNumberOfCards.put(alphabetList.get(i), kanaCards.get(alphabetList.get(i)));
+            selectedNumberOfKanaCards.put(alphabetList.get(i), kanaCards.get(alphabetList.get(i)));
         }
 
-        return randomNumberOfCards;
+        return selectedNumberOfKanaCards;
     }
 
     public Map<String, String> getRandomFourHiraganaCards() {
         Map<String, String> kanaCards = createKanaCards(this.alphabetCharacters, this.hiraganaCharacters);
 
-        return getRandomNumberOfKanaCards(kanaCards, 4);
+        return getSelectedNumberOfKanaCards(kanaCards, 4);
     }
 
     public Map<String, String> getRandomFourKatakanaCards() {
         Map<String, String> kanaCards = createKanaCards(this.alphabetCharacters, this.katakanaCharacters);
 
-        return getRandomNumberOfKanaCards(kanaCards, 4);
+        return getSelectedNumberOfKanaCards(kanaCards, 4);
     }
 
 }
