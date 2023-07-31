@@ -1,6 +1,7 @@
 package de.neuefische.koheis.backend.chractercards;
 
 
+import de.neuefische.koheis.backend.idservice.IdService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;

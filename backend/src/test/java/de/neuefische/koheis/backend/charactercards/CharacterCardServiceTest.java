@@ -1,6 +1,7 @@
 package de.neuefische.koheis.backend.charactercards;
 
 import de.neuefische.koheis.backend.chractercards.*;
+import de.neuefische.koheis.backend.idservice.IdService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

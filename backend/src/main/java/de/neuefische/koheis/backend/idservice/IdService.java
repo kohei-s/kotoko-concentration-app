@@ -1,4 +1,4 @@
-package de.neuefische.koheis.backend.chractercards;
+package de.neuefische.koheis.backend.idservice;
 
 import org.springframework.stereotype.Component;
 
