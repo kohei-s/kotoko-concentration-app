@@ -14,8 +14,8 @@ export default function App() {
     const [selectedCharacter, setSelectedCharacter] = useState<string>("");
     const [id, setId] = useState<string>("");
     const [playingCards, setPlayingCards] = useState<string[]>([""]);
-    const [hiraganaCards, setHiraganaCards] = useState<KanaCards>();
-    const [katakanaCards, setKatakanaCards] = useState<KanaCards>();
+    const [hiraganaCards, setHiraganaCards] = useState<KanaCards[]>([]);
+    const [katakanaCards, setKatakanaCards] = useState<KanaCards[]>([]);
     const [characterCards, setCharacterCards] = useState<CharacterCard[]>([]);
     const [isModalAddOpen, setIsModalAddOpen] = useState<boolean>(false);
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState<boolean>(false);
@@ -32,7 +32,7 @@ export default function App() {
     }
 
     function loadHiraganaCards() {
-        axios.get<KanaCards>(
+        axios.get<KanaCards[]>(
             "/api/kana_cards/hiragana")
             .then((response) => {
                 setHiraganaCards(response?.data)
@@ -42,7 +42,7 @@ export default function App() {
     }
 
     function loadKatakanaCards() {
-        axios.get<KanaCards>(
+        axios.get<KanaCards[]>(
             "/api/kana_cards/katakana")
             .then((response) => {
                 setKatakanaCards(response?.data)
@@ -177,9 +177,10 @@ export default function App() {
                 {playingCards}
             </div>
             <h2>Hiragana Cards</h2>
-            <p>{hiraganaCards?.kana1}</p>
+            {Object.entries(hiraganaCards)}
             <h2>Katakana Cards</h2>
-            <p>{katakanaCards?.kana1}</p>
+            {Object.entries(katakanaCards)}
+
 
 
         </>
