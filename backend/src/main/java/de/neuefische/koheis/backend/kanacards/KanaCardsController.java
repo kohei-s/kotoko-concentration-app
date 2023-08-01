@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/kana_cards")
 public class KanaCardsController {
@@ -17,13 +15,8 @@ public class KanaCardsController {
     }
 
     @GetMapping("/hiragana")
-    Map<String, String> getRandomFourHiraganaCards(){
-        return kanaCardsService.getRandomFourHiraganaCards();
-    }
-
-    @GetMapping("/katakana")
-    Map<String, String> getRandomFourKatakanaCards(){
-        return kanaCardsService.getRandomFourKatakanaCards();
+    KanaCardsGrid getNineByNineKanaCardsGrid(){
+        return kanaCardsService.getNineByNineKanaCardsGrid();
     }
 
 }

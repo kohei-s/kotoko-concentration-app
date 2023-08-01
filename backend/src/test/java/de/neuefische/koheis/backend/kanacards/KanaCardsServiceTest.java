@@ -2,10 +2,6 @@ package de.neuefische.koheis.backend.kanacards;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -15,37 +11,26 @@ class KanaCardsServiceTest {
     KanaCardsService kanaCardsService = new KanaCardsService(kanaCardsRepository);
 
     @Test
-    void getRandomFourHiraganaCards_thenReturnHashMapOfFourAlphabetHiraganaPairs(){
+    void getThreeByThreeKanaCardGrid_thenReturnTwoDimensionalArrayOfNineKanaCards() {
         //GIVEN
-        Map<String, String> expected = new HashMap<>() {{
-            put("ka", "か");
-            put("mi","み");
-            put("na","な");
-            put("ri","り");
-        }};
+        KanaCard kanaCard1 = new KanaCard("あ", "a");
+        KanaCard kanaCard2 = new KanaCard("い", "i");
+        KanaCard kanaCard3 = new KanaCard("う", "u");
+        KanaCard kanaCard4 = new KanaCard("え", "e");
+        KanaCard kanaCard5 = new KanaCard("あ", "a");
+        KanaCard kanaCard6 = new KanaCard("い", "i");
+        KanaCard kanaCard7 = new KanaCard("う", "u");
+        KanaCard kanaCard8 = new KanaCard("え", "e");
+        KanaCard kanaCard9 = new KanaCard("empty", "empty");
+        KanaCardsGrid expected = new KanaCardsGrid(new KanaCard[][]{
+                {kanaCard1, kanaCard2, kanaCard3},
+                {kanaCard4, kanaCard5, kanaCard6},
+                {kanaCard7, kanaCard8, kanaCard9}});
 
         //WHEN
-        Mockito.when(kanaCardsRepository.getRandomFourHiraganaCards())
+        Mockito.when(kanaCardsRepository.getNineByNineKanaCardsGrid())
                 .thenReturn(expected);
-        Map<String, String> actual = kanaCardsService.getRandomFourHiraganaCards();
-
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void getRandomFourKatakanaCards_thenReturnHashMapOfFourAlphabetKatakanaPairs(){
-        Map<String, String> expected = new HashMap<>() {{
-            put("ka", "カ");
-            put("mi","ミ");
-            put("na","ナ");
-            put("ri","リ");
-        }};
-
-        //WHEN
-        Mockito.when(kanaCardsRepository.getRandomFourKatakanaCards())
-                .thenReturn(expected);
-        Map<String, String> actual = kanaCardsService.getRandomFourKatakanaCards();
+        KanaCardsGrid actual = kanaCardsService.getNineByNineKanaCardsGrid();
 
         //THEN
         assertEquals(expected, actual);
