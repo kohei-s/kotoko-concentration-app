@@ -55,7 +55,8 @@ public class KanaCards {
 
     public Map<String, String> getSelectedNumberOfKanaCards(Map<String, String> kanaCards, int numberOfCards) {
         Map<String, String> selectedNumberOfKanaCards = new HashMap<>();
-        List<String> alphabetList = List.copyOf(kanaCards.keySet());
+        List<String> alphabetList = new ArrayList<>(kanaCards.keySet());
+        Collections.shuffle(alphabetList);
         for (int i = 0; i < numberOfCards; i++) {
             selectedNumberOfKanaCards.put(alphabetList.get(i), kanaCards.get(alphabetList.get(i)));
         }
