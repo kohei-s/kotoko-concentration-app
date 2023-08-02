@@ -58,7 +58,7 @@ public class KanaCardsDeck {
         return getSelectedNumberOfKanaCards(kanaCards, 4);
     }
 
-    public KanaCardsGrid getNineByNineKanaCardsGrid() {
+    public KanaCard[][] getNineByNineKanaCardsGrid() {
         KanaCard[][] kanaCardsGrid = new KanaCard[3][3];
         KanaCardsDeck deck = new KanaCardsDeck();
         List<KanaCard> kanaCards = deck.getRandomFourHiraganaCards();
@@ -72,7 +72,7 @@ public class KanaCardsDeck {
                 k++;
             }
         }
-        return (new KanaCardsGrid(kanaCardsGrid));
+        return kanaCardsGrid;
     }
 
 }
