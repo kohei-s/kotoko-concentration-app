@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    width: 80vw;
+    height: 60vh;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    font-family: sans-serif;
+}
+
+.card {
+    flex-basis: 25%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: center;
+    padding-top: 9vw;
+    margin-bottom: 4%;
+    margin-left: 4%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: coral;
+    color: #fefda5;
+    transition: 0.3s ease-in-out background-color, 0.3s ease-in-out color;
+}
+
+.card:hover {
+    background-color: cornflowerblue;
+    color: #484848;
+}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {KanaCard} from "./KanaCard.ts";
+import './HiraganaCard.css';
 
 export default function HiraganaCard() {
 
@@ -21,9 +22,9 @@ export default function HiraganaCard() {
     }
 
     return (
-        <div>
-            {hiraganaCards.cardsGrid.map(cards => (cards).map((card) => <div
-                key={card.kana}>{card.kana}{card.reading}</div>))}
+        <div className={"container"}>
+            {hiraganaCards.cardsGrid.map(cards => (cards).map((card) => <div className={"card"}
+                key={card.kana}><div>{card.kana}</div><div>{card.reading}</div></div>))}
         </div>
     )
 
