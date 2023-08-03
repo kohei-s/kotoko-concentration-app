@@ -23,8 +23,20 @@ export default function HiraganaCard() {
 
     return (
         <div className={"container"}>
-            {hiraganaCards.cardsGrid.map(cards => (cards).map((card) => <div className={"card"}
-                key={card.kana}><div>{card.kana}</div><div>{card.reading}</div></div>))}
+            {hiraganaCards.cardsGrid.map((row, rowIndex) => {
+                return (row).map((card, columIndex) => {
+                        return <div className={"card"}
+                                    key={`${rowIndex}-${columIndex}`}>
+                            <div className={"front"}>
+                                <div>{card.kana}</div>
+                                <div>{card.reading}</div>
+                            </div>
+                            <div className={"back"}>
+                            </div>
+                        </div>
+                    }
+                )
+            })}
         </div>
     )
 
