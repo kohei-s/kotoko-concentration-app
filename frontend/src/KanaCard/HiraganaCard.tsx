@@ -6,19 +6,26 @@ import './HiraganaCard.css';
 export default function HiraganaCard() {
 
     const [hiraganaCards, setHiraganaCards] = useState<{ cardsGrid: KanaCard[][] }>({cardsGrid: [[]]});
+    const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
 
     useEffect(() => {
         loadHiraganaCards()
     }, [])
 
+
     function loadHiraganaCards() {
-        axios.get(
+        axios.get<{ cardsGrid: KanaCard[][], isMatched: boolean[][] }>(
             "/api/kana_cards/hiragana")
-            .then((response) => {
-                const responseData = response.data as { cardsGrid: KanaCard[][] }
-                setHiraganaCards(responseData)
-            })
+            .then(response => response.data)
+            .then(data => {
+                    const responseDataCardsGrid = {cardsGrid: data.cardsGrid}
+                    const responseDataBooleanArray = {isMatched: data.isMatched}
+                    setHiraganaCards(responseDataCardsGrid)
+                    setIsMatched(responseDataBooleanArray)
+                }
+            )
             .catch(console.error)
+
     }
 
     return (
