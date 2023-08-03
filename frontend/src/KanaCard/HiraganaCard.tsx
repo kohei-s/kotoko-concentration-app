@@ -6,7 +6,7 @@ import './HiraganaCard.css';
 export default function HiraganaCard() {
 
     const [hiraganaCards, setHiraganaCards] = useState<{ cardsGrid: KanaCard[][] }>({cardsGrid: [[]]});
-    const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
+    const [, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
 
     useEffect(() => {
         loadHiraganaCards()
