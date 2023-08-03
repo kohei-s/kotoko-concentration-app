@@ -22,6 +22,7 @@ class PlayingCardsIntegrationTest {
     void expectListWithSizeFiftyTwoOnGet() throws Exception {
         //GIVEN
         String size = "large";
+        //WHEN
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/playing_cards/" + size)
                 )
