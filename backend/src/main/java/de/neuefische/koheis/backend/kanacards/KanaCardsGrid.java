@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class KanaCardsGrid {
     @Id
     private String id;
-
     private KanaCard[][] cardsGrid;
 }
 

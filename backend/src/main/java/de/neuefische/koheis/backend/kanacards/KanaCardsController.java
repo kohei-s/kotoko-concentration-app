@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class KanaCardsController {
 
     private final KanaCardsService kanaCardsService;
-
     public KanaCardsController(KanaCardsService kanaCardsService) {
         this.kanaCardsService = kanaCardsService;
     }

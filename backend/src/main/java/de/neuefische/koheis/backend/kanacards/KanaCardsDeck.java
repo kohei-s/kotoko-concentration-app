@@ -72,6 +72,7 @@ public class KanaCardsDeck {
                 k++;
             }
         }
+
         return kanaCardsGrid;
     }
 
