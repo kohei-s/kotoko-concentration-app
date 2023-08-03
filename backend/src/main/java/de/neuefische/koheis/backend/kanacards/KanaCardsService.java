@@ -15,7 +15,12 @@ public class KanaCardsService {
 
     public KanaCardsGrid getNineByNineKanaCardsGrid(){
         KanaCard[][] kanaCardGridWithoutId = kanaCardsRepository.getNineByNineKanaCardsGrid();
-        return new KanaCardsGrid(idService.createRandomId(), kanaCardGridWithoutId);
+        boolean[][] isMatched = {
+            {false, false, false},
+            {false, false, false},
+            {false, false, false}
+        };
+        return new KanaCardsGrid(idService.createRandomId(), kanaCardGridWithoutId, isMatched);
     }
 
 }

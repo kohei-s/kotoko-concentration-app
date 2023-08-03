@@ -32,13 +32,19 @@ class KanaCardsIntegrationTest {
 
         JSONObject json = new JSONObject(result);
         JSONArray cardsGrid = json.getJSONArray("cardsGrid");
+        JSONArray isMatched = json.getJSONArray("isMatched");
 
         //THEN
         int expectedRows = 3;
         int expectedCols = 3;
         assertEquals(expectedRows, cardsGrid.length());
+        assertEquals(expectedRows, isMatched.length());
         for (int i = 0; i < cardsGrid.length(); i++) {
             JSONArray row = cardsGrid.getJSONArray(i);
+            assertEquals(expectedCols, row.length());
+        }
+        for (int i = 0; i < isMatched.length(); i++) {
+            JSONArray row = isMatched.getJSONArray(i);
             assertEquals(expectedCols, row.length());
         }
     }
