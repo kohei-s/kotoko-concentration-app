@@ -69,15 +69,15 @@ export default function HiraganaCard() {
                 return (row).map((card, columnIndex) => {
                         return <div className={"card"}
                                     key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
-                            <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
-                                <div>{card.kana}</div>
-                                <div>{card.reading}</div>
-                            </div>
+                                <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
+                                    <div>{card.kana}</div>
+                                    <div>{card.reading}</div>
+                                </div>
 
-                            <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
-                                back
+                                <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
+                                    back
+                                </div>
                             </div>
-                        </div>
 
                     }
                 )
