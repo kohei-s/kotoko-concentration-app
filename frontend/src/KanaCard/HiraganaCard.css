@@ -1,4 +1,4 @@
-.container {
+.concentration {
     display: grid;
     width: 80vw;
     height: 70vh;
@@ -12,6 +12,7 @@
     height: 100%;
     position: relative;
     text-align: center;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
 
@@ -30,17 +31,13 @@
 .card .front {
     background-color: #fefda5;
     color: darkblue;
-    transform: rotateY(-180deg);
 }
 
 .card .back {
-    background-color: coral;
+    background-color: #FF7F50FF;
+    color: #1a1a1a;
 }
 
-.card:hover .back {
+.flip {
     transform: rotateY(180deg);
-}
-
-.card:hover .front {
- transform: rotateY(0);
 }

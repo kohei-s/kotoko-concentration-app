@@ -14,5 +14,6 @@ public class KanaCardsGrid {
     @Id
     private String id;
     private KanaCard[][] cardsGrid;
+    private boolean[][] isMatched;
 }
 

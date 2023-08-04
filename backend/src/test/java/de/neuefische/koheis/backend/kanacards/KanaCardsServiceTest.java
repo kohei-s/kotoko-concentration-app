@@ -16,6 +16,11 @@ class KanaCardsServiceTest {
     void getThreeByThreeKanaCardGrid_thenReturnTwoDimensionalArrayOfNineKanaCards() {
         //GIVEN
         String id = "012";
+        boolean[][] isMatched = {
+                {false, false, false},
+                {false, false, false},
+                {false, false, false}
+        };
         KanaCard kanaCard1 = new KanaCard("あ", "a");
         KanaCard kanaCard2 = new KanaCard("い", "i");
         KanaCard kanaCard3 = new KanaCard("う", "u");
@@ -35,7 +40,7 @@ class KanaCardsServiceTest {
                 .thenReturn(kanaCards);
         Mockito.when(idService.createRandomId())
                 .thenReturn(id);
-        KanaCardsGrid expected = new KanaCardsGrid(id, kanaCards);
+        KanaCardsGrid expected = new KanaCardsGrid(id, kanaCards, isMatched);
         KanaCardsGrid actual = kanaCardsService.getNineByNineKanaCardsGrid();
 
         //THEN
