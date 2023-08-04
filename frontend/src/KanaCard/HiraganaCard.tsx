@@ -37,9 +37,20 @@ export default function HiraganaCard() {
 
         if (firstCard) {
             if (selectedCard.kana === hiraganaCards.cardsGrid[firstCard.x][firstCard.y].kana) {
-                isMatched.isMatched[rowIndex][columnIndex] = true
-                isMatched.isMatched[firstCard.x][firstCard.y] = true
-                setIsMatched(isMatched)
+                setIsMatched(prevState => ({
+                    ...prevState,
+                    isMatched: {
+                        ...prevState.isMatched,
+                        [rowIndex]: {
+                            ...prevState.isMatched[rowIndex],
+                            [columnIndex]: true,
+                        },
+                        [firstCard.x]: {
+                            ...prevState.isMatched[firstCard.x],
+                            [firstCard.y]: true,
+                        },
+                    },
+                }));
                 setFirstCard(undefined)
             } else {
                 isMatched.isMatched[firstCard.x][firstCard.y] = false
@@ -58,15 +69,15 @@ export default function HiraganaCard() {
                 return (row).map((card, columnIndex) => {
                         return <div className={"card"}
                                     key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
-                                <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
-                                    <div>{card.kana}</div>
-                                    <div>{card.reading}</div>
-                                </div>
-
-                                <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
-                                    back
-                                </div>
+                            <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
+                                <div>{card.kana}</div>
+                                <div>{card.reading}</div>
                             </div>
+
+                            <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
+                                back
+                            </div>
+                        </div>
 
                     }
                 )
