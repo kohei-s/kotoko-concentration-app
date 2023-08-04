@@ -1,15 +1,16 @@
 import HiraganaCard from "./KanaCard/HiraganaCard.tsx";
+import {Route, Routes} from "react-router-dom";
+import MainPage from "./MainPage/MainPage.tsx";
 
 export default function App() {
 
     return (
         <>
-            <h2>Concentration</h2>
             <main>
-                <h3>Hiragana Cards</h3>
-                <div>
-                    <HiraganaCard/>
-                </div>
+                <Routes>
+                    <Route path={"/"} element={<MainPage/>}></Route>
+                    <Route path={"/hiragana"} element={<HiraganaCard/>}></Route>
+                </Routes>
             </main>
         </>
     );

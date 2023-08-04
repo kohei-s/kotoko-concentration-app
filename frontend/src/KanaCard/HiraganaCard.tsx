@@ -64,11 +64,14 @@ export default function HiraganaCard() {
 
 
     return (
-        <div className={"concentration"}>
-            {hiraganaCards.cardsGrid.map((row, rowIndex) => {
-                return (row).map((card, columnIndex) => {
-                        return <div className={"card"}
-                                    key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
+        <>
+            <h2>Concentration</h2>
+            <h3>Hiragana Cards</h3>
+            <div className={"concentration"}>
+                {hiraganaCards.cardsGrid.map((row, rowIndex) => {
+                    return (row).map((card, columnIndex) => {
+                            return <div className={"card"}
+                                        key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
                                     <div>{card.kana}</div>
                                     <div>{card.reading}</div>
@@ -79,10 +82,11 @@ export default function HiraganaCard() {
                                 </div>
                             </div>
 
-                    }
-                )
-            })}
-        </div>
+                        }
+                    )
+                })}
+            </div>
+        </>
     )
 
 }
