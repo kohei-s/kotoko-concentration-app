@@ -11,7 +11,7 @@ New concentration game app aims to support learning Japanese for so called [thir
 ## 3. MVP 💮
 Simple concentration game with elementary Japanese [Hiragana](https://en.wikipedia.org/wiki/Hiragana) characters 
 ## 4. Target group 🧒🏾🧒🏼🧒🏿🧒🏻🧒🏽
-Children between 5-15 years old learning Japanese as (one of) thier home language(s), as well as their parents who want to support the learning jouney
+Children between 5-15 years old learning Japanese as (one of) their home language(s), as well as their parents who want to support the learning journey
 ## 5. Core function
   🪄 Personalize game contents with your favorite Japanese characters \
   📖 Add new characters you're about to learn \
