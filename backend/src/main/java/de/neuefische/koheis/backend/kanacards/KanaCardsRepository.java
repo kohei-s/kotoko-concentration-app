@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 public interface KanaCardsRepository extends MongoRepository<KanaCardsDeck, String> {
     KanaCardsDeck kanaCardsDeck = new KanaCardsDeck();
 
-    default KanaCard[][] getNineByNineKanaCardsGrid(){
-        return kanaCardsDeck.getNineByNineKanaCardsGrid();
+    default KanaCard[][] getNineByNineKanaCardsGrid(String kanaType){
+        return kanaCardsDeck.getNineByNineKanaCardsGrid(kanaType);
     }
 
 }

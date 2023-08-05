@@ -19,6 +19,19 @@ public class KanaCardsDeck {
             "わ", "を", "ん"
     ));
 
+    private final List<String> katakanaCharacters = new ArrayList<>(List.of(
+            "ア", "イ", "ウ", "エ", "オ",
+            "カ", "キ", "ク", "ケ", "コ",
+            "サ", "シ", "ス", "セ", "ソ",
+            "タ", "チ", "ツ", "テ", "ト",
+            "ナ", "ニ", "ヌ", "ネ", "ノ",
+            "ハ", "ヒ", "フ", "ヘ", "ホ",
+            "マ", "ミ", "ム", "メ", "モ",
+            "ヤ", "ユ", "ヨ",
+            "ラ", "リ", "ル", "レ", "ロ",
+            "ワ", "ヲ", "ン"
+    ));
+
     private final List<String> alphabetCharacters = new ArrayList<>(List.of(
             "a", "i", "u", "e", "o",
             "ka", "ki", "ku", "ke", "ko",
@@ -52,16 +65,22 @@ public class KanaCardsDeck {
         return selectedNumberOfKanaCards;
     }
 
-    public List<KanaCard> getRandomFourHiraganaCards() {
-        List<KanaCard> kanaCards = createKanaCards(this.alphabetCharacters, this.hiraganaCharacters);
-
+    public List<KanaCard> getRandomFourKanaCards(String kanaType) {
+        List<KanaCard> kanaCards;
+        if (kanaType.equals("hiragana")) {
+            kanaCards = createKanaCards(this.alphabetCharacters, this.hiraganaCharacters);
+        } else {
+            kanaCards = createKanaCards(this.alphabetCharacters, this.katakanaCharacters);
+        }
         return getSelectedNumberOfKanaCards(kanaCards, 4);
+
     }
 
-    public KanaCard[][] getNineByNineKanaCardsGrid() {
+
+    public KanaCard[][] getNineByNineKanaCardsGrid(String kanaType) {
         KanaCard[][] kanaCardsGrid = new KanaCard[3][3];
         KanaCardsDeck deck = new KanaCardsDeck();
-        List<KanaCard> kanaCards = deck.getRandomFourHiraganaCards();
+        List<KanaCard> kanaCards = deck.getRandomFourKanaCards(kanaType);
         kanaCards.addAll(List.copyOf(kanaCards));
         kanaCards.add(new KanaCard("empty", "empty"));
         shuffle(kanaCards);

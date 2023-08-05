@@ -13,8 +13,8 @@ public class KanaCardsService {
         this.idService = idService;
     }
 
-    public KanaCardsGrid getNineByNineKanaCardsGrid(){
-        KanaCard[][] kanaCardGridWithoutId = kanaCardsRepository.getNineByNineKanaCardsGrid();
+    public KanaCardsGrid getNineByNineKanaCardsGrid(String kanaType){
+        KanaCard[][] kanaCardGridWithoutId = kanaCardsRepository.getNineByNineKanaCardsGrid(kanaType);
         boolean[][] isMatched = {
             {false, false, false},
             {false, false, false},

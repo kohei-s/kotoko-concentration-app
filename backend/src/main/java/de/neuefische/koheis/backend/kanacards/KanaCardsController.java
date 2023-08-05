@@ -15,7 +15,12 @@ public class KanaCardsController {
 
     @GetMapping("/hiragana")
     KanaCardsGrid getNineByNineKanaCardsGrid(){
-        return kanaCardsService.getNineByNineKanaCardsGrid();
+        return kanaCardsService.getNineByNineKanaCardsGrid("hiragana");
+    }
+
+    @GetMapping("/katakana")
+    KanaCardsGrid getNineKanaCardsGrid(){
+        return kanaCardsService.getNineByNineKanaCardsGrid("katakana");
     }
 
 }
