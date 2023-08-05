@@ -1,7 +1,9 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {KanaCard} from "./KanaCard.ts";
-import './HiraganaCard.css';
+import './KatakanaCard.css';
+import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
 
 export default function KatakanaCard() {
 
@@ -10,10 +12,10 @@ export default function KatakanaCard() {
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
 
     useEffect(() => {
-        loadHiraganaCards()
+        loadKatakanaCards()
     }, [])
 
-    function loadHiraganaCards() {
+    function loadKatakanaCards() {
         axios.get<{ cardsGrid: KanaCard[][], isMatched: boolean[][] }>(
             "/api/kana_cards/katakana")
             .then(response => response.data)
@@ -34,7 +36,7 @@ export default function KatakanaCard() {
 
         const selectedCard = katakanaCards.cardsGrid[rowIndex][columnIndex]
         if (firstCard) {
-            if (selectedCard.kana === katakanaCards.cardsGrid[firstCard.x][firstCard.y].kana) {
+            if (selectedCard.reading === katakanaCards.cardsGrid[firstCard.x][firstCard.y].reading) {
                 setIsMatched(prevState => ({
                     ...prevState,
                     isMatched: {
@@ -64,13 +66,13 @@ export default function KatakanaCard() {
     return (
         <>
             <div>
-                <img width={"200px"} src="/logos/katakana-logo-red.png" alt="katakana-logo"/>
+                <img width={"150px"} height={"150%"} src="/logos/katakana-logo-red.png" alt="katakana-logo"/>
             </div>
             <div className={"concentration"}>
                 {katakanaCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
-                            return <div className={"card"}
-                                        key={card.reading} onClick={() => flipCard(rowIndex, columnIndex)}>
+                            return <div className={"k-card"}
+                                        key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
                                     {(card.reading === "empty") ? <img src="/logos/kotoko-logo.png" alt="start"/> :
                                         <img src={"/katakana-images/k-" + card.reading + ".png"}
@@ -83,6 +85,14 @@ export default function KatakanaCard() {
                         }
                     )
                 })}
+            </div>
+            <div>
+                <Button color="inherit">
+                    <Link to="/">back</Link>
+                </Button>
+                <Button color="secondary" onClick={loadKatakanaCards}>
+                    restart
+                </Button>
             </div>
         </>
     )

@@ -2,6 +2,8 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {KanaCard} from "./KanaCard.ts";
 import './HiraganaCard.css';
+import {Button} from "@mui/material";
+import {Link} from "react-router-dom";
 
 export default function HiraganaCard() {
 
@@ -34,7 +36,7 @@ export default function HiraganaCard() {
 
         const selectedCard = hiraganaCards.cardsGrid[rowIndex][columnIndex]
         if (firstCard) {
-            if (selectedCard.kana === hiraganaCards.cardsGrid[firstCard.x][firstCard.y].kana) {
+            if (selectedCard.reading === hiraganaCards.cardsGrid[firstCard.x][firstCard.y].reading) {
                 setIsMatched(prevState => ({
                     ...prevState,
                     isMatched: {
@@ -64,13 +66,15 @@ export default function HiraganaCard() {
     return (
         <>
             <div>
-                <img width={"200px"} src="/logos/hiragana-logo-blue.png" alt="hiragana-logo"/>
+
+                <img width={"150px"} height={"150px"} src="/logos/hiragana-logo-blue.png" alt="hiragana-logo"/>
+
             </div>
             <div className={"concentration"}>
                 {hiraganaCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
-                            return <div className={"card"}
-                                        key={card.reading} onClick={() => flipCard(rowIndex, columnIndex)}>
+                            return <div className={"h-card"}
+                                        key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
                                     {(card.reading === "empty") ? <img src="/logos/kotoko-logo.png" alt="start"/> :
                                         <img src={"/hiragana-images/h-" + card.reading + ".png"}
@@ -84,7 +88,14 @@ export default function HiraganaCard() {
                     )
                 })}
             </div>
-
+            <div>
+                <Button color="inherit">
+                    <Link to="/">back</Link>
+                </Button>
+                <Button onClick={loadHiraganaCards}>
+                    restart
+                </Button>
+            </div>
         </>
     )
 
