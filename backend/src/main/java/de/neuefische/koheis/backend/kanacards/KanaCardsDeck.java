@@ -29,7 +29,7 @@ public class KanaCardsDeck {
             "ma", "mi", "mu", "me", "mo",
             "ya", "yu", "yo",
             "ra", "ri", "ru", "re", "ro",
-            "wa", "o", "n"
+            "wa", "wo", "n"
     ));
 
     public List<KanaCard> createKanaCards(List<String> listAlphabet, List<String> listKana) {

@@ -13,7 +13,6 @@ export default function HiraganaCard() {
         loadHiraganaCards()
     }, [])
 
-
     function loadHiraganaCards() {
         axios.get<{ cardsGrid: KanaCard[][], isMatched: boolean[][] }>(
             "/api/kana_cards/hiragana")
@@ -65,23 +64,19 @@ export default function HiraganaCard() {
 
     return (
         <>
-            <h2>Concentration</h2>
-            <h3>Hiragana Cards</h3>
             <div className={"concentration"}>
                 {hiraganaCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
                             return <div className={"card"}
-                                        key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
+                                        key={card.reading} onClick={() => flipCard(rowIndex, columnIndex)}>
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
-                                    <div>{card.kana}</div>
-                                    <div>{card.reading}</div>
+                                    {(card.reading !== "empty") ? <img src={"/hiragana-images/h-" + card.reading + ".png"}
+                                                                       alt={"hiragana-" + card.reading}/>
+                                        : <img src="/kotoko-logo.png" alt="start"/>}
                                 </div>
-
                                 <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
-                                    back
                                 </div>
                             </div>
-
                         }
                     )
                 })}
