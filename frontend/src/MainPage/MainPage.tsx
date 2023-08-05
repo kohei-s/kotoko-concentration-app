@@ -7,7 +7,7 @@ export default function MainPage() {
         <>
             <div className={"start"}>
                 <Link to="/hiragana">
-                    <img height={"280vm"} src="/kotoko-logo.png" alt="start"/>
+                    <img height={"280vm"} src="/logos/kotoko-logo.png" alt="start"/>
                 </Link>
             </div>
         </>

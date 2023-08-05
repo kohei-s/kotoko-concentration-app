@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import {KanaCard} from "./KanaCard.ts";
 import './HiraganaCard.css';
 
-export default function HiraganaCard() {
+export default function KatakanaCard() {
 
-    const [hiraganaCards, setHiraganaCards] = useState<{ cardsGrid: KanaCard[][] }>({cardsGrid: [[]]});
+    const [katakanaCards, setKatakanaCards] = useState<{ cardsGrid: KanaCard[][] }>({cardsGrid: [[]]});
     const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
 
@@ -15,12 +15,12 @@ export default function HiraganaCard() {
 
     function loadHiraganaCards() {
         axios.get<{ cardsGrid: KanaCard[][], isMatched: boolean[][] }>(
-            "/api/kana_cards/hiragana")
+            "/api/kana_cards/katakana")
             .then(response => response.data)
             .then(data => {
                     const responseDataCardsGrid = {cardsGrid: data.cardsGrid}
                     const responseDataBooleanArray = {isMatched: data.isMatched}
-                    setHiraganaCards(responseDataCardsGrid)
+                    setKatakanaCards(responseDataCardsGrid)
                     setIsMatched(responseDataBooleanArray)
                 }
             )
@@ -32,9 +32,9 @@ export default function HiraganaCard() {
             return
         }
 
-        const selectedCard = hiraganaCards.cardsGrid[rowIndex][columnIndex]
+        const selectedCard = katakanaCards.cardsGrid[rowIndex][columnIndex]
         if (firstCard) {
-            if (selectedCard.kana === hiraganaCards.cardsGrid[firstCard.x][firstCard.y].kana) {
+            if (selectedCard.kana === katakanaCards.cardsGrid[firstCard.x][firstCard.y].kana) {
                 setIsMatched(prevState => ({
                     ...prevState,
                     isMatched: {
@@ -64,17 +64,17 @@ export default function HiraganaCard() {
     return (
         <>
             <div>
-                <img width={"200px"} src="/logos/hiragana-logo-blue.png" alt="hiragana-logo"/>
+                <img width={"200px"} src="/logos/katakana-logo-red.png" alt="katakana-logo"/>
             </div>
             <div className={"concentration"}>
-                {hiraganaCards.cardsGrid.map((row, rowIndex) => {
+                {katakanaCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
                             return <div className={"card"}
                                         key={card.reading} onClick={() => flipCard(rowIndex, columnIndex)}>
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
                                     {(card.reading === "empty") ? <img src="/logos/kotoko-logo.png" alt="start"/> :
-                                        <img src={"/hiragana-images/h-" + card.reading + ".png"}
-                                             alt={"hiragana-" + card.reading}/>
+                                        <img src={"/katakana-images/k-" + card.reading + ".png"}
+                                             alt={"katakana-" + card.reading}/>
                                     }
                                 </div>
                                 <div className={"back" + (isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
@@ -84,7 +84,6 @@ export default function HiraganaCard() {
                     )
                 })}
             </div>
-
         </>
     )
 
