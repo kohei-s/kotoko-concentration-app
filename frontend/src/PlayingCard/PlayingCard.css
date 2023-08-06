@@ -42,7 +42,7 @@ h2 {
     height: 100%;
     border-radius: 12px;
     border: 2px solid #88A5D4;
-    transorm: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 
 .playingCard .back {
