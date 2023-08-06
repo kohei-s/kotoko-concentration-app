@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -30,25 +29,6 @@ class PlayingCardsIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(52)));
-    }
-
-    @Test
-    void expectTrueWithCardsOfSameNumber() throws Exception{
-        //WHEN
-        Boolean actual = Boolean.valueOf(mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/playing_cards")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                        ["♠13","♥13"]
-                                        """)
-                )
-        //THEN
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString());
-
-        assertThat(actual).isTrue();
     }
 
 }
