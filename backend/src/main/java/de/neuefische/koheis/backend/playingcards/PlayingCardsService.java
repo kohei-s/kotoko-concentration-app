@@ -16,7 +16,4 @@ public class PlayingCardsService {
         return playingCardsRepository.getPlayingCards(gameSize);
     }
 
-    public boolean checkMatchOfSelectedPlayingCards(List<String> twoCards) {
-        return playingCardsRepository.checkMatchOfSelectedPlayingCards(twoCards);
-    }
 }
