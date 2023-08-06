@@ -2,9 +2,7 @@ import {Link} from "react-router-dom";
 import "./MainPage.css"
 import {Button} from "@mui/material";
 
-
 export default function MainPage() {
-
 
     return (
         <>
@@ -22,4 +20,5 @@ export default function MainPage() {
             </Button>
         </>
     )
+
 }
