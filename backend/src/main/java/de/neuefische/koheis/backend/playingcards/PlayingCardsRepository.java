@@ -9,14 +9,8 @@ import java.util.List;
 public interface PlayingCardsRepository extends MongoRepository<PlayingCards, String> {
 
     PlayingCards playingCards = new PlayingCards();
-
     default List<String> getPlayingCards(String gameSize){
         return playingCards.getPlayingCards(gameSize);
     }
-
-    default boolean checkMatchOfSelectedPlayingCards(List<String> twoCards) {
-        return playingCards.checkMatchOfSelectedPlayingCards(twoCards);
-    }
-
 
 }
