@@ -2,8 +2,11 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {KanaCard} from "../KanaCard.ts";
 import {Link} from "react-router-dom";
-import {Button} from "@mui/material";
+import {IconButton, Stack} from "@mui/material";
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import FlipCard from "../../FlipCard.tsx";
+import './KatakanaCard.css'
 
 export default function KatakanaCard() {
 
@@ -31,19 +34,24 @@ export default function KatakanaCard() {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150%"} src="/logos/katakana-logo-red.png" alt="katakana-logo"/>
+                <img width={"150px"} height={"150%"} src="/logos/katakana-logo-blue.png" alt="katakana-logo"/>
             </div>
             <FlipCard
                 cardsGrid={katakanaCards}
                 isMatched={isMatched}
-                imagePath={"/katakana-images/k-"}/>
+                imagePath={"/katakana-images/k-"}
+                colorStyle={"#4D6A9A"}/>
             <div>
-                <Button color="inherit">
-                    <Link to="/">back</Link>
-                </Button>
-                <Button color="secondary" onClick={loadKatakanaCards}>
-                    restart
-                </Button>
+                <Stack direction="row" spacing={0.4} justifyContent={"end"}>
+                    <IconButton size={"small"}
+                                sx={{background: "#D05F5F", boxShadow: 0}}>
+                        <Link to="/"><HomeRoundedIcon/></Link>
+                    </IconButton>
+                    <IconButton size={"small"} onClick={loadKatakanaCards}
+                                sx={{background: "#73683F", color: "#FDF6E1", boxShadow: 0}}>
+                        <ReplayRoundedIcon/>
+                    </IconButton>
+                </Stack>
             </div>
         </>
     )

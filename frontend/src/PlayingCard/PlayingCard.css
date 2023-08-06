@@ -1,0 +1,60 @@
+.playingCard-concentration {
+    display: grid;
+    width: 75vw;
+    height: 60vh;
+    grid-gap: 7px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding-block-end: 25px;
+}
+
+body {
+    background-color: #FDEEBE;
+}
+
+h2 {
+    color:#D05F5F;
+}
+
+.playingCard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.playingCard .back,
+.playingCard .front {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 12px;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: all 0.5s;
+}
+
+.playingCard .front {
+    color: #73683F;
+    max-width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: 2px solid #88A5D4;
+    transorm: rotateY(-180deg);
+}
+
+.playingCard .back {
+    background-color: #73683F;
+    border: 2px solid #88A5D4;
+}
+
+.playingCard:hover .back {
+    transform: rotateY(180deg);
+}
+
+.playingCard:hover .front {
+    transform: rotateY(0);
+}
+

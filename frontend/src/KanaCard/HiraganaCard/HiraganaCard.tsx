@@ -1,9 +1,12 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {KanaCard} from "../KanaCard.ts";
-import {Button} from "@mui/material";
+import {IconButton, Stack} from "@mui/material";
 import {Link} from "react-router-dom";
 import FlipCard from "../../FlipCard.tsx";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
+import './HiraganaCard.css'
 
 export default function HiraganaCard() {
 
@@ -31,18 +34,23 @@ export default function HiraganaCard() {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150px"} src="/logos/hiragana-logo-blue.png" alt="hiragana-logo"/>
+                <img width={"150px"} height={"150px"} src="/logos/hiragana-logo.png" alt="hiragana-logo"/>
             </div>
             <FlipCard cardsGrid={hiraganaCards}
                       isMatched={isMatched}
-                      imagePath={"/hiragana-images/h-"}/>
+                      imagePath={"/hiragana-images/h-"}
+                      colorStyle={"#D05F5F"}/>
             <div>
-                <Button color="inherit">
-                    <Link to="/">back</Link>
-                </Button>
-                <Button onClick={loadHiraganaCards}>
-                    restart
-                </Button>
+                <Stack direction="row" spacing={0.4} justifyContent={"end"}>
+                    <IconButton size={"small"}
+                                sx={{background: "#73683F", boxShadow: 0}}>
+                        <Link to="/"><HomeRoundedIcon/></Link>
+                    </IconButton>
+                    <IconButton size={"small"} onClick={loadHiraganaCards}
+                                sx={{background: "#4D6A9A", color: "#FDF6E1", boxShadow: 0}}>
+                        <ReplayRoundedIcon/>
+                    </IconButton>
+                </Stack>
             </div>
         </>
     )

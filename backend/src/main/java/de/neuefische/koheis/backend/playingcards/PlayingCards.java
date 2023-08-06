@@ -1,11 +1,9 @@
 package de.neuefische.koheis.backend.playingcards;
 
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Component
 public class PlayingCards {
@@ -27,14 +25,6 @@ public class PlayingCards {
 
         Collections.shuffle(playingCards);
         return playingCards;
-    }
-
-    public boolean checkMatchOfSelectedPlayingCards(List<String> twoCards) {
-        Pattern numbers = Pattern.compile("\\d{1,2}");
-        String cardNumber1 = String.valueOf(numbers.matcher(twoCards.get(0)));
-        String cardNumber2 = String.valueOf(numbers.matcher(twoCards.get(1)));
-
-        return (cardNumber1.equals(cardNumber2));
     }
 
 }

@@ -6,6 +6,7 @@ type Props = {
     cardsGrid:{ cardsGrid: KanaCard[][] }
     isMatched: { isMatched: boolean[][] }
     imagePath: string
+    colorStyle: string
 }
 export default function FlipCard(props: Props) {
 
@@ -44,7 +45,7 @@ export default function FlipCard(props: Props) {
                                          alt={"kana-" + card.reading}/>
                                 }
                             </div>
-                            <div className={"back" + (props.isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
+                            <div style={{background: props.colorStyle}} className={"back" + (props.isMatched.isMatched[rowIndex][columnIndex] ? " flip" : "")}>
                             </div>
                         </div>
                     }
