@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 @Component
 public class PlayingCards {
     public List<String> getPlayingCards(String gameSize) {
-        ArrayList<String> names = new ArrayList<>(List.of("heart", "spade", "diamond", "club"));
+        ArrayList<String> names = new ArrayList<>(List.of("♥", "♠", "♣", "♦"));
         ArrayList<String> numbers = new ArrayList<>(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"));
         ArrayList<String> playingCards = new ArrayList<>();
 

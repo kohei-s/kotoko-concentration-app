@@ -19,12 +19,12 @@ class PlayingCardsServiceTest {
         //GIVEN
         List<String> expected = new ArrayList<>(
                 List.of(
-                        "heart13", "heart7", "club6", "club10", "heart2", "diamond3", "heart6", "diamond10",
-                        "club13", "club5", "spade3", "heart11", "spade13", "spade9", "heart12", "spade12", "spade10",
-                        "club11", "diamond4", "diamond2", "club1", "spade4", "spade5", "spade8", "heart3", "heart9",
-                        "spade7", "spade2", "spade1", "diamond13", "diamond11", "heart10", "spade6", "diamond9", "diamond5",
-                        "club2", "club4", "club3", "diamond8", "spade11", "club9", "heart5", "diamond1", "diamond7",
-                        "diamond6", "club12", "heart8", "diamond12", "heart4", "club8", "club7", "heart1"
+                        "♥13", "♥7", "♣6", "♣10", "♥2", "♦3", "♥6", "♦10",
+                        "♣13", "♣5", "♠3", "♥11", "♠13", "♠9", "♥12", "♠12", "♠10",
+                        "♣11", "♦4", "♦2", "♣1", "♠4", "♠5", "♠8", "♥3", "♥9",
+                        "♠7", "♠2", "♠1", "♦13", "♦11", "♥10", "♠6", "♦9", "♦5",
+                        "♣2", "♣4", "♣3", "♦8", "♠11", "♣9", "♥5", "♦1", "♦7",
+                        "♦6", "♣12", "♥8", "♦12", "♥4", "♣8", "♣7", "♥1"
                 )
         );
 
@@ -42,11 +42,11 @@ class PlayingCardsServiceTest {
         //GIVEN
         List<String> expected = new ArrayList<>(
                 List.of(
-                        "heart13", "heart7", "heart2",  "heart6", "spade12",
-                        "spade3", "heart11", "spade13", "spade9", "heart12", "spade10",
-                        "spade4", "spade5", "spade8", "heart3", "heart9", "spade7",
-                        "spade2", "spade1", "heart10", "spade6",  "spade11", "heart5",
-                        "heart8", "heart4", "heart1"
+                        "♥13", "♥7", "♥2",  "♥6", "♠12",
+                        "♠3", "♥11", "♠13", "♠9", "♥12", "♠10",
+                        "♠4", "♠5", "♠8", "♥3", "♥9", "♠7",
+                        "♠2", "♠1", "♥10", "♠6",  "♠11", "♥5",
+                        "♥8", "♥4", "♥1"
                 )
         );
 
@@ -64,8 +64,8 @@ class PlayingCardsServiceTest {
         //GIVEN
         List<String> expected = new ArrayList<>(
                 List.of(
-                        "heart1", "heart2", "heart3", "heart4", "heart5", "heart6",
-                        "spade1", "spade2", "spade3", "spade4", "spade5", "spade6"
+                        "♥1", "♥2", "♥3", "♥4", "♥5", "♥6",
+                        "♠1", "♠2", "♠3", "♠4", "♠5", "♠6"
                 )
         );
 
@@ -81,7 +81,7 @@ class PlayingCardsServiceTest {
     @Test
     void checkMatchOfSelectedPlayingCardsWithTwoCardsWithSameNumber_thenTrue() {
         //GIVEN
-        List<String> twoCards = new ArrayList<>(List.of("heart12", "spade12"));
+        List<String> twoCards = new ArrayList<>(List.of("♥12", "♠12"));
 
         //WHEN
         Boolean expected = true;

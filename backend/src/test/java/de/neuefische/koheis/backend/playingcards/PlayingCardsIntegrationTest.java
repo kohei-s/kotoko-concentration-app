@@ -39,7 +39,7 @@ class PlayingCardsIntegrationTest {
                         MockMvcRequestBuilders.post("/api/playing_cards")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
-                                        ["spade13","heart13"]
+                                        ["♠13","♥13"]
                                         """)
                 )
         //THEN
