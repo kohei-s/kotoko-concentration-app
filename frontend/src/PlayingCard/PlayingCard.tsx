@@ -6,11 +6,19 @@ import axios from "axios";
 import './PlayingCard.css'
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
+import FlipPlayingCard from "./FlipPlayingCard.tsx";
 
 export default function PlayingCard() {
 
     const gameSize = "small";
-    const [playingCards, setPlayingCards] = useState<string[]>([""]);
+    const [playingCards, setPlayingCards] = useState<string[]>([]);
+    const [isMatched, setIsMatched] = useState<boolean[]>([false, false, false, false, false, false, false, false, false, false, false, false])
+
+    useEffect(
+        () => {
+            loadPlayingCards()
+        }, []
+    )
 
     function loadPlayingCards() {
         axios.get<string[]>(
@@ -21,38 +29,27 @@ export default function PlayingCard() {
             .catch(console.error)
     }
 
-    useEffect(
-        () => {
-            loadPlayingCards()
-        }, []
-    )
 
     return (
         <>
             <div>
                 <img width={"150px"} height={"150px"} src="/logos/cards-logo.png" alt="cards-logo"/>
             </div>
-            <div className={"playingCard-concentration"}>
-                {playingCards.map((playingCard: string) =>
-                    <div className={"playingCard"} key={playingCard}>
-                        <div className={"front"}>
-                            {playingCard}
-                        </div>
-                        <div className={"back"}>
-                        </div>
-                    </div>)
-                }
+            <FlipPlayingCard playingCards={playingCards}
+                             isMatched={isMatched}
+                             setIsMatched={setIsMatched}/>
+            <div>
+                <Stack direction="row" spacing={0.4} justifyContent={"end"}>
+                    <IconButton size={"small"}
+                                sx={{background: "#4D6A9A", boxShadow: 0}}>
+                        <Link to="/"><HomeRoundedIcon/></Link>
+                    </IconButton>
+                    <IconButton size={"small"} onClick={loadPlayingCards}
+                                sx={{background: "#D05F5F", color: "#FDF6E1", boxShadow: 0}}>
+                        <ReplayRoundedIcon/>
+                    </IconButton>
+                </Stack>
             </div>
-            <Stack direction="row" spacing={0.4} justifyContent={"end"}>
-                <IconButton size={"small"}
-                            sx={{background: "#4D6A9A", boxShadow: 0}}>
-                    <Link to="/"><HomeRoundedIcon/></Link>
-                </IconButton>
-                <IconButton size={"small"} onClick={loadPlayingCards}
-                            sx={{background: "#D05F5F", color: "#FDF6E1", boxShadow: 0}}>
-                    <ReplayRoundedIcon/>
-                </IconButton>
-            </Stack>
         </>
     )
 

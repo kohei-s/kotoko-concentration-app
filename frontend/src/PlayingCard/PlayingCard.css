@@ -36,15 +36,12 @@ h2 {
     transition: all 0.5s;
 }
 
-.playingCard .front {
-    display: grid;
-    color: #73683F;
+.playingCard .front img {
     max-width: 100%;
     height: 100%;
     border-radius: 12px;
     border: 2px solid #88A5D4;
-    transform: rotateY(-180deg);
-    align-items: center;
+    object-fit: cover;
 }
 
 .playingCard .back {
