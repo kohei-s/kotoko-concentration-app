@@ -1,7 +1,7 @@
 .concentration {
     display: grid;
-    width: 75vw;
-    height: 60vh;
+    width: 300px;
+    height: 300px;
     grid-gap: 7px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -41,6 +41,7 @@ h2 {
     height: 100%;
     border-radius: 12px;
     border: 2px solid #88A5D4;
+    object-fit: cover;
 }
 
 .flip {

@@ -39,6 +39,7 @@ export default function HiraganaCard() {
             <FlipCard cardsGrid={hiraganaCards}
                       isMatched={isMatched}
                       imagePath={"/hiragana-images/h-"}
+                      setIsMatched={setIsMatched}
                       colorStyle={"#D05F5F"}/>
             <div>
                 <Stack direction="row" spacing={0.4} justifyContent={"end"}>

@@ -3,34 +3,51 @@ import {KanaCard} from "./KanaCard/KanaCard.ts";
 import './FlipCard.css';
 
 type Props = {
-    cardsGrid:{ cardsGrid: KanaCard[][] }
+    cardsGrid: { cardsGrid: KanaCard[][] }
     isMatched: { isMatched: boolean[][] }
     imagePath: string
     colorStyle: string
+    setIsMatched: (isMatched: { isMatched: boolean[][] }) => void;
 }
 export default function FlipCard(props: Props) {
 
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
+    const [isLocked, setIsLocked] = useState<boolean>(false);
 
     function flipCard(rowIndex: number, columnIndex: number) {
-        if (props.isMatched.isMatched[rowIndex][columnIndex]) {
+        if ((props.isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
             return
         }
 
         const selectedCard = props.cardsGrid.cardsGrid[rowIndex][columnIndex]
+        const newIsMatched = JSON.parse(JSON.stringify(props.isMatched)) as { isMatched: boolean[][] }
+
         if (firstCard) {
+            setIsLocked(true)
+
             if (selectedCard.reading === props.cardsGrid.cardsGrid[firstCard.x][firstCard.y].reading) {
-                props.isMatched.isMatched[rowIndex][columnIndex] = true
-                props.isMatched.isMatched[firstCard.x][firstCard.y] = true
+                newIsMatched.isMatched[rowIndex][columnIndex] = true
+                newIsMatched.isMatched[firstCard.x][firstCard.y] = true
+                props.setIsMatched(newIsMatched)
+                setIsLocked(false)
                 setFirstCard(undefined)
             } else {
-                props.isMatched.isMatched[firstCard.x][firstCard.y] = false;
-                setFirstCard(undefined);
+                newIsMatched.isMatched[rowIndex][columnIndex] = true
+                props.setIsMatched(newIsMatched)
+                setTimeout(() => {
+                    newIsMatched.isMatched[rowIndex][columnIndex] = false
+                    newIsMatched.isMatched[firstCard.x][firstCard.y] = false
+                    props.setIsMatched(newIsMatched)
+                    setIsLocked(false)
+                    setFirstCard(undefined)
+                }, 800)
             }
         } else {
-            props.isMatched.isMatched[rowIndex][columnIndex] = true
+            newIsMatched.isMatched[rowIndex][columnIndex] = true
+            props.setIsMatched(newIsMatched)
             setFirstCard({x: rowIndex, y: columnIndex})
         }
+
     }
 
     return (
