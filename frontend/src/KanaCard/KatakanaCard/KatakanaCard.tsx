@@ -40,6 +40,7 @@ export default function KatakanaCard() {
                 cardsGrid={katakanaCards}
                 isMatched={isMatched}
                 imagePath={"/katakana-images/k-"}
+                setIsMatched={setIsMatched}
                 colorStyle={"#4D6A9A"}/>
             <div>
                 <Stack direction="row" spacing={0.4} justifyContent={"end"}>
