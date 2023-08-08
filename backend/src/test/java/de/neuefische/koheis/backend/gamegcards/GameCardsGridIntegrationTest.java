@@ -1,4 +1,4 @@
-package de.neuefische.koheis.backend.playingcards;
+package de.neuefische.koheis.backend.gamegcards;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PlayingCardsGridIntegrationTest {
+class GameCardsGridIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -36,8 +36,8 @@ class PlayingCardsGridIntegrationTest {
         JSONArray isMatched = json.getJSONArray("isMatched");
 
         //THEN
-        int expectedRows = 4;
-        int expectedCols = 7;
+        int expectedRows = 7;
+        int expectedCols = 4;
         assertEquals(expectedRows, playingCardsGrid.length());
         assertEquals(expectedRows, isMatched.length());
         for (int i = 0; i < playingCardsGrid.length(); i++) {

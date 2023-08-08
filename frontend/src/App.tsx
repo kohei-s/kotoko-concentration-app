@@ -1,7 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import MainPage from "./MainPage/MainPage.tsx";
-import HiraganaCard from "./KanaCard/HiraganaCard/HiraganaCard.tsx";
-import KatakanaCard from "./KanaCard/KatakanaCard/KatakanaCard.tsx";
+import HiraganaCard from "./HiraganaCard/HiraganaCard.tsx";
+import KatakanaCard from "./KatakanaCard/KatakanaCard.tsx";
 import PlayingCard from "./PlayingCard/PlayingCard.tsx";
 
 
