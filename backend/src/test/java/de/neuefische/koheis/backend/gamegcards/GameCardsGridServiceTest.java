@@ -19,12 +19,7 @@ class GameCardsGridServiceTest {
     void generateGameBoard() {
         //Given
         String id = "012";
-        boolean[][] isMatched = new boolean[3][4];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                isMatched[i][j] = false;
-            }
-        }
+
         GameCard gameCard1 = new GameCard("♥1", "playing-cards");
         GameCard gameCard2 = new GameCard("♥2", "playing-cards");
         GameCard gameCard3 = new GameCard("♥3", "playing-cards");
