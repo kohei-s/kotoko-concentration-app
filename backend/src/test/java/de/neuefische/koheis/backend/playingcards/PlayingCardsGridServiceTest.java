@@ -3,10 +3,6 @@ package de.neuefische.koheis.backend.playingcards;
 import de.neuefische.koheis.backend.idservice.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -25,7 +21,7 @@ class PlayingCardsGridServiceTest {
             for (int j = 0; j < 7; j++) {
                 isMatched[i][j] = false;
             }
-        };
+        }
         PlayingCard playingCard1 = new PlayingCard("♥", "1");
         PlayingCard playingCard2 = new PlayingCard("♥", "2");
         PlayingCard playingCard3 = new PlayingCard("♥", "3");

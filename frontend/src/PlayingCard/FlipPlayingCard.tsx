@@ -46,6 +46,7 @@ export default function FlipPlayingCard(props: Props){
         }
 
     }
+
     return(
         <>
             <div className={"playingCard-concentration"}>
@@ -53,7 +54,7 @@ export default function FlipPlayingCard(props: Props){
                     <div className={"playingCard"} key={playingCard} onClick={() => flipPlayingCard(index)}>
                         <div className={"front" + (props.isMatched[index]? "" : " flip")}>
                             <img
-                                src={"/playing-cards-images/c-" + ((playingCard.slice(0, 1) === "♥") ? "h" : "s") + "-" + playingCard.charAt(2) + ".png"}
+                                src={"/playing-cards-images/c-" + ((playingCard.startsWith("♥") ? "h" : "s") + "-" + playingCard.charAt(2) + ".png")}
                                 alt={"cards-" + playingCard}/>
                         </div>
                         <div className={"back" + (props.isMatched[index]? " flip" : "")}>

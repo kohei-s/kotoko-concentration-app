@@ -28,7 +28,7 @@ public class PlayingCardsDeck {
     }
 
     public PlayingCard[][] getPlayingCardsGrid(String gameSize) {
-        int indexOfColumn = 0;
+        int indexOfColumn;
         switch (gameSize) {
             case "large" -> indexOfColumn = 13;
             case "medium" -> indexOfColumn = 7;
