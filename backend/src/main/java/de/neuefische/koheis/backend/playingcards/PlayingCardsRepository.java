@@ -3,14 +3,13 @@ package de.neuefische.koheis.backend.playingcards;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface PlayingCardsRepository extends MongoRepository<PlayingCards, String> {
+public interface PlayingCardsRepository extends MongoRepository<PlayingCardsGrid, String> {
 
-    PlayingCards playingCards = new PlayingCards();
-    default List<String> getPlayingCards(String gameSize){
-        return playingCards.getPlayingCards(gameSize);
+    PlayingCardsDeck playingCardsDeck = new PlayingCardsDeck();
+
+    default PlayingCard[][] getPlayingCardsGrid(String gameSize){
+        return playingCardsDeck.getPlayingCardsGrid(gameSize);
     }
 
 }
