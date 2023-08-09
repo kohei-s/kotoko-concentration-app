@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {GameCard} from "./GameLogic/GameCard.ts";
 
@@ -7,11 +7,11 @@ export default function NewGameCard() {
     const [title, setTitle] = useState<string>("");
     const [cardSetName, setCardSetName] = useState<string>("");
 
-    function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
+    function inputTitle(event: React.ChangeEvent<HTMLInputElement>) {
         setTitle(event.target.value)
     }
 
-    function changeCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
+    function inputCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
         setCardSetName(event.target.value)
     }
 
@@ -30,8 +30,8 @@ export default function NewGameCard() {
     return (
         <>
             <div className="">
-                <input type="text" value={title} onInput={changeTitle}/>
-                <input type="text" value={cardSetName} onInput={changeCardSetName}/>
+                <input type="text" value={title} onInput={inputTitle}/>
+                <input type="text" value={cardSetName} onInput={inputCardSetName}/>
                 <button onClick={saveGameCard}>Save</button>
             </div>
         </>
