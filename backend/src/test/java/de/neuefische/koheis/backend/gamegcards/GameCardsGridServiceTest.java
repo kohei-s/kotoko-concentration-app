@@ -17,8 +17,6 @@ class GameCardsGridServiceTest {
     @Test
     void getAllGameCards_thenReturnListOfAllGameCards() {
         //Given
-        String id = "012";
-
         GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
         GameCard gameCard2 = new GameCard("02","♥2", "playing-cards");
         GameCard gameCard3 = new GameCard("03","♥3", "playing-cards");
