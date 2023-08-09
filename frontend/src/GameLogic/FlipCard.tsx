@@ -81,7 +81,8 @@ export default function FlipCard(props: Props) {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"} alt={props.gameName + "-logo"}/>
+                <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"}
+                     alt={props.gameName + "-logo"}/>
             </div>
             <div className={"concentration"}>
                 {playingCards.cardsGrid.map((row, rowIndex) => {
@@ -92,9 +93,10 @@ export default function FlipCard(props: Props) {
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
 
                                     {(card.title === "empty") ? <img src="/logos/kotoko-logo.png" alt="start"/> :
-                                        <img
-                                            src={props.gameName + "-" + card.title + ".png"}     //name of image data must be changed accordingly
-                                            alt={props.gameName + card.title + card.cardSetName}/>
+                                        ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) ?
+                                            <img
+                                                src={props.gameName + "-" + card.title + ".png"}
+                                                alt={props.gameName + card.title + card.cardSetName}/> : card.title
                                     }
                                 </div>
                                 <div style={{background: props.colorStyle}}

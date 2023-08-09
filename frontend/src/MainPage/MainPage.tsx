@@ -20,6 +20,9 @@ export default function MainPage() {
             <Button  variant="contained" sx={{background:"#73683F", boxShadow:0, borderRadius:'20px'}}>
                 <Link to="/playing-card">♥♠</Link>
             </Button>
+                <Button  variant="contained" sx={{background:"#73683F", boxShadow:0, borderRadius:'20px'}}>
+                    <Link to="/custom">yours</Link>
+                </Button>
             </Stack>
             <Button  variant="contained">
                 <Link to="/card-collection">collection</Link>

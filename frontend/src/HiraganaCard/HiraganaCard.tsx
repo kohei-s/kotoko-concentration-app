@@ -6,7 +6,7 @@ export default function HiraganaCard() {
         <>
             <FlipCard
                       gameSize={"small"}
-                      gameName={"testSet2"}
+                      gameName={"hiragana"}
                       colorStyle={"#D05F5F"}
                       colorStyle2={"#73683F"}
                       colorStyle3={"#4D6A9A"}/>
