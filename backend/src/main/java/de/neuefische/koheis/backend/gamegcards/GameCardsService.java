@@ -17,7 +17,7 @@ public class GameCardsService {
     }
 
     public List<GameCard> getAllGameCards(){
-        
+
         return gameCardsRepository.findAll();
     }
 
