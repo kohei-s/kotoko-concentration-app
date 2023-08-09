@@ -28,7 +28,7 @@ export default function FlipCard(props: Props) {
 
     function loadPlayingCardGame() {
         axios.get<{ boardId: string, cardsGrid: GameCard[][], isMatched: boolean[][] }>(
-            "/api/playing_cards?" + "size=" + props.gameSize + "&name=" + props.gameName)
+            "/api/game_cards?" + "size=" + props.gameSize + "&name=" + props.gameName)
             .then(response => response.data)
             .then(data => {
                     const responseDataBoardId = data.boardId

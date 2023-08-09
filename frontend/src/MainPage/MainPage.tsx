@@ -21,6 +21,9 @@ export default function MainPage() {
                 <Link to="/playing-card">♥♠</Link>
             </Button>
             </Stack>
+            <Button  variant="contained">
+                <Link to="/card-collection">collection</Link>
+            </Button>
         </>
     )
 

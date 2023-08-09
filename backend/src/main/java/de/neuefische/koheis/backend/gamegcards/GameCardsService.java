@@ -16,14 +16,19 @@ public class GameCardsService {
         this.idService = idService;
     }
 
-    List<GameCard> findByCardSetName(String cardSetName){
+    public List<GameCard> getAllGameCards(){
+
+        return gameCardsRepository.findAll();
+    }
+
+    public List<GameCard> findByCardSetName(String cardSetName){
         List<GameCard> gameCardList = gameCardsRepository.findAll();
 
         return gameCardList.stream().filter(card -> cardSetName.equals(card.getCardSetName())).toList();
     }
 
     // "small": 2 names & 6 numbers / "medium": 2 names & 13 numbers / "large": 4 names & 13 numbers
-    public GameCardsGrid getPlayingCardsGrid(String gameSize, String cardSetName) {
+    public GameCardsGrid getGameCardsGrid(String gameSize, String cardSetName) {
 
         List<GameCard> gameCardList = findByCardSetName(cardSetName);
         GameCard[][] gameCardBoard = generateGameBoard(gameSize, gameCardList);
@@ -54,7 +59,7 @@ public class GameCardsService {
         GameCard[][] gameCardGrid = new GameCard[indexOfRow][4];
         List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, indexOfRow * 2));
         gameCards.addAll(List.copyOf(gameCards));
-        GameCard emptyCard = new GameCard("empty", "empty");
+        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty");
         if (gameSize.equals("medium")) {
             gameCards.add(emptyCard);
             gameCards.add(emptyCard);
@@ -69,6 +74,10 @@ public class GameCardsService {
         }
 
         return gameCardGrid;
+    }
+
+    public GameCard addGameCard (GameCardWithoutId gameCardWithoutId) {
+        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
     }
 
 }
