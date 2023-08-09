@@ -16,14 +16,19 @@ public class GameCardsService {
         this.idService = idService;
     }
 
-    List<GameCard> findByCardSetName(String cardSetName){
+    public List<GameCard> getAllGameCards(){
+        
+        return gameCardsRepository.findAll();
+    }
+
+    public List<GameCard> findByCardSetName(String cardSetName){
         List<GameCard> gameCardList = gameCardsRepository.findAll();
 
         return gameCardList.stream().filter(card -> cardSetName.equals(card.getCardSetName())).toList();
     }
 
     // "small": 2 names & 6 numbers / "medium": 2 names & 13 numbers / "large": 4 names & 13 numbers
-    public GameCardsGrid getPlayingCardsGrid(String gameSize, String cardSetName) {
+    public GameCardsGrid getGameCardsGrid(String gameSize, String cardSetName) {
 
         List<GameCard> gameCardList = findByCardSetName(cardSetName);
         GameCard[][] gameCardBoard = generateGameBoard(gameSize, gameCardList);
