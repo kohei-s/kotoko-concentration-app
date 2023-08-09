@@ -17,12 +17,12 @@ public class CharacterCardController {
         this.characterCardService = characterCardService;
     }
 
-    @GetMapping
+//    @GetMapping
     public List<CharacterCard> getAllCharacterCards() {
         return this.characterCardService.getAllCharacterCards();
     }
 
-    @GetMapping("/{id}")
+//    @GetMapping("/{id}")
     public ResponseEntity<CharacterCard> getOneCharacterCardById(@PathVariable("id") String id) {
         try {
             CharacterCard getedCharacterCard = characterCardService.getOneCharacterCardById(id);
@@ -32,13 +32,13 @@ public class CharacterCardController {
         }
     }
 
-    @PostMapping
+//    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CharacterCard addCharacterCard(@RequestBody CharacterCardWithoutId characterCardWithoutId) {
         return characterCardService.addCharacterCard(characterCardWithoutId);
     }
 
-    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
     public ResponseEntity<CharacterCard> updateCharacterCard(@PathVariable("id") String id, @RequestBody CharacterCardWithoutId characterCardWithoutId) {
         try {
             CharacterCard updatedCharacterCard = characterCardService.updateCharacterCard(characterCardWithoutId, id);
@@ -48,7 +48,7 @@ public class CharacterCardController {
         }
     }
 
-    @DeleteMapping("/{id}")
+//    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCharacterCard(@PathVariable("id") String id) {
         try {
             characterCardService.deleteCharacterCard(id);

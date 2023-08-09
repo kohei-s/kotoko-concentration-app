@@ -3,9 +3,7 @@ package de.neuefische.koheis.backend.gamegcards;
 import de.neuefische.koheis.backend.idservice.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -16,7 +14,7 @@ class GameCardsGridServiceTest {
     GameCardsService gameCardsService = new GameCardsService(gameCardsRepository, idService);
 
     @Test
-    void generateGameBoard() {
+    void generateGameBoardSmallSize_thenReturnTwoDimensionalArrayOfTwelveGameCards() {
         //Given
         String id = "012";
 
@@ -39,19 +37,17 @@ class GameCardsGridServiceTest {
                 gameCard10, gameCard11, gameCard12);
 
         //WHEN
-        Mockito.when(gameCardsRepository.findByCardSetName("playing-cards"))
+        Mockito.when(gameCardsRepository.findAll())
                 .thenReturn(allGameCards);
         Mockito.when(idService.createRandomId())
                 .thenReturn(id);
-        GameCard[][] expected = new GameCard[][]{
-                {gameCard1, gameCard2, gameCard3},
-                {gameCard4, gameCard5, gameCard6},
-                {gameCard10, gameCard11, gameCard12}
-        };
+        int expectedRow = 3;
+        int expectedColumn = 4;
         GameCard[][] actual = gameCardsService.generateGameBoard("small", allGameCards);
 
         //THEN
-        assertEquals(expected.length, actual.length);
+        assertEquals(expectedRow, actual.length);
+        assertEquals(expectedColumn, actual[0].length);
     }
 
 }
