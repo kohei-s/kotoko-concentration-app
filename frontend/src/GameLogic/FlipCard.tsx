@@ -16,7 +16,7 @@ type Props = {
 }
 export default function FlipCard(props: Props) {
 
-    const [boardId, setBoardId] = useState<string>("")
+    const [, setBoardId] = useState<string>("")
     const [playingCards, setPlayingCards] = useState<{ cardsGrid: GameCard[][] }>({cardsGrid: [[]]});
     const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
@@ -24,7 +24,7 @@ export default function FlipCard(props: Props) {
 
     useEffect(() => {
         loadPlayingCardGame()
-    }, [])
+    },)
 
     function loadPlayingCardGame() {
         axios.get<{ boardId: string, cardsGrid: GameCard[][], isMatched: boolean[][] }>(
