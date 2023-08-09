@@ -1,13 +1,15 @@
-import './PlayingCard.css';
-import {Link} from "react-router-dom";
-import {Button} from "@mui/material";
-export default function PlayingCard(){
-    return(
+import FlipCard from "../GameLogic/FlipCard.tsx";
+
+export default function PlayingCard() {
+
+    return (
         <>
-            <h2>coming soon...</h2>
-            <Button color="inherit">
-                <Link to="/">back</Link>
-            </Button>
+            <FlipCard
+                gameSize={"small"}
+                gameName={"playing-cards"}
+                colorStyle={"#73683F"}
+                colorStyle2={"#4D6A9A"}
+                colorStyle3={"#D05F5F"}/>
         </>
     )
 

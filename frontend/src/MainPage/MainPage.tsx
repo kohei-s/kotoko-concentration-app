@@ -1,23 +1,26 @@
 import {Link} from "react-router-dom";
 import "./MainPage.css"
-import {Button} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 
 export default function MainPage() {
+
 
     return (
         <>
             <div className={"start"}>
-                <img height={"280vm"} src="/logos/kotoko-logo.png" alt="start"/>
+                <img height={"290vm"} src="/logos/kotoko-logo.png" alt="start"/>
             </div>
-            <Button color="inherit">
-                <Link to="/hiragana">hiragana</Link>
+            <Stack direction="row" spacing={0.5} justifyContent="center">
+            <Button variant="contained" sx={{background:"#D05F5F", boxShadow:0, borderRadius:'20px'}}>
+                <Link to="/hiragana">あ</Link>
             </Button>
-            <Button color="inherit">
-                <Link to="/katakana">katakana</Link>
+            <Button variant="contained" sx={{background:"#4D6A9A", boxShadow:0, borderRadius:'20px'}}>
+                <Link to="/katakana">ア</Link>
             </Button>
-            <Button color="inherit">
-                <Link to="/playing-card">card</Link>
+            <Button  variant="contained" sx={{background:"#73683F", boxShadow:0, borderRadius:'20px'}}>
+                <Link to="/playing-card">♥♠</Link>
             </Button>
+            </Stack>
         </>
     )
 

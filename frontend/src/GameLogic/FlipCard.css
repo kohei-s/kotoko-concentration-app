@@ -1,0 +1,49 @@
+.concentration {
+    display: grid;
+    width: 300px;
+    height: 300px;
+    grid-gap: 7px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding-block-end: 25px;
+}
+
+body {
+    background-color: #FDEEBE;
+}
+
+h2 {
+    color:#D05F5F;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.card .back,
+.card .front {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 12px;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: all 0.5s;
+}
+
+.card .front img {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: 2px solid #88A5D4;
+    object-fit: cover;
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
