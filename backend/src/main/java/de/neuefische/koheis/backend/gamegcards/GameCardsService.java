@@ -54,7 +54,7 @@ public class GameCardsService {
         GameCard[][] gameCardGrid = new GameCard[indexOfRow][4];
         List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, indexOfRow * 2));
         gameCards.addAll(List.copyOf(gameCards));
-        GameCard emptyCard = new GameCard("empty", "empty");
+        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty");
         if (gameSize.equals("medium")) {
             gameCards.add(emptyCard);
             gameCards.add(emptyCard);
@@ -69,6 +69,10 @@ public class GameCardsService {
         }
 
         return gameCardGrid;
+    }
+
+    public GameCard addGameCard (GameCardWithoutId gameCardWithoutId) {
+        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
     }
 
 }
