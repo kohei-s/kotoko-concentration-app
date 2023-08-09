@@ -1,5 +1,6 @@
 package de.neuefische.koheis.backend.gamegcards;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,9 @@ class GameCardsGridIntegrationTest {
     MockMvc mockMvc;
 
     @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
     GameCardsRepository gameCardsRepository;
 
     @Test
@@ -40,35 +44,80 @@ class GameCardsGridIntegrationTest {
     }
 
 
+    @DirtiesContext
+    @Test
+    void whenGetExistingGameCardById_thenReturnGameCardWithId() throws Exception {
+        //GIVEN
+        String actual = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/game_cards")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "title": "test",
+                                        "cardSetName": "testSet"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json("""
+                        {
+                        "title": "test",
+                        "cardSetName": "testSet"
+                        }
+                        """))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        GameCard actualGameCard = objectMapper.readValue(actual, GameCard.class);
+        String id = actualGameCard.getId();
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/game_cards/" + id))
+                .andExpect(status().isOk())
+
+                //THEN
+                .andExpect(content().json("""
+                        {
+                        "id": "<ID>",
+                        "title": "test",
+                        "cardSetName": "testSet"
+                        }
+                        """.replaceFirst("<ID>", id)));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenGetNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingGameCard = "012";
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/game_cards/" + idOfNotExistingGameCard)
+                )
+
+                //THEN
+                .andExpect(status().isNotFound());
+    }
+
     @Test
     void expectTwoDimensionalArrayOfTwentyEightPlayingCards() throws Exception {
         //GIVEN
         String size = "small";
-        GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
-        GameCard gameCard2 = new GameCard("012", "♥2", "playing-cards");
-        GameCard gameCard3 = new GameCard("03", "♥3", "playing-cards");
-        GameCard gameCard4 = new GameCard("04", "♥4", "playing-cards");
-        GameCard gameCard5 = new GameCard("05", "♥5", "playing-cards");
-        GameCard gameCard6 = new GameCard("06", "♥6", "playing-cards");
-        GameCard gameCard7 = new GameCard("07", "♥7", "playing-cards");
-        GameCard gameCard8 = new GameCard("08", "♥8", "playing-cards");
-        GameCard gameCard9 = new GameCard("09", "♥9", "playing-cards");
-        GameCard gameCard10 = new GameCard("10", "♥10", "playing-cards");
-        GameCard gameCard11 = new GameCard("11", "♥11", "playing-cards");
-        GameCard gameCard12 = new GameCard("12", "♥12", "playing-cards");
-
-        gameCardsRepository.save(gameCard1);
-        gameCardsRepository.save(gameCard2);
-        gameCardsRepository.save(gameCard3);
-        gameCardsRepository.save(gameCard4);
-        gameCardsRepository.save(gameCard5);
-        gameCardsRepository.save(gameCard6);
-        gameCardsRepository.save(gameCard7);
-        gameCardsRepository.save(gameCard8);
-        gameCardsRepository.save(gameCard9);
-        gameCardsRepository.save(gameCard10);
-        gameCardsRepository.save(gameCard11);
-        gameCardsRepository.save(gameCard12);
+        gameCardsRepository.save(new GameCard("01", "♥1", "playing-cards"));
+        gameCardsRepository.save(new GameCard("012", "♥2", "playing-cards"));
+        gameCardsRepository.save(new GameCard("03", "♥3", "playing-cards"));
+        gameCardsRepository.save(new GameCard("04", "♥4", "playing-cards"));
+        gameCardsRepository.save(new GameCard("05", "♥5", "playing-cards"));
+        gameCardsRepository.save(new GameCard("06", "♥6", "playing-cards"));
+        gameCardsRepository.save(new GameCard("07", "♥7", "playing-cards"));
+        gameCardsRepository.save(new GameCard("08", "♥8", "playing-cards"));
+        gameCardsRepository.save(new GameCard("09", "♥9", "playing-cards"));
+        gameCardsRepository.save(new GameCard("10", "♥10", "playing-cards"));
+        gameCardsRepository.save(new GameCard("11", "♥11", "playing-cards"));
+        gameCardsRepository.save(new GameCard("12", "♥12", "playing-cards"));
 
         //WHEN
         String result = mockMvc.perform(
@@ -109,6 +158,128 @@ class GameCardsGridIntegrationTest {
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("title").value("testTitle"))
                 .andExpect(jsonPath("cardSetName").value("testSet3"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenUpdateExistingGameCard_thenReturnUpdatedGameCard() throws Exception {
+        //GIVEN
+        String existingGameCardWithoutId = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/game_cards")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "title": "test",
+                                        "cardSetName": "testSet"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json("""
+                        {
+                        "title": "test",
+                        "cardSetName": "testSet"
+                        }
+                        """))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        GameCard existingGameCard = objectMapper.readValue(existingGameCardWithoutId, GameCard.class);
+        String id = existingGameCard.getId();
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/game_cards/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "title": "test_updated",
+                                        "cardSetName": "testSet"
+                                        }
+                                        """)
+                )
+
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("title").value("test_updated"))
+                .andExpect(jsonPath("cardSetName").value("testSet"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenUpdateNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingGameCard = "012";
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+        String gameCardJson = objectMapper.writeValueAsString(gameCardWithoutId);
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/game_cards/" + idOfNotExistingGameCard)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(gameCardJson)
+                )
+
+                //THEN
+                .andExpect(status().isNotFound());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenDeleteExistingGameCard_thenReturnEmptyList() throws Exception {
+        //GIVEN
+        String existingGameCardWithoutId = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/game_cards")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "title": "test",
+                                        "cardSetName": "setTest"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isCreated())
+                .andExpect(content().json("""
+                        {
+                        "title": "test",
+                        "cardSetName": "setTest"
+                        }
+                        """))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        GameCard existingGameCard = objectMapper.readValue(existingGameCardWithoutId, GameCard.class);
+        String id = existingGameCard.getId();
+
+        //WHEN
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/game_cards/" + id)
+        ).andExpect(status().isOk());
+
+        //THEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/game_cards/all")
+                ).andExpect(status().isOk())
+                .andExpect(content().json("[]"));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenDeleteNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
+        //GIVEN
+        String idOfNotExistingGameCard = "012";
+
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/api/game_cards/" + idOfNotExistingGameCard)
+                )
+
+                //THEN
+                .andExpect(status().isNotFound());
     }
 
 }
