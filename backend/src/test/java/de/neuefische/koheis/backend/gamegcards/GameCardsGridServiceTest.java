@@ -112,7 +112,7 @@ class GameCardsGridServiceTest {
         Mockito.when(idService.createRandomId())
                 .thenReturn(id);
         int expectedRow = 3;
-        int expectedColumn = 4;
+        int expectedColumn = 3;
         GameCard[][] actual = gameCardsService.generateGameBoard("small", allGameCards);
 
         //THEN
