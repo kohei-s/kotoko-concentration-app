@@ -75,7 +75,7 @@ public class GameCardsService {
         }
         int[] rowAndColumn = setIndexOfRowAndColumn(gameSize);
         GameCard[][] gameCardGrid = new GameCard[rowAndColumn[0]][rowAndColumn[1]];
-        List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, pairing * 2));
+        List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, pairing));
         gameCards.addAll(List.copyOf(gameCards));
         GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty");
         if (gameSize.equals("small")) {

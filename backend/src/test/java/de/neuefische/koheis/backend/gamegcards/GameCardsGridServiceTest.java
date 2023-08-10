@@ -209,4 +209,45 @@ class GameCardsGridServiceTest {
         verify(gameCardsRepository, never()).deleteById(id);
     }
 
+    @Test
+    void whenLargeGamSize_thenReturnIntegerArrayWithFourAndFour(){
+        //WHEN
+        int[] expected = {4, 4};
+        int[] actual = gameCardsService.setIndexOfRowAndColumn("large");
+
+        //THEN
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    void whenGenerateGameBoardWithMediumGameSize_thenReturnPairValueOfSix() {
+        //WHEN
+        int expected = 6 * 2;
+        GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
+        GameCard gameCard2 = new GameCard("02","♥2", "playing-cards");
+        GameCard gameCard3 = new GameCard("03","♥3", "playing-cards");
+        GameCard gameCard4 = new GameCard("04","♥4", "playing-cards");
+        GameCard gameCard5 = new GameCard("05","♥5", "playing-cards");
+        GameCard gameCard6 = new GameCard("06","♥6", "playing-cards");
+        GameCard gameCard7 = new GameCard("07","♥7", "playing-cards");
+        GameCard gameCard8 = new GameCard("08","♥8", "playing-cards");
+        GameCard gameCard9 = new GameCard("09","♥9", "playing-cards");
+        GameCard gameCard10 = new GameCard("10","♥10", "1playing-cards");
+        GameCard gameCard11 = new GameCard("11","♥11", "1playing-cards");
+        GameCard gameCard12 = new GameCard("12","♥12", "playing-cards");
+        List<GameCard> cards = List.of(
+                gameCard1, gameCard2, gameCard3,
+                gameCard4, gameCard5, gameCard6,
+                gameCard7, gameCard8, gameCard9,
+                gameCard10, gameCard11, gameCard12);
+        GameCard[][] gameGrid = gameCardsService.generateGameBoard("medium", cards);
+        int actual = (gameGrid[0].length) * (gameGrid.length);
+
+        //THEN
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
+
+    }
+
 }
