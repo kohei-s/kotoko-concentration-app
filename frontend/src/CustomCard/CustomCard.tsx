@@ -6,7 +6,7 @@ export default function CustomCard(){
         <>
             <FlipCard
                 gameSize={"small"}
-                gameName={"testSet"}
+                gameName={"custom"}
                 colorStyle={"#73683F"}
                 colorStyle2={"#4D6A9A"}
                 colorStyle3={"#D05F5F"}/>

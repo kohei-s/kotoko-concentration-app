@@ -17,16 +17,16 @@ type Props = {
 export default function FlipCard(props: Props) {
 
     const [, setBoardId] = useState<string>("")
-    const [playingCards, setPlayingCards] = useState<{ cardsGrid: GameCard[][] }>({cardsGrid: [[]]});
+    const [gameCards, setGameCards] = useState<{ cardsGrid: GameCard[][] }>({cardsGrid: [[]]});
     const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
     const [isLocked, setIsLocked] = useState<boolean>(false);
 
     useEffect(() => {
-        loadPlayingCardGame()
+        loadGameCards()
     },)
 
-    function loadPlayingCardGame() {
+    function loadGameCards() {
         axios.get<{ boardId: string, cardsGrid: GameCard[][], isMatched: boolean[][] }>(
             "/api/game_cards?" + "size=" + props.gameSize + "&name=" + props.gameName)
             .then(response => response.data)
@@ -35,7 +35,7 @@ export default function FlipCard(props: Props) {
                     const responseDataCardsGrid = {cardsGrid: data.cardsGrid}
                     const responseDataBooleanArray = {isMatched: data.isMatched}
                     setBoardId(responseDataBoardId)
-                    setPlayingCards(responseDataCardsGrid)
+                    setGameCards(responseDataCardsGrid)
                     setIsMatched(responseDataBooleanArray)
                 }
             )
@@ -47,13 +47,13 @@ export default function FlipCard(props: Props) {
             return
         }
 
-        const selectedCard = playingCards.cardsGrid[rowIndex][columnIndex]
+        const selectedCard = gameCards.cardsGrid[rowIndex][columnIndex]
         const newIsMatched = JSON.parse(JSON.stringify(isMatched)) as { isMatched: boolean[][] }
 
         if (firstCard) {
             setIsLocked(true)
 
-            if (selectedCard.title === playingCards.cardsGrid[firstCard.x][firstCard.y].title) {
+            if (selectedCard.title === gameCards.cardsGrid[firstCard.x][firstCard.y].title) {
                 newIsMatched.isMatched[rowIndex][columnIndex] = true
                 newIsMatched.isMatched[firstCard.x][firstCard.y] = true
                 setIsMatched(newIsMatched)
@@ -85,7 +85,7 @@ export default function FlipCard(props: Props) {
                      alt={props.gameName + "-logo"}/>
             </div>
             <div className={"concentration"}>
-                {playingCards.cardsGrid.map((row, rowIndex) => {
+                {gameCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
                             return <div className={"card"}
                                         key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>

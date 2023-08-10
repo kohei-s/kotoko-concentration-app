@@ -6,7 +6,6 @@ import PlayingCard from "./PlayingCard/PlayingCard.tsx";
 import GameCardCollection from "./GameCollection/GameCardCollection.tsx";
 import CustomCard from "./CustomCard/CustomCard.tsx";
 import GameRecord from "./GameRecord/GameRecord.tsx";
-import GameMenu from "./GameMenu/GameMenu.tsx";
 
 
 export default function App() {
@@ -17,7 +16,6 @@ export default function App() {
             <main>
                 <Routes>
                     <Route path={"/"} element={<MainPage/>}></Route>
-                    <Route path={"game-menu"} element={<GameMenu/>}></Route>
                     <Route path={"/hiragana"} element={<HiraganaCard/>}></Route>
                     <Route path={"/katakana"} element={<KatakanaCard/>}></Route>
                     <Route path={"/playing-card"} element={<PlayingCard/>}></Route>
