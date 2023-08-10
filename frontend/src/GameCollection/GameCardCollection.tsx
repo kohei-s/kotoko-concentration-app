@@ -1,5 +1,5 @@
 import NewGameCard from "./NewGameCard.tsx";
-import {GameCard} from "./GameLogic/GameCard.ts";
+import {GameCard} from "../GameLogic/GameCard.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import GameCardFrame from "./GameCardFrame.tsx";
