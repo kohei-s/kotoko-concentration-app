@@ -18,4 +18,4 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
   🔎 Search Japanese character in your strongest language e.g. English or German \
   🗻 Show game records you achieved \
   ❤️ Praise your kids for thier achivements and keep cheering them (feature for parents) \
-  🛝 Child friendly design
+  🛝 Child friendly design +
