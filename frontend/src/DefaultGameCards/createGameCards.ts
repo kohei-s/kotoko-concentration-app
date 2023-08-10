@@ -65,7 +65,7 @@ export function createGameCards(setName: string, gameSize: string) {
         rowAndColumn[1] = 3;
     }
 
-    let pairing = 0;
+    let pairing;
     switch (gameSize) {
         case "small":
             pairing = 4;
@@ -108,8 +108,7 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const id = String(1 + Math.floor(Math.random() * 100000));
-    const gameCards = {id, cardGrid, isMatched}
 
-    return gameCards;
+    return {id, cardGrid, isMatched}
 
 }
