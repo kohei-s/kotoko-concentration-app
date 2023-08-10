@@ -4,6 +4,8 @@ import de.neuefische.koheis.backend.idservice.IdService;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static java.util.Collections.shuffle;
 
 @Service
@@ -19,6 +21,12 @@ public class GameCardsService {
     public List<GameCard> getAllGameCards(){
 
         return gameCardsRepository.findAll();
+    }
+
+    public GameCard getGameCardById(String id){
+
+        return gameCardsRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("CharacterCard with id:" + id + " is not found!"));
     }
 
     public List<GameCard> findByCardSetName(String cardSetName){
@@ -78,6 +86,16 @@ public class GameCardsService {
 
     public GameCard addGameCard (GameCardWithoutId gameCardWithoutId) {
         return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
+    }
+
+    public GameCard updateGameCard(GameCardWithoutId gameCardWithoutId, String id){
+        if (!gameCardsRepository.existsById(id)) throw new NoSuchElementException();
+        return gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
+    }
+
+    public void deleteGameCard(String id){
+        if (!gameCardsRepository.existsById(id)) throw new NoSuchElementException();
+        gameCardsRepository.deleteById(id);
     }
 
 }

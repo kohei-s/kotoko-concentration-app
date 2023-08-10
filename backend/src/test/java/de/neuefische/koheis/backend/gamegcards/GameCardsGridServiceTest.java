@@ -5,8 +5,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class GameCardsGridServiceTest {
 
@@ -48,6 +52,36 @@ class GameCardsGridServiceTest {
         //THEN
         assertEquals(expected, actual);
     }
+
+    @Test
+    void getExistingGameCardWithId_thenReturnGameCardWithId() {
+        //GIVEN
+        GameCard expected = new GameCard("012", "test", "testSet");
+        Mockito.when(gameCardsRepository.findById("012"))
+                .thenReturn(Optional.of(expected));
+
+        //WHEN
+        GameCard actual = gameCardsService.getGameCardById("012");
+
+        //THEN
+        verify(gameCardsRepository).findById("012");
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    void getNotExistingGameCardWithId_thenThrowException() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        Mockito.when(gameCardsRepository.existsById(id))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> gameCardsService.getGameCardById(id));
+    }
+
 
     @Test
     void generateGameBoardSmallSize_thenReturnTwoDimensionalArrayOfTwelveGameCards() {
@@ -101,11 +135,78 @@ class GameCardsGridServiceTest {
         GameCard actual = gameCardsService.addGameCard(gameCard);
 
         //THEN
-        Mockito.verify(gameCardsRepository).insert(gameCardAdded);
-        Mockito.verify(idService).createRandomId();
+        verify(gameCardsRepository).insert(gameCardAdded);
+        verify(idService).createRandomId();
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
 
+    }
+
+    @Test
+    void whenUpdateExistingGameCard_thenReturnGameCard() {
+        //GIVEN
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+        String id = "012";
+
+        //WHEN
+        when(gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName())))
+                .thenReturn(new GameCard("012", "test", "testSet"));
+        when(gameCardsRepository.existsById(id))
+                .thenReturn(true);
+        GameCard actual = gameCardsService.updateGameCard(gameCardWithoutId, "012");
+
+        //THEN
+        GameCard expected = new GameCard("012", "test", "testSet");
+        verify(gameCardsRepository).save(expected);
+        Assertions.assertThat(actual)
+                .isEqualTo(expected);
+    }
+
+    @Test
+    void whenUpdateWithNotExistingId_thenThrowException() {
+        //GIVEN
+        String notExistingId = "012";
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+
+        //WHEN
+        Mockito.when(gameCardsRepository.existsById("012"))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> gameCardsService.updateGameCard(gameCardWithoutId, "012"));
+        verify(gameCardsRepository).existsById(notExistingId);
+        verify(gameCardsRepository, never()).save(any());
+    }
+
+    @Test
+    void whenDeleteExistingGameCard_thenDeleteGameCard() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        Mockito.when(gameCardsRepository.existsById(id))
+                .thenReturn(true);
+        doNothing().when(gameCardsRepository).deleteById(id);
+        gameCardsService.deleteGameCard(id);
+
+        //THEN
+        verify(gameCardsRepository).existsById(id);
+        verify(gameCardsRepository).deleteById(id);
+    }
+
+    @Test
+    void whenDeleteNotExistingGameCard_thenThrowException() {
+        //GIVEN
+        String id = "012";
+
+        //WHEN
+        when(gameCardsRepository.existsById(id))
+                .thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> gameCardsService.deleteGameCard(id));
+        verify(gameCardsRepository).existsById(id);
+        verify(gameCardsRepository, never()).deleteById(id);
     }
 
 }
