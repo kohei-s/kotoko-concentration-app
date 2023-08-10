@@ -6,6 +6,7 @@ import {IconButton, Stack} from "@mui/material";
 import {Link} from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
+import {createGameCards} from "../DefaultGameCards/createGameCards.ts";
 
 type Props = {
     gameSize: "small" | "medium" | "large"
@@ -16,7 +17,7 @@ type Props = {
 }
 export default function FlipCard(props: Props) {
 
-    const [, setBoardId] = useState<string>("")
+    const [boardId, setBoardId] = useState<string>("")
     const [gameCards, setGameCards] = useState<{ cardsGrid: GameCard[][] }>({cardsGrid: [[]]});
     const [isMatched, setIsMatched] = useState<{ isMatched: boolean[][] }>({isMatched: [[]]});
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
@@ -27,19 +28,30 @@ export default function FlipCard(props: Props) {
     },)
 
     function loadGameCards() {
-        axios.get<{ boardId: string, cardsGrid: GameCard[][], isMatched: boolean[][] }>(
-            "/api/game_cards?" + "size=" + props.gameSize + "&name=" + props.gameName)
-            .then(response => response.data)
-            .then(data => {
-                    const responseDataBoardId = data.boardId
-                    const responseDataCardsGrid = {cardsGrid: data.cardsGrid}
-                    const responseDataBooleanArray = {isMatched: data.isMatched}
-                    setBoardId(responseDataBoardId)
-                    setGameCards(responseDataCardsGrid)
-                    setIsMatched(responseDataBooleanArray)
-                }
-            )
-            .catch(console.error)
+        if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
+            const cardsData = createGameCards(props.gameName, props.gameSize);
+            const setId = cardsData.id
+            const cardGridData = {cardsGrid: cardsData.cardGrid}
+            const isMatchedData = {isMatched: cardsData.isMatched}
+            setBoardId(setId);
+            setGameCards(cardGridData);
+            setIsMatched(isMatchedData);
+            console.log(cardsData)
+        } else {
+            axios.get<{ boardId: string, cardsGrid: GameCard[][], isMatched: boolean[][] }>(
+                "/api/game_cards?" + "size=" + props.gameSize + "&name=" + props.gameName)
+                .then(response => response.data)
+                .then(data => {
+                        const responseDataBoardId = data.boardId
+                        const responseDataCardsGrid = {cardsGrid: data.cardsGrid}
+                        const responseDataBooleanArray = {isMatched: data.isMatched}
+                        setBoardId(responseDataBoardId)
+                        setGameCards(responseDataCardsGrid)
+                        setIsMatched(responseDataBooleanArray)
+                    }
+                )
+                .catch(console.error)
+        }
     }
 
     function flipCard(rowIndex: number, columnIndex: number) {
@@ -88,7 +100,7 @@ export default function FlipCard(props: Props) {
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return (row).map((card, columnIndex) => {
                             return <div className={"card"}
-                                        key={`${rowIndex}-${columnIndex}`} onClick={() => flipCard(rowIndex, columnIndex)}>
+                                        key={`${rowIndex}-${columnIndex}` + boardId} onClick={() => flipCard(rowIndex, columnIndex)}>
 
                                 <div className={"front" + (isMatched.isMatched[rowIndex][columnIndex] ? "" : " flip")}>
 
