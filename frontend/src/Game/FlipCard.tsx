@@ -6,11 +6,11 @@ import {IconButton, Stack} from "@mui/material";
 import {Link} from "react-router-dom";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
-import {createGameCards} from "../DefaultGameCards/createGameCards.ts";
+import {createGameCards} from "./createGameCards.ts";
 import Confetti from 'react-confetti'
 
 type Props = {
-    gameSize: "small" | "medium" | "large"
+    gameSize: string
     gameName: string
     colorStyle: string
     colorStyle2: string
@@ -105,8 +105,8 @@ export default function FlipCard(props: Props) {
     }
 
     function confetti(){
-        if (matchCount===4) {
-            return <Confetti width={300} height={200}></Confetti>
+        if (((props.gameSize==="small") && (matchCount===4))||((props.gameSize==="medium") && (matchCount===6))||((props.gameSize==="large") && (matchCount===8))) {
+            return <Confetti width={390} height={300}></Confetti>
         }
         return
     }
@@ -144,7 +144,7 @@ export default function FlipCard(props: Props) {
                         <Link to="/"><HomeRoundedIcon/></Link>
                     </IconButton>
                     <IconButton size={"small"}
-                                sx={{background: props.colorStyle3, color: "#FDF6E1", boxShadow: 0}}>
+                                sx={{background: props.colorStyle3, color: "#FDF6E1", boxShadow: 0}} onClick={loadGameCards}>
                         <ReplayRoundedIcon/>
                     </IconButton>
                 </Stack>

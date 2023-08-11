@@ -1,4 +1,4 @@
-import {GameCard} from "../GameLogic/GameCard.ts";
+import {GameCard} from "./GameCard.ts";
 
 export function createGameCards(setName: string, gameSize: string) {
 
@@ -78,8 +78,6 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const cardPairs: GameCard [] = cardList.splice(0, pairing);
-    // const copyOfCardPairs = Array.from(cardPairs);
-    // const resultCardPairs = cardPairs.concat(copyOfCardPairs);
     cardPairs.push(...cardPairs);
 
     const emptyCard: GameCard = {id: "0", title: "empty", cardSetName: setName}

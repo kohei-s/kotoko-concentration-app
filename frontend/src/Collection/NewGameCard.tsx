@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {GameCard} from "../GameLogic/GameCard.ts";
+import {GameCard} from "../Game/GameCard.ts";
 
 export default function NewGameCard() {
 
