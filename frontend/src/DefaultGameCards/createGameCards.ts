@@ -1,7 +1,6 @@
 import {GameCard} from "../GameLogic/GameCard.ts";
 
 export function createGameCards(setName: string, gameSize: string) {
-    let index = 1;
 
     const alphabetReading = [
         "a", "i", "u", "e", "o",
@@ -35,6 +34,7 @@ export function createGameCards(setName: string, gameSize: string) {
         listData = playingCards;
     }
 
+    let index = 1;
     listData.forEach((data: string) => {
         const gameCard: GameCard = {
             id: String(index),
@@ -78,20 +78,21 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const cardPairs: GameCard [] = cardList.splice(0, pairing);
-    const copyOfCardPairs = Array.from(cardPairs);
-    const resultCardPairs = cardPairs.concat(copyOfCardPairs);
+    // const copyOfCardPairs = Array.from(cardPairs);
+    // const resultCardPairs = cardPairs.concat(copyOfCardPairs);
+    cardPairs.push(...cardPairs);
 
     const emptyCard: GameCard = {id: "0", title: "empty", cardSetName: setName}
     if (gameSize === "small") {
-        resultCardPairs.push(emptyCard);
+        cardPairs.push(emptyCard);
     }
 
     const shuffledPairs: GameCard[] = [];
-    while (resultCardPairs.length > 0) {
+    while (cardPairs.length > 0) {
         const n = cardPairs.length;
         const k = Math.floor(Math.random() * n);
-        shuffledPairs.push(resultCardPairs[k]);
-        resultCardPairs.splice(k, 1);
+        shuffledPairs.push(cardPairs[k]);
+        cardPairs.splice(k, 1);
     }
 
     const cardGrid: GameCard[][] = [];
