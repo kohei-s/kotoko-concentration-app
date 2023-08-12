@@ -28,9 +28,9 @@ export default function createGameBoard(gameSize: string, gameName: string) {
             return <FlipCard
                 gameSize={gameSize}
                 gameName={gameName}
-                colorStyle={"#73683F"}
-                colorStyle2={"#4D6A9A"}
-                colorStyle3={"#D05F5F"}/>;
+                colorStyle={"#587c18"}
+                colorStyle2={"#233d67"}
+                colorStyle3={"#834242"}/>;
     }
 
 }

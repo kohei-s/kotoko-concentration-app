@@ -34,10 +34,22 @@ export function createGameCards(setName: string, gameSize: string) {
         listData = playingCards;
     }
 
+    let prefix: string;
+    switch (setName) {
+        case "hiragana":
+            prefix = "h";
+            break;
+        case "katakana":
+            prefix = "k";
+            break;
+        default:
+            prefix = "c";
+    }
+
     let index = 1;
     listData.forEach((data: string) => {
         const gameCard: GameCard = {
-            id: String(index),
+            id: prefix + String(index),
             title: data,
             cardSetName: setName
         };
@@ -106,7 +118,7 @@ export function createGameCards(setName: string, gameSize: string) {
         }
     }
 
-    const id = String(1 + Math.floor(Math.random() * 100000));
+    const id = prefix + String(1 + Math.floor(Math.random() * 100000));
 
     return {id, cardGrid, isMatched}
 

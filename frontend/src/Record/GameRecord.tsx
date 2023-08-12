@@ -8,9 +8,11 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 export default function GameRecord() {
 
+
     const valueHiragana = 10;
-    const valueKatakana = 25
-    const valuePlayingCards = 8
+    const valueKatakana = 8;
+    const valuePlayingCards = 15;
+    const valueGames = 58;
 
     return (
         <>
@@ -53,9 +55,9 @@ export default function GameRecord() {
             <div>
                 <h5>You have already learned & played with</h5>
                 <h4><p>♥</p><span id={"hiragana"}>10 of 46 Hiragana</span></h4>
-                <h4><span id={"katakana"}>25 of 46 Katakana</span></h4>
-                <h4><span id={"playing-cards"}>8 of 52 Playing Cards</span><p>♥</p></h4>
-                <h5>Total xxx games</h5>
+                <h4><span id={"katakana"}>8 of 46 Katakana</span></h4>
+                <h4><span id={"playing-cards"}>15 of 52 Playing Cards</span><p>♥</p></h4>
+                <h5>Total {valueGames} games</h5>
                 <Stack direction="row" spacing={0.4} justifyContent={"end"} paddingTop={5}>
                     <IconButton size={"small"}
                                 sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0}}>
