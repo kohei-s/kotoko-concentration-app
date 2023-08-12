@@ -105,7 +105,7 @@ export function createGameCards(setName: string, gameSize: string) {
     const shuffledPairs: GameCard[] = [];
     while (cardPairs.length > 0) {
         const n = cardPairs.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng);;
+        const k = prand.unsafeUniformIntDistribution(0, n, rng);
         shuffledPairs.push(cardPairs[k]);
         cardPairs.splice(k, 1);
     }
