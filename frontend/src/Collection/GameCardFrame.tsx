@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {GameCard} from "../GameLogic/GameCard.ts";
+import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
 
 type Props = {

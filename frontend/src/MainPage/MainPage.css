@@ -1,3 +1,8 @@
+.menu {
+    padding-top: 30px;
+    padding-right: 10px;
+}
+
 .start {
     padding-top:200px;
     display: flex;
