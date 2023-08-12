@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -28,11 +30,14 @@ class GameCardsGridIntegrationTest {
     @Autowired
     GameCardsRepository gameCardsRepository;
 
+    @DirtiesContext
     @Test
+    @WithMockUser
     void whenListEmpty_thenReturnEmptyList() throws Exception {
         //WHEN
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/game_cards/all")
+                                .with(csrf())
                 )
 
                 //THEN
@@ -46,6 +51,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenGetExistingGameCardById_thenReturnGameCardWithId() throws Exception {
         //GIVEN
         String actual = mockMvc.perform(
@@ -57,6 +63,7 @@ class GameCardsGridIntegrationTest {
                                         "cardSetName": "testSet"
                                         }
                                         """)
+                                .with(csrf())
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
@@ -89,6 +96,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenGetNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
@@ -102,7 +110,9 @@ class GameCardsGridIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @DirtiesContext
     @Test
+    @WithMockUser
     void expectTwoDimensionalArrayOfTwentyEightPlayingCards() throws Exception {
         //GIVEN
         String size = "small";
@@ -140,6 +150,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenAddedGameCard_thenReturnGameCard() throws Exception {
         //WHEN
         mockMvc.perform(
@@ -151,6 +162,7 @@ class GameCardsGridIntegrationTest {
                                         "cardSetName": "testSet3"
                                         }
                                         """)
+                                .with(csrf())
                 )
                 //THEN
                 .andExpect(status().isCreated())
@@ -162,6 +174,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenUpdateExistingGameCard_thenReturnUpdatedGameCard() throws Exception {
         //GIVEN
         String existingGameCardWithoutId = mockMvc.perform(
@@ -173,6 +186,7 @@ class GameCardsGridIntegrationTest {
                                         "cardSetName": "testSet"
                                         }
                                         """)
+                                .with(csrf())
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
@@ -198,6 +212,7 @@ class GameCardsGridIntegrationTest {
                                         "cardSetName": "testSet"
                                         }
                                         """)
+                                .with(csrf())
                 )
 
                 //THEN
@@ -210,6 +225,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenUpdateNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
@@ -221,6 +237,7 @@ class GameCardsGridIntegrationTest {
                         MockMvcRequestBuilders.put("/api/game_cards/" + idOfNotExistingGameCard)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(gameCardJson)
+                                .with(csrf())
                 )
 
                 //THEN
@@ -229,6 +246,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenDeleteExistingGameCard_thenReturnEmptyList() throws Exception {
         //GIVEN
         String existingGameCardWithoutId = mockMvc.perform(
@@ -240,6 +258,7 @@ class GameCardsGridIntegrationTest {
                                         "cardSetName": "setTest"
                                         }
                                         """)
+                                .with(csrf())
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
@@ -258,17 +277,20 @@ class GameCardsGridIntegrationTest {
         //WHEN
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/game_cards/" + id)
+                        .with(csrf())
         ).andExpect(status().isOk());
 
         //THEN
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/game_cards/all")
+                                .with(csrf())
                 ).andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
 
     @DirtiesContext
     @Test
+    @WithMockUser
     void whenDeleteNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
@@ -276,10 +298,23 @@ class GameCardsGridIntegrationTest {
         //WHEN
         mockMvc.perform(
                         MockMvcRequestBuilders.delete("/api/game_cards/" + idOfNotExistingGameCard)
+                                .with(csrf())
                 )
 
                 //THEN
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser
+    void post() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
+                        .content("testBody")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("testBody"));
     }
 
 }
