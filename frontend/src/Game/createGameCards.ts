@@ -1,4 +1,6 @@
 import {GameCard} from "./GameCard.ts";
+import prand from 'pure-rand';
+
 
 export function createGameCards(setName: string, gameSize: string) {
 
@@ -57,10 +59,13 @@ export function createGameCards(setName: string, gameSize: string) {
         kanaCards.push(gameCard);
     });
 
+    const seed = 42;
+    const rng = prand.xoroshiro128plus(seed);
+
     const cardList: GameCard[] = [];
     while (kanaCards.length > 0) {
         const n = kanaCards.length;
-        const k = Math.floor(Math.random() * n);
+        const k = prand.unsafeUniformIntDistribution(0, n, rng);
         cardList.push(kanaCards[k]);
         kanaCards.splice(k, 1);
     }
@@ -100,7 +105,7 @@ export function createGameCards(setName: string, gameSize: string) {
     const shuffledPairs: GameCard[] = [];
     while (cardPairs.length > 0) {
         const n = cardPairs.length;
-        const k = Math.floor(Math.random() * n);
+        const k = prand.unsafeUniformIntDistribution(0, n, rng);;
         shuffledPairs.push(cardPairs[k]);
         cardPairs.splice(k, 1);
     }
@@ -118,7 +123,8 @@ export function createGameCards(setName: string, gameSize: string) {
         }
     }
 
-    const id = prefix + String(1 + Math.floor(Math.random() * 100000));
+    const id = prefix + String(1 + prand.unsafeUniformIntDistribution(0, 10000, rng));
+
 
     return {id, cardGrid, isMatched}
 

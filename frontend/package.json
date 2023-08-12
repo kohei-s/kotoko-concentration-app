@@ -17,6 +17,8 @@
     "@mui/material": "^5.14.4",
     "axios": "^1.4.0",
     "framer-motion": "^10.15.0",
+    "pure-rand": "^6.0.2",
+    "random": "^4.1.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-confetti": "^6.1.0",

@@ -25,8 +25,6 @@ export default function FlipCard(props: Props) {
     const [isLocked, setIsLocked] = useState<boolean>(false);
     const [matchCount, setMatchCount] = useState<number>(0);
 
-    const [gameCount, setGameCount] = useState<number>(0);
-    const [playedCardId, setPlayedCardId] = useState<string[]>([]);
 
     const loadGameCards = useCallback(() => {
         if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
@@ -67,7 +65,6 @@ export default function FlipCard(props: Props) {
 
         const selectedCard = gameCards.cardsGrid[rowIndex][columnIndex]
         const newIsMatched = JSON.parse(JSON.stringify(isMatched)) as { isMatched: boolean[][] }
-        const playingCardId: string[] = playedCardId;
 
         if (firstCard) {
             setIsLocked(true)
@@ -79,8 +76,6 @@ export default function FlipCard(props: Props) {
                 setIsLocked(false)
                 setFirstCard(undefined)
                 setMatchCount(matchCount + 1)
-                playingCardId.push(selectedCard.id)
-                setPlayedCardId(playingCardId)
             } else {
                 newIsMatched.isMatched[rowIndex][columnIndex] = true
                 setIsMatched(newIsMatched)
@@ -113,7 +108,6 @@ export default function FlipCard(props: Props) {
 
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
-            setGameCount(gameCount + 1);
             return <Confetti width={390} height={300}></Confetti>
         }
     }
