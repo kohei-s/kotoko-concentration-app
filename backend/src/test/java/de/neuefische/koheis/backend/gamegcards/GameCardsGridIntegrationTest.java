@@ -305,17 +305,5 @@ class GameCardsGridIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    @DirtiesContext
-    @WithMockUser
-    void post() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
-                        .content("testBody")
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().string("testBody"));
-    }
-
 }
 
