@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,6 +26,8 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(requestHandler))
                 .httpBasic(Customizer.withDefaults())
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
                                 .requestMatchers(HttpMethod.GET, "/api_game_cards").permitAll()
@@ -34,7 +37,6 @@ public class SecurityConfig {
                                 .requestMatchers("/api/users/me").permitAll()
                                 .anyRequest().permitAll()
                 )
-                .formLogin(Customizer.withDefaults())
                 .build();
     }
 
@@ -42,5 +44,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
+
+
 
 }

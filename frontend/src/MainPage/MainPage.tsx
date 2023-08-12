@@ -3,6 +3,7 @@ import {Button, IconButton, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import "./MainPage.css"
 
 export default function MainPage() {
 
