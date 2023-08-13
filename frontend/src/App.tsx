@@ -4,10 +4,10 @@ import GameRecord from "./Record/GameRecord.tsx";
 import GameBoard from "./Game/GameBoard.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import LoginPage from "./LoginPage.tsx";
-import ProtectedRoutes from "./ProtectedRoutes.tsx";
+import LoginPage from "./Security/LoginPage.tsx";
+import ProtectedRoutes from "./Security/ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
-import Header from "./Header.tsx";
+import Header from "./Header/Header.tsx";
 import "./App.css"
 
 export default function App() {
