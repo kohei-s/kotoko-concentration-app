@@ -14,9 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class MongoUserController {
 
+    private final MongoUserRepository mongoUserRepository;
+    public MongoUserController(MongoUserRepository mongoUserRepository) {
+        this.mongoUserRepository = mongoUserRepository;
+    }
+
     @GetMapping("/me")
-    public String getUserInfo() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    public Object getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.getPrincipal() instanceof org.springframework.security.core.userdetails.User userDetails) {
+            return mongoUserRepository.findByUsername(userDetails.getUsername()).orElse(null);
+        }
+
+        return "Anonymous User"; // User details not available.
+
     }
 
     @PostMapping("/login")
