@@ -4,10 +4,11 @@ import GameRecord from "./Record/GameRecord.tsx";
 import GameBoard from "./Game/GameBoard.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import "./App.css"
 import LoginPage from "./LoginPage.tsx";
 import ProtectedRoutes from "./ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
+import Header from "./Header.tsx";
+import "./App.css"
 
 export default function App() {
 
@@ -31,17 +32,24 @@ export default function App() {
             .catch(console.error)
     }
 
+    function logout() {
+        axios.post("/api/users/logout")
+            .then(() => {setUser("anonymousUser")})
+            .catch(console.error)
+    }
+
     useEffect(() => {
         me()
-    }, [])
+    }, [user])
 
 
     return (
         <>
+            <Header user={user} onLogout={logout}></Header>
             <Routes>
-                <Route path={"/"} element={<MainPage user={user}/>}></Route>
                 <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
                 <Route element={<ProtectedRoutes user={user}/>}>
+                    <Route path={"/"} element={<MainPage/>}></Route>
                     <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
                     <Route path={"/game-record"} element={<GameRecord/>}></Route>
