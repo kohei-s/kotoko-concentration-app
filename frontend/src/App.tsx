@@ -12,13 +12,17 @@ import "./App.css"
 
 export default function App() {
 
-    const [user, setUser] = useState<string>("")
+    const [userName, setUserName] = useState<string>("")
+    const [userInfo, setUserInfo] = useState<string[]>([])
     const navigate = useNavigate()
 
     function login(username: string, password: string) {
         axios.post("/api/users/login", null, {auth: {username, password}})
             .then((response) => {
-                setUser(response.data as string)
+                const userInfo: string[] = response.data as string[]
+                setUserInfo(userInfo)
+                const name: string = userInfo.username as string
+                setUserName(name)
                 navigate("/")
             })
             .catch(console.error)
@@ -27,32 +31,36 @@ export default function App() {
     function me() {
         axios.get("/api/users/me")
             .then(response => {
-                setUser(response.data as string)
+                const userInfo: string[] = response.data as string[]
+                setUserInfo(userInfo)
+                const name: string = userInfo.username as string
+                setUserName(name)
+                navigate("/")
             })
             .catch(console.error)
     }
 
     function logout() {
         axios.post("/api/users/logout")
-            .then(() => {setUser("anonymousUser")})
+            .then(() => {setUserName("anonymousUser")})
             .catch(console.error)
     }
 
     useEffect(() => {
         me()
-    }, [user])
+    }, [userName])
 
 
     return (
         <>
-            <Header user={user} onLogout={logout}></Header>
+            <Header user={userName} onLogout={logout}></Header>
             <Routes>
                 <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
-                <Route element={<ProtectedRoutes user={user}/>}>
+                <Route element={<ProtectedRoutes user={userName}/>}>
                     <Route path={"/"} element={<MainPage/>}></Route>
                     <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
-                    <Route path={"/game-record"} element={<GameRecord/>}></Route>
+                    <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                     <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                 </Route>
             </Routes>
