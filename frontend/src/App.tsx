@@ -1,4 +1,4 @@
-import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import GameCardCollection from "./Collection/GameCardCollection.tsx";
 import GameRecord from "./Record/GameRecord.tsx";
 import GameBoard from "./Game/GameBoard.ts";
@@ -38,18 +38,16 @@ export default function App() {
 
     return (
         <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path={"/"} element={<MainPage/>}></Route>
-                    <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
-                    <Route element={<ProtectedRoutes user={user}/>}>
-                        <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
-                        <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
-                        <Route path={"/game-record"} element={<GameRecord/>}></Route>
-                        <Route path={"/*"} element={<Navigate to={"/"}/>}/>
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+            <Routes>
+                <Route path={"/"} element={<MainPage user={user}/>}></Route>
+                <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
+                <Route element={<ProtectedRoutes user={user}/>}>
+                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
+                    <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
+                    <Route path={"/game-record"} element={<GameRecord/>}></Route>
+                    <Route path={"/*"} element={<Navigate to={"/"}/>}/>
+                </Route>
+            </Routes>
         </>
     )
 }

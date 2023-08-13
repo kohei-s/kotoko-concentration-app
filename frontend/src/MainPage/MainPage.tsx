@@ -1,11 +1,14 @@
-import "./MainPage.css"
 import {Button, IconButton, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import "./MainPage.css"
 
-export default function MainPage() {
+type Props = {
+    user: string
+}
+
+export default function MainPage(props: Props) {
 
 
     return (
@@ -36,6 +39,7 @@ export default function MainPage() {
                 </Tooltip>
             </Stack>
             <div className={"menu"}>
+                <p>{props.user}</p>
                 <Stack direction="row" spacing={1.0} justifyContent={"end"}>
                     <Tooltip title="Card Collection">
                         <IconButton size="small"
