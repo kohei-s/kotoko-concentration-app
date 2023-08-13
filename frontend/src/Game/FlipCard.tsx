@@ -121,7 +121,10 @@ export default function FlipCard(props: Props) {
             </div>
             <div className={"concentration"}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
-                    return (row).map((card, columnIndex) => {
+                    return row.map((card, columnIndex) => {
+                        if (!card) {
+                            return null;
+                        }
                             return <div className={"card"}
                                         key={`${rowIndex}-${columnIndex}` + boardId}
                                         onClick={() => flipCard(rowIndex, columnIndex)}>

@@ -1,7 +1,6 @@
 import {GameCard} from "./GameCard.ts";
 import prand from 'pure-rand';
 
-
 export function createGameCards(setName: string, gameSize: string) {
 
     const alphabetReading = [
@@ -28,7 +27,6 @@ export function createGameCards(setName: string, gameSize: string) {
         "club-8", "club-9", "club-10", "club-11", "club-12", "club-13"
     ]
 
-    const kanaCards: GameCard[] = [];
     let listData: string[];
     if (setName === "hiragana" || setName === "katakana") {
         listData = alphabetReading;
@@ -48,6 +46,7 @@ export function createGameCards(setName: string, gameSize: string) {
             prefix = "c";
     }
 
+    const kanaCards: GameCard[] = [];
     let index = 1;
     listData.forEach((data: string) => {
         const gameCard: GameCard = {
@@ -71,33 +70,28 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const rowAndColumn: number[] = [];
-    if (gameSize === "large") {
-        rowAndColumn[0] = 4;
-        rowAndColumn[1] = 4;
-    } else if (gameSize === "medium") {
-        rowAndColumn[0] = 3;
-        rowAndColumn[1] = 4;
-    } else {
-        rowAndColumn[0] = 3;
-        rowAndColumn[1] = 3;
-    }
-
     let pairing;
     switch (gameSize) {
         case "small":
+            rowAndColumn[0] = 4;
+            rowAndColumn[1] = 4;
             pairing = 4;
             break;
         case "medium":
+            rowAndColumn[0] = 3;
+            rowAndColumn[1] = 4;
             pairing = 6;
             break;
         default:
+            rowAndColumn[0] = 4;
+            rowAndColumn[1] = 4;
             pairing = 8;
     }
 
     const cardPairs: GameCard [] = cardList.splice(0, pairing);
-    cardPairs.push(...cardPairs);
+    cardPairs.push(...cardPairs.map(card => ({...card})));
 
-    const emptyCard: GameCard = {id: "0", title: "empty", cardSetName: setName}
+    const emptyCard: GameCard = {id: prefix + "0", title: "empty", cardSetName: setName}
     if (gameSize === "small") {
         cardPairs.push(emptyCard);
     }
@@ -105,9 +99,13 @@ export function createGameCards(setName: string, gameSize: string) {
     const shuffledPairs: GameCard[] = [];
     while (cardPairs.length > 0) {
         const n = cardPairs.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng);
-        shuffledPairs.push(cardPairs[k]);
-        cardPairs.splice(k, 1);
+        const k = prand.unsafeUniformIntDistribution(0, n, rng)
+        if (cardPairs[k]===undefined){
+            cardPairs.splice(k, 1);
+        } else {
+            shuffledPairs.push(cardPairs[k]);
+            cardPairs.splice(k, 1);
+        }
     }
 
     const cardGrid: GameCard[][] = [];
@@ -124,7 +122,6 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const id = prefix + String(1 + prand.unsafeUniformIntDistribution(0, 10000, rng));
-
 
     return {id, cardGrid, isMatched}
 
