@@ -1,4 +1,5 @@
 import {FormEvent, useState} from "react";
+import "./LoginPage.css"
 
 type Props = {
     onLogin: (username: string, password: string) => void
@@ -17,7 +18,6 @@ export default function LoginPage(props: Props) {
 
     return (
         <form onSubmit={onLogin}>
-            <p>Login</p>
             <input value={username} onChange={event => setUsername(event.target.value)} placeholder={"Username"}/>
             <input value={password} onChange={event => setPassword(event.target.value)} placeholder={"Password"}
                    type="password"/>

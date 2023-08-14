@@ -1,9 +1,8 @@
-import "./Header.css"
 import {Button, IconButton, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-
+import "./Header.css"
 
 
 type Props = {
@@ -17,16 +16,14 @@ export default function Header(props: Props) {
         <>
 
             <div className={"menu"}>
-                <Stack direction="row" spacing={1.0} justifyContent={"end"}>
-                <div className={"userName"}> ☺︎ {props.user}</div>
+                <Stack direction="row" spacing={1.0} justifyContent={"space-between"} id={"userButton"}>
                 <Tooltip title="Logout">
                     <Button size="small"
-                            sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} onClick={props.onLogout}>
-                        x
+                            sx={{color: "#FDEEBE", background: "#69d1ca", boxShadow: 0, borderRadius: '50px'}} onClick={props.onLogout}>
+                        ☺︎ {props.user}
                     </Button>
                 </Tooltip>
-
-
+                    <Stack direction="row" spacing={0.5}>
                     <Tooltip title="Card Collection">
                         <IconButton size="small"
                                     sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
@@ -39,7 +36,7 @@ export default function Header(props: Props) {
                             <Link to="/game-record"><EmojiEventsIcon/></Link>
                         </IconButton>
                     </Tooltip>
-
+                    </Stack>
                 </Stack>
             </div>
         </>
