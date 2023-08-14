@@ -57,7 +57,7 @@ export default function App() {
 
     useEffect(() => {
         me()
-    }, [userName])
+    },[userName])
 
 
     return (
