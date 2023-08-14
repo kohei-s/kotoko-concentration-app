@@ -2,39 +2,37 @@ package de.neuefische.koheis.backend.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class MongoUserController {
 
-    private final MongoUserRepository mongoUserRepository;
-    public MongoUserController(MongoUserRepository mongoUserRepository) {
-        this.mongoUserRepository = mongoUserRepository;
-    }
+    private final MongoUserService mongoUserService;
+
 
     @GetMapping("/me")
     public UserInfo getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-         MongoUser mongoUser = mongoUserRepository.findByUsername(authentication.getName()).orElse(null);
+        return mongoUserService.findByUsername(username);
+    }
 
-         if (mongoUser != null) {
-             return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook());
-         } else {
-             throw new UserNotFoundException("User not found");
-         }
+    @PutMapping("/update")
+    public UserInfo updateUserInfo(@RequestBody UserInfo userInfo) {
 
+        return mongoUserService.updateUserInfo(userInfo);
     }
 
     @PostMapping("/login")
     public String login() {
+
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
