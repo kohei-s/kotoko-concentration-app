@@ -104,6 +104,16 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function renderGameTitle() {
+        if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
+            return <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"}
+                        alt={props.gameName + "-logo"}/>
+        } else {
+            return <img width={"150px"} height={"150px"} src={"/logos/custom-logo.png"}
+                        alt={props.gameName + "-logo"}/>
+        }
+    }
+
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
             return <Confetti width={390} height={300}></Confetti>
@@ -113,16 +123,15 @@ export default function FlipCard(props: Props) {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"}
-                     alt={props.gameName + "-logo"}/>
+                {renderGameTitle()}
                 {confetti()}
             </div>
             <div className={"concentration"}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
-                        if (!card) {
-                            return null;
-                        }
+                            if (!card) {
+                                return null;
+                            }
                             return <div className={"card"}
                                         key={`${rowIndex}-${columnIndex}` + boardId}
                                         onClick={() => flipCard(rowIndex, columnIndex)}>

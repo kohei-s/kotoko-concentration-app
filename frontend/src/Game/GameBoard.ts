@@ -8,7 +8,7 @@ export default function GameBoard(){
     const name: string = params.gameName as string;
 
     if ((size === "small") || (size === "medium") || (size === "large")){
-        if ((name === "hiragana")||(name === "katakana")||(name === "playing-cards")||(name === "custom"))
+        if ((name === "hiragana")||(name === "katakana")||(name === "playing-cards")||(name === "testSet"))
         return createGameBoard(size, name);
     } else {
         return ("Invalid parameters!");
