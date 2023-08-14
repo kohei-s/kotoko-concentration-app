@@ -3,8 +3,6 @@ import {GameCard} from "./GameCard.ts";
 import axios from "axios";
 import './FlipCard.css';
 import {IconButton, Stack} from "@mui/material";
-import {Link} from "react-router-dom";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import {createGameCards} from "./createGameCards.ts";
 import Confetti from 'react-confetti'
@@ -142,10 +140,6 @@ export default function FlipCard(props: Props) {
             </div>
             <div>
                 <Stack direction="row" spacing={0.4} justifyContent={"end"}>
-                    <IconButton size={"small"}
-                                sx={{background: props.colorStyle2, boxShadow: 0}}>
-                        <Link to="/"><HomeRoundedIcon/></Link>
-                    </IconButton>
                     <IconButton size={"small"}
                                 sx={{background: props.colorStyle3, color: "#FDF6E1", boxShadow: 0}}
                                 onClick={loadGameCards}>

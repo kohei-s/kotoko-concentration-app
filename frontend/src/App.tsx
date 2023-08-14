@@ -7,21 +7,21 @@ import axios from "axios";
 import LoginPage from "./Security/LoginPage.tsx";
 import ProtectedRoutes from "./Security/ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
-import Header from "./Header/Header.tsx";
 import "./App.css"
+import {UserInfo} from "./UserInfo.ts";
 
 export default function App() {
 
     const [userName, setUserName] = useState<string>("")
-    const [userInfo, setUserInfo] = useState<string[]>([])
+    const [userInfo, setUserInfo] = useState<UserInfo>()
     const navigate = useNavigate()
 
     function login(username: string, password: string) {
-        axios.post("/api/users/login", null, {auth: {username, password}})
-            .then((response) => {
-                const userInfo: string[] = response.data as string[]
-                setUserInfo(userInfo)
-                const name: string = userInfo.username as string
+        axios.post<string>
+        ("/api/users/login", null, {auth: {username, password}})
+            .then(response => response.data)
+            .then(data => {
+                const name: string = data
                 setUserName(name)
                 navigate("/")
             })
@@ -29,20 +29,29 @@ export default function App() {
     }
 
     function me() {
-        axios.get("/api/users/me")
-            .then(response => {
-                const userInfo: string[] = response.data as string[]
-                setUserInfo(userInfo)
-                const name: string = userInfo.username as string
+        axios.get<UserInfo>
+        ("/api/users/me")
+            .then(response => response.data)
+            .then(data => {
+                const name: string = data.username
+                setUserInfo(data)
                 setUserName(name)
                 navigate("/")
             })
-            .catch(console.error)
+            .catch(error=> {
+                console.error(error)
+                setUserInfo(undefined)
+                setUserName("Anonymous User")
+            })
+
     }
 
     function logout() {
         axios.post("/api/users/logout")
-            .then(() => {setUserName("anonymousUser")})
+            .then(() => {
+                setUserName("anonymousUser")
+                navigate("/login")
+            })
             .catch(console.error)
     }
 
@@ -53,10 +62,9 @@ export default function App() {
 
     return (
         <>
-            <Header user={userName} onLogout={logout}></Header>
             <Routes>
                 <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
-                <Route element={<ProtectedRoutes user={userName}/>}>
+                <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
                     <Route path={"/"} element={<MainPage/>}></Route>
                     <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>

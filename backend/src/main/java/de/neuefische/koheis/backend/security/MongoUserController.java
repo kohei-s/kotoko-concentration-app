@@ -20,14 +20,16 @@ public class MongoUserController {
     }
 
     @GetMapping("/me")
-    public Object getUserInfo() {
+    public UserInfo getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication.getPrincipal() instanceof org.springframework.security.core.userdetails.User userDetails) {
-            return mongoUserRepository.findByUsername(userDetails.getUsername()).orElse(null);
-        }
+         MongoUser mongoUser = mongoUserRepository.findByUsername(authentication.getName()).orElse(null);
 
-        return "Anonymous User"; // User details not available.
+         if (mongoUser != null) {
+             return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook());
+         } else {
+             throw new UserNotFoundException("User not found");
+         }
 
     }
 

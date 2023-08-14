@@ -1,21 +1,23 @@
-import {IconButton, Stack, Tooltip} from "@mui/material";
-import {Link} from "react-router-dom";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import {Stack} from "@mui/material";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import MenuBookIcon from "@mui/icons-material/MenuBook";
 import "./GameRecord.css"
+import {UserInfo} from "../UserInfo.ts";
 
 type Props = {
-    userInfo: string[]
+    userInfo?: UserInfo
 }
 
 export default function GameRecord(props: Props) {
 
-    const userData: string[] = props.userInfo
-    const user: string = userData.username as string
-    const userAchievement: string = userData.achievement as string
-    const uniqueWords: string[] = [...new Set(userData.wordbook)] as string[]
+    if (!props.userInfo){
+        return "Lade.."
+    }
+
+    const userData = props.userInfo
+    const user: string = userData.username
+    const userAchievement: string = userData.achievement
+    const uniqueWords: string[] = [...new Set(userData.wordbook)]
 
     const valueHiragana: number = uniqueWords.filter(word  => word.startsWith("h")).length
     const valueKatakana: number = uniqueWords.filter(word => word.startsWith("k")).length
@@ -67,18 +69,6 @@ export default function GameRecord(props: Props) {
                 <h4><span id={"katakana"}>{valueKatakana} of 46 Katakana</span></h4>
                 <h4><span id={"playing-cards"}>{valuePlayingCards} of 52 Playing Cards</span><p>♥</p></h4>
                 <h5>Total {userAchievement} games</h5>
-                <Stack direction="row" spacing={0.4} justifyContent={"end"} paddingTop={5}>
-                    <IconButton size={"small"}
-                                sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0}}>
-                        <Link to="/"><HomeRoundedIcon/></Link>
-                    </IconButton>
-                    <Tooltip title="Card Collection">
-                        <IconButton size="small"
-                                    sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
-                            <Link to="/card-collection"><MenuBookIcon/></Link>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
             </div>
         </>
     )

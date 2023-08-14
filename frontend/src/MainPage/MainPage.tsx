@@ -27,7 +27,7 @@ export default function MainPage() {
                 </Tooltip>
                 <Tooltip title="Custom Card">
                     <Button variant="contained" sx={{background: "#508356", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to="/game/small/custom">★</Link>
+                        <Link to="/game/small/testSet">★</Link>
                     </Button>
                 </Tooltip>
             </Stack>
