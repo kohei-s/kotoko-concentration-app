@@ -64,17 +64,6 @@ export function createGameCards(setName: string, gameSize: string) {
         kanaCards.push(gameCard);
     });
 
-    /*const seed = 42;
-    const rng = prand.xoroshiro128plus(seed);
-
-    const cardList: GameCard[] = [];
-    while (kanaCards.length > 0) {
-        const n = kanaCards.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng);
-        cardList.push(kanaCards[k]);
-        kanaCards.splice(k, 1);
-    }*/
-
     shuffleArray(kanaCards)
 
     const rowAndColumn: number[] = [];
@@ -103,18 +92,6 @@ export function createGameCards(setName: string, gameSize: string) {
     if (gameSize === "small") {
         cardPairs.push(emptyCard);
     }
-
-    /*const shuffledPairs: GameCard[] = [];
-    while (cardPairs.length > 0) {
-        const n = cardPairs.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng)
-        if (cardPairs[k]===undefined){
-            cardPairs.splice(k, 1);
-        } else {
-            shuffledPairs.push(cardPairs[k]);
-            cardPairs.splice(k, 1);
-        }
-    }*/
 
     shuffleArray(cardPairs)
 
