@@ -32,8 +32,7 @@ class MongoUserControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/users/me"))
 
                 // THEN
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Anonymous User"));
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
     @Test
@@ -51,7 +50,6 @@ class MongoUserControllerIntegrationTest {
         .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username", Matchers.is("test")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.password", Matchers.is("1234")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.achievement", Matchers.is("USER")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.wordbook", Matchers.hasItem("ROLE_USER")));
     }
@@ -76,8 +74,7 @@ class MongoUserControllerIntegrationTest {
                 .with(SecurityMockMvcRequestPostProcessors.anonymous()))
 
                 //THEN
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Anonymous User"));
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
     }
 
