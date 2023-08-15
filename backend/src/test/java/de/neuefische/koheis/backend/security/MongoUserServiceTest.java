@@ -3,6 +3,8 @@ package de.neuefische.koheis.backend.security;
 import de.neuefische.koheis.backend.idservice.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -12,7 +14,8 @@ class MongoUserServiceTest {
 
     private final MongoUserRepository mongoUserRepository = mock(MongoUserRepository.class);
     private final IdService idService = mock(IdService.class);
-    private final MongoUserService mongoUserService = new MongoUserService(mongoUserRepository, idService);
+    private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
+    private final MongoUserService mongoUserService = new MongoUserService(mongoUserRepository, idService, passwordEncoder);
 
     @Test
     void whenUserIsRegistered_verifyRepositoryCall() {
@@ -22,12 +25,14 @@ class MongoUserServiceTest {
                 .thenReturn(Optional.empty());
         when(idService.createRandomId())
                 .thenReturn("01");
+        when(passwordEncoder.encode("testPassword"))
+                .thenReturn("123");
 
         //WHEN
         mongoUserService.registerUser(mongoUserWithoutId);
 
         //THEN
-        verify(mongoUserRepository).findByUsername("testName");
+        verify(mongoUserRepository).insert(new MongoUser("01", "testName", "123", null, new String[0]));
         verify(idService).createRandomId();
     }
 

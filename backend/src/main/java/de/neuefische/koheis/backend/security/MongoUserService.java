@@ -3,7 +3,6 @@ package de.neuefische.koheis.backend.security;
 import de.neuefische.koheis.backend.idservice.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,7 @@ public class MongoUserService {
 
     private final MongoUserRepository mongoUserRepository;
     private final IdService idService;
+    private final PasswordEncoder passwordEncoder;
 
     public UserInfo findByUsername(String username) {
         if (mongoUserRepository.findByUsername(username).isEmpty()) {
@@ -25,14 +25,13 @@ public class MongoUserService {
     }
 
     public void registerUser(MongoUserCreation mongoUserWithoutId) {
-        if (mongoUserRepository.findByUsername(mongoUserWithoutId.username()).isPresent()) {
+        if (mongoUserRepository.existsByUsername(mongoUserWithoutId.username())) {
             throw new IllegalArgumentException("User: " + mongoUserWithoutId.username() + " exists already!");
         }
 
-        PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 8, 1 << 16 ,4);
-        String encoderPassword = encoder.encode(mongoUserWithoutId.password());
+        String encoderPassword = passwordEncoder.encode(mongoUserWithoutId.password());
 
-        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, "", new String[]{""});
+        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new String[0]);
         mongoUserRepository.insert(newUser);
     }
 

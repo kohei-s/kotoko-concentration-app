@@ -26,7 +26,9 @@ public class MongoUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Username:" + username + " not found!"));
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(mongoUser.getAchievement()));
+        if (mongoUser.achievement() != null) {
+            authorities.add(new SimpleGrantedAuthority(mongoUser.getAchievement()));
+        }
         for (String role : mongoUser.getWordbook()) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
