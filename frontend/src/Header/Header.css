@@ -3,3 +3,11 @@
     align-items: center;
     color: #959fa8;
 }
+
+button {
+    margin-top: 20px;
+    border-color: #f8e619;
+    margin-left: 200px;
+    color: #f8e619;
+    background-color: #69d1ca;
+}

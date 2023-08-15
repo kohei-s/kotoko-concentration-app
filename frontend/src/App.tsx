@@ -9,6 +9,7 @@ import ProtectedRoutes from "./Security/ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
 import "./App.css"
 import {UserInfo} from "./UserInfo.ts";
+import RegisterPage from "./Security/RegisterPage.tsx";
 
 export default function App() {
 
@@ -28,9 +29,19 @@ export default function App() {
             .catch(console.error)
     }
 
+    function register(username: string, password: string) {
+        const newUser = {"username": `${username}`, "password": `${password}`}
+        axios.post<string>
+        ("/api/users/register", newUser)
+            .then(response => {
+                console.log(response)
+                navigate("/")
+            })
+            .catch(console.error)
+    }
+
     function me() {
-        axios.get<UserInfo>
-        ("/api/users/me")
+        axios.get<UserInfo>("/api/users/me")
             .then(response => response.data)
             .then(data => {
                 const name: string = data.username
@@ -43,7 +54,6 @@ export default function App() {
                 setUserInfo(undefined)
                 setUserName("Anonymous User")
             })
-
     }
 
     function logout() {
@@ -63,7 +73,8 @@ export default function App() {
     return (
         <>
             <Routes>
-                <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
+                <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
+                <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
                 <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
                     <Route path={"/"} element={<MainPage/>}></Route>
                     <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
