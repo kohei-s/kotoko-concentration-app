@@ -2,6 +2,7 @@ package de.neuefische.koheis.backend.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,12 @@ public class MongoUserController {
     public UserInfo updateUserInfo(@RequestBody UserInfo userInfo) {
 
         return mongoUserService.updateUserInfo(userInfo);
+    }
+
+    @PostMapping("/register")
+    public String register(@Valid @RequestBody MongoUserCreation mongoUserWithoutId) {
+        mongoUserService.registerUser(mongoUserWithoutId);
+        return "registered";
     }
 
     @PostMapping("/login")

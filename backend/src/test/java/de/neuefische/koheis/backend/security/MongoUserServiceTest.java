@@ -1,43 +1,78 @@
 package de.neuefische.koheis.backend.security;
 
-import lombok.RequiredArgsConstructor;
+import de.neuefische.koheis.backend.idservice.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RequiredArgsConstructor
+
 class MongoUserServiceTest {
 
     private final MongoUserRepository mongoUserRepository = mock(MongoUserRepository.class);
-    private final MongoUserService mongoUserService;
+    private final IdService idService = mock(IdService.class);
+    private final MongoUserService mongoUserService = new MongoUserService(mongoUserRepository, idService);
 
     @Test
-    void whenUserExists_returnUserInfo() {
+    void whenUserIsRegistered_verifyRepositoryCall() {
         //GIVEN
-        MongoUser mongoUser = new MongoUser("1", "test", "test", "test", new String[]{"test"});
-        Mockito.when(mongoUserRepository.findByUsername("test"))
-                .thenReturn(Optional.of(mongoUser));
+        MongoUserCreation mongoUserWithoutId = new MongoUserCreation("testName", "testPassword");
+        Mockito.when(mongoUserRepository.findByUsername("testName"))
+                .thenReturn(Optional.empty());
+        when(idService.createRandomId())
+                .thenReturn("01");
 
         //WHEN
-        UserInfo expected = new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook());
-        UserInfo actual = mongoUserService.findByUsername("test");
+        mongoUserService.registerUser(mongoUserWithoutId);
 
         //THEN
+        verify(mongoUserRepository).findByUsername("testName");
+        verify(idService).createRandomId();
+    }
+
+    @Test
+    void whenUserExists_throwException() {
+        //GIVEN
+        Mockito.when(mongoUserRepository.findByUsername("testName"))
+                        .thenReturn(Optional.of(new MongoUser("01", "testName", "testPassword", "testAchievement", new String[]{"testWordbook"})));
+
+        //WHEN //THEN
+       try {
+           mongoUserService.registerUser(new MongoUserCreation("testName", "testPassword"));
+       } catch (Exception e) {
+           assertEquals("User: testName exists already!", e.getMessage());
+       }
+    }
+
+    @Test
+    void whenUsernameExists_returnUserInfo() {
+        //GIVEN
+        MongoUser mongoUser = new MongoUser("01", "testName", "testPassword", "", new String[]{});
+        Mockito.when(mongoUserRepository.findByUsername("testName"))
+                .thenReturn(Optional.of(mongoUser));
+        UserInfo expected = new UserInfo("testName", "", new String[]{});
+
+        //WHEN
+        UserInfo actual = mongoUserService.findByUsername("testName");
+
+        //THEN
+        verify(mongoUserRepository, times(2)).findByUsername("testName");
         assertEquals(expected, actual);
     }
 
     @Test
-    void whenNotUserExists_throwException() {
+    void whenUsernameExists_returnAnonymousUser () {
         //GIVEN
-        //WHEN
-        Mockito.when(mongoUserRepository.findByUsername("test"))
+        Mockito.when(mongoUserRepository.findByUsername("testName"))
                 .thenReturn(Optional.empty());
-        UserInfo expected = new UserInfo("Anonymous User", "unknown", new String[]{"unknown"});
-        UserInfo actual = mongoUserService.findByUsername("test");
+        UserInfo expected = new UserInfo("Anonymous User", "", new String[]{});
+
+        //WHEN
+        UserInfo actual = mongoUserService.findByUsername("testName");
 
         //THEN
+        verify(mongoUserRepository).findByUsername("testName");
         assertEquals(expected, actual);
     }
 
@@ -45,8 +80,6 @@ class MongoUserServiceTest {
     void whenUpdateExistingUserInfo_returnUpdatedUserInfo() {
         //GIVEN
         MongoUser before = new MongoUser("012", "test", "345", "testA", new String[]{"testB"});
-        Mockito.when(mongoUserRepository.save(before))
-                .thenReturn(before);
         Mockito.when(mongoUserRepository.findByUsername("test"))
                 .thenReturn(Optional.of(before));
 
