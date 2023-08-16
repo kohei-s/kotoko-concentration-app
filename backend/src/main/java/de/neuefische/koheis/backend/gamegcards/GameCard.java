@@ -1,5 +1,6 @@
 package de.neuefische.koheis.backend.gamegcards;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class GameCard {
     @Id
     private String id;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String cardSetName;
 }

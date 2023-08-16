@@ -1,18 +1,28 @@
-import {IconButton, Stack, Tooltip} from "@mui/material";
-import {Link} from "react-router-dom";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import {Stack} from "@mui/material";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import "./GameRecord.css"
-import MenuBookIcon from "@mui/icons-material/MenuBook";
+import {UserInfo} from "../UserInfo.ts";
 
-export default function GameRecord() {
+type Props = {
+    userInfo?: UserInfo
+}
 
+export default function GameRecord(props: Props) {
 
-    const valueHiragana = 10;
-    const valueKatakana = 8;
-    const valuePlayingCards = 15;
-    const valueGames = 58;
+    if (!props.userInfo){
+        return "Loading data..."
+    }
+
+    const userData = props.userInfo
+    const user: string = userData.username
+    const userAchievement: string = userData.achievement
+    const uniqueWords: string[] = [...new Set(userData.wordbook)]
+
+    const valueHiragana: number = uniqueWords.filter(word  => word.startsWith("h")).length
+    const valueKatakana: number = uniqueWords.filter(word => word.startsWith("k")).length
+    const valuePlayingCards: number = uniqueWords.filter(word => word.startsWith("c")).length
+
 
     return (
         <>
@@ -53,23 +63,12 @@ export default function GameRecord() {
                 </div>
             </Stack>
             <div>
+                <h5>Keep up the good work ☺︎ {user}!!</h5>
                 <h5>You have already learned & played with</h5>
-                <h4><p>♥</p><span id={"hiragana"}>10 of 46 Hiragana</span></h4>
-                <h4><span id={"katakana"}>8 of 46 Katakana</span></h4>
-                <h4><span id={"playing-cards"}>15 of 52 Playing Cards</span><p>♥</p></h4>
-                <h5>Total {valueGames} games</h5>
-                <Stack direction="row" spacing={0.4} justifyContent={"end"} paddingTop={5}>
-                    <IconButton size={"small"}
-                                sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0}}>
-                        <Link to="/"><HomeRoundedIcon/></Link>
-                    </IconButton>
-                    <Tooltip title="Card Collection">
-                        <IconButton size="small"
-                                    sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
-                            <Link to="/card-collection"><MenuBookIcon/></Link>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
+                <h4><p>♥</p><span id={"hiragana"}>{valueHiragana} of 46 Hiragana</span></h4>
+                <h4><span id={"katakana"}>{valueKatakana} of 46 Katakana</span></h4>
+                <h4><span id={"playing-cards"}>{valuePlayingCards} of 52 Playing Cards</span><p>♥</p></h4>
+                <h5>Total {userAchievement} games</h5>
             </div>
         </>
     )

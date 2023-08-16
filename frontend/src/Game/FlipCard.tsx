@@ -1,13 +1,12 @@
 import {useCallback, useEffect, useState} from "react";
 import {GameCard} from "./GameCard.ts";
 import axios from "axios";
-import './FlipCard.css';
 import {IconButton, Stack} from "@mui/material";
-import {Link} from "react-router-dom";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import {createGameCards} from "./createGameCards.ts";
 import Confetti from 'react-confetti'
+import {UserInfo} from "../UserInfo.ts";
+import './FlipCard.css';
 
 type Props = {
     gameSize: string
@@ -15,6 +14,7 @@ type Props = {
     colorStyle: string
     colorStyle2: string
     colorStyle3: string
+    userInfo: UserInfo | undefined
 }
 export default function FlipCard(props: Props) {
 
@@ -24,7 +24,18 @@ export default function FlipCard(props: Props) {
     const [firstCard, setFirstCard] = useState<{ x: number, y: number }>();
     const [isLocked, setIsLocked] = useState<boolean>(false);
     const [matchCount, setMatchCount] = useState<number>(0);
+    const [userData, setUserData] = useState<UserInfo>();
+    const [userAchievement, setUserAchievement] = useState<string>("");
+    const [userWordbook, setUserWordbook] = useState<string[]>([]);
 
+    function update(updatedUserInfo: UserInfo) {
+        axios.put<UserInfo>("/api/users/update", updatedUserInfo)
+            .then(response => response.data)
+            .then(data => {
+                setUserData(data)
+            })
+            .catch(console.error)
+    }
 
     const loadGameCards = useCallback(() => {
         if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
@@ -56,7 +67,13 @@ export default function FlipCard(props: Props) {
 
     useEffect(() => {
         loadGameCards()
-    }, [loadGameCards]);
+        setUserData(props.userInfo)
+        if (props.userInfo){
+            setUserAchievement(props.userInfo.achievement)
+            setUserWordbook(props.userInfo.wordbook)
+        }
+    }, [loadGameCards, props.userInfo]);
+
 
     function flipCard(rowIndex: number, columnIndex: number) {
         if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
@@ -76,6 +93,20 @@ export default function FlipCard(props: Props) {
                 setIsLocked(false)
                 setFirstCard(undefined)
                 setMatchCount(matchCount + 1)
+                updateUserInfo()
+
+                if (userData && userData.wordbook) {
+                    const wordList = userData.wordbook
+                    if (wordList.includes(selectedCard.id)) {
+                        return
+                    } else {
+                        wordList.push(selectedCard.id)
+                        setUserWordbook(wordList)
+                    }
+                } else {
+                    console.log("Loading data...")
+                }
+
             } else {
                 newIsMatched.isMatched[rowIndex][columnIndex] = true
                 setIsMatched(newIsMatched)
@@ -106,8 +137,32 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function renderGameTitle() {
+        if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
+            return <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"}
+                        alt={props.gameName + "-logo"}/>
+        } else {
+            return <img width={"150px"} height={"150px"} src={"/logos/custom-logo.png"}
+                        alt={props.gameName + "-logo"}/>
+        }
+    }
+
+    function updateUserInfo() {
+        if (((props.gameSize === "small") && (matchCount === 3)) || ((props.gameSize === "medium") && (matchCount === 5)) || ((props.gameSize === "large") && (matchCount === 7))) {
+            const newAchievement = String(Number(userAchievement) + 1)
+            setUserAchievement(newAchievement)
+            const updatedUserInfo: UserInfo = {
+                username: userData?.username as string,
+                achievement: userAchievement,
+                wordbook: userWordbook
+            }
+            update(updatedUserInfo)
+        }
+    }
+
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
+
             return <Confetti width={390} height={300}></Confetti>
         }
     }
@@ -115,16 +170,15 @@ export default function FlipCard(props: Props) {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150px"} src={"/logos/" + props.gameName + "-logo.png"}
-                     alt={props.gameName + "-logo"}/>
+                {renderGameTitle()}
                 {confetti()}
             </div>
             <div className={"concentration"}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
-                        if (!card) {
-                            return null;
-                        }
+                            if (!card) {
+                                return null;
+                            }
                             return <div className={"card"}
                                         key={`${rowIndex}-${columnIndex}` + boardId}
                                         onClick={() => flipCard(rowIndex, columnIndex)}>
@@ -142,10 +196,6 @@ export default function FlipCard(props: Props) {
             </div>
             <div>
                 <Stack direction="row" spacing={0.4} justifyContent={"end"}>
-                    <IconButton size={"small"}
-                                sx={{background: props.colorStyle2, boxShadow: 0}}>
-                        <Link to="/"><HomeRoundedIcon/></Link>
-                    </IconButton>
                     <IconButton size={"small"}
                                 sx={{background: props.colorStyle3, color: "#FDF6E1", boxShadow: 0}}
                                 onClick={loadGameCards}>

@@ -2,25 +2,44 @@ package de.neuefische.koheis.backend.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class MongoUserController {
 
+    private final MongoUserService mongoUserService;
+
+
     @GetMapping("/me")
-    public String getUserInfo() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    public UserInfo getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return mongoUserService.findByUsername(username);
+    }
+
+    @PutMapping("/update")
+    public UserInfo updateUserInfo(@RequestBody UserInfo userInfo) {
+
+        return mongoUserService.updateUserInfo(userInfo);
+    }
+
+    @PostMapping("/register")
+    public String register(@Valid @RequestBody MongoUserCreation mongoUserWithoutId) {
+        mongoUserService.registerUser(mongoUserWithoutId);
+        return "registered";
     }
 
     @PostMapping("/login")
     public String login() {
+
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 

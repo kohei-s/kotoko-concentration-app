@@ -4,55 +4,82 @@ import GameRecord from "./Record/GameRecord.tsx";
 import GameBoard from "./Game/GameBoard.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import LoginPage from "./LoginPage.tsx";
-import ProtectedRoutes from "./ProtectedRoutes.tsx";
+import LoginPage from "./Security/LoginPage.tsx";
+import ProtectedRoutes from "./Security/ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
-import Header from "./Header.tsx";
 import "./App.css"
+import {UserInfo} from "./UserInfo.ts";
+import RegisterPage from "./Security/RegisterPage.tsx";
 
 export default function App() {
 
-    const [user, setUser] = useState<string>("")
+    const [userName, setUserName] = useState<string>("")
+    const [userInfo, setUserInfo] = useState<UserInfo>()
     const navigate = useNavigate()
 
     function login(username: string, password: string) {
-        axios.post("/api/users/login", null, {auth: {username, password}})
-            .then((response) => {
-                setUser(response.data as string)
+        axios.post<string>
+        ("/api/users/login", null, {auth: {username, password}})
+            .then(response => response.data)
+            .then(data => {
+                const name: string = data
+                setUserName(name)
+                navigate("/")
+            })
+            .catch(console.error)
+    }
+
+    function register(username: string, password: string) {
+        const newUser = {"username": `${username}`, "password": `${password}`}
+        axios.post<string>
+        ("/api/users/register", newUser)
+            .then(response => {
+                console.log(response)
                 navigate("/")
             })
             .catch(console.error)
     }
 
     function me() {
-        axios.get("/api/users/me")
-            .then(response => {
-                setUser(response.data as string)
+        axios.get<UserInfo>("/api/users/me")
+            .then(response => response.data)
+            .then(data => {
+                const name: string = data.username
+                setUserInfo(data)
+                setUserName(name)
+                navigate("/")
             })
-            .catch(console.error)
+            .catch(error=> {
+                console.error(error)
+                setUserInfo(undefined)
+                setUserName("Anonymous User")
+            })
     }
 
     function logout() {
         axios.post("/api/users/logout")
-            .then(() => {setUser("anonymousUser")})
+            .then(() => {
+                setUserName("anonymousUser")
+                navigate("/login")
+            })
             .catch(console.error)
     }
 
     useEffect(() => {
         me()
-    }, [user])
+    },[userName])
 
 
     return (
         <>
-            <Header user={user} onLogout={logout}></Header>
             <Routes>
-                <Route path={"/login"} element={<LoginPage onLogin={login}></LoginPage>}></Route>
-                <Route element={<ProtectedRoutes user={user}/>}>
+                <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
+                <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
+                <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
                     <Route path={"/"} element={<MainPage/>}></Route>
-                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
+                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard userInfo={userInfo}/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
-                    <Route path={"/game-record"} element={<GameRecord/>}></Route>
+                    <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                     <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                 </Route>
             </Routes>

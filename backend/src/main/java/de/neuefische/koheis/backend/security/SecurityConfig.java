@@ -3,7 +3,7 @@ package de.neuefische.koheis.backend.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,18 +23,23 @@ public class SecurityConfig {
         requestHandler.setCsrfRequestAttributeName(null);
 
         return http.csrf(csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .csrfTokenRequestHandler(requestHandler))
-                .httpBasic(Customizer.withDefaults())
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(requestHandler))
+                .httpBasic(basic -> basic.authenticationEntryPoint(
+                        (request, response, authException) ->
+                                response.sendError(
+                                        HttpStatus.UNAUTHORIZED.value(),
+                                        HttpStatus.UNAUTHORIZED.getReasonPhrase()
+                                )))
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
-                httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
                                 .requestMatchers(HttpMethod.GET, "/api_game_cards").permitAll()
                                 .requestMatchers("/api/game_cards").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api_game_cards/**").permitAll()
                                 .requestMatchers("/api/game_cards/**").authenticated()
-                                .requestMatchers("/api/users/me").permitAll()
+                                .requestMatchers("/api/users/me").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .build();
@@ -44,7 +49,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
-
-
 
 }

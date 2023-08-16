@@ -1,0 +1,17 @@
+form {
+    padding-top: 100px;
+    padding-left: 25px;
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    color: #535bf2;
+    text-decoration: inherit;
+}
+
+button {
+    margin-top: 20px;
+    border-color: #f8e619;
+}

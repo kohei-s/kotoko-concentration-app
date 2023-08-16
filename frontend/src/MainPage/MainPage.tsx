@@ -1,7 +1,5 @@
-import {Button, IconButton, Stack, Tooltip} from "@mui/material";
+import {Button, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import "./MainPage.css"
 
 export default function MainPage() {
@@ -29,26 +27,10 @@ export default function MainPage() {
                 </Tooltip>
                 <Tooltip title="Custom Card">
                     <Button variant="contained" sx={{background: "#508356", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to="/game/small/custom">★</Link>
+                        <Link to="/game/small/testSet">★</Link>
                     </Button>
                 </Tooltip>
             </Stack>
-            <div className={"menu"}>
-                <Stack direction="row" spacing={1.0} justifyContent={"end"}>
-                    <Tooltip title="Card Collection">
-                        <IconButton size="small"
-                                    sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
-                            <Link to="/card-collection"><MenuBookIcon/></Link>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Game Record">
-                        <IconButton size="small"
-                                    sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
-                            <Link to="/game-record"><EmojiEventsIcon/></Link>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
-            </div>
         </>
     )
 

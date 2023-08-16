@@ -1,12 +1,15 @@
 package de.neuefische.koheis.backend.security;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Collections;
 
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
@@ -22,6 +25,19 @@ public class MongoUserDetailsService implements UserDetailsService {
         MongoUser mongoUser = mongoUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username:" + username + " not found!"));
 
-        return new User(mongoUser.username(), mongoUser.password(), Collections.emptyList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (mongoUser.achievement() != null) {
+            authorities.add(new SimpleGrantedAuthority(mongoUser.getAchievement()));
+        }
+        for (String role : mongoUser.getWordbook()) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+
+        return User.builder()
+                .username(mongoUser.username())
+                .password(mongoUser.password())
+                .authorities(authorities)
+                .build();
     }
+
 }

@@ -1,7 +1,13 @@
 import {GameCard} from "./GameCard.ts";
-import prand from 'pure-rand';
 
 export function createGameCards(setName: string, gameSize: string) {
+
+    function shuffleArray(array: GameCard[]) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
     const alphabetReading = [
         "a", "i", "u", "e", "o",
@@ -58,16 +64,7 @@ export function createGameCards(setName: string, gameSize: string) {
         kanaCards.push(gameCard);
     });
 
-    const seed = 42;
-    const rng = prand.xoroshiro128plus(seed);
-
-    const cardList: GameCard[] = [];
-    while (kanaCards.length > 0) {
-        const n = kanaCards.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng);
-        cardList.push(kanaCards[k]);
-        kanaCards.splice(k, 1);
-    }
+    shuffleArray(kanaCards)
 
     const rowAndColumn: number[] = [];
     let pairing;
@@ -88,7 +85,7 @@ export function createGameCards(setName: string, gameSize: string) {
             pairing = 8;
     }
 
-    const cardPairs: GameCard [] = cardList.splice(0, pairing);
+    const cardPairs: GameCard [] = kanaCards.splice(0, pairing);
     cardPairs.push(...cardPairs.map(card => ({...card})));
 
     const emptyCard: GameCard = {id: prefix + "0", title: "empty", cardSetName: setName}
@@ -96,17 +93,7 @@ export function createGameCards(setName: string, gameSize: string) {
         cardPairs.push(emptyCard);
     }
 
-    const shuffledPairs: GameCard[] = [];
-    while (cardPairs.length > 0) {
-        const n = cardPairs.length;
-        const k = prand.unsafeUniformIntDistribution(0, n, rng)
-        if (cardPairs[k]===undefined){
-            cardPairs.splice(k, 1);
-        } else {
-            shuffledPairs.push(cardPairs[k]);
-            cardPairs.splice(k, 1);
-        }
-    }
+    shuffleArray(cardPairs)
 
     const cardGrid: GameCard[][] = [];
     const isMatched: boolean[][] = [];
@@ -115,13 +102,13 @@ export function createGameCards(setName: string, gameSize: string) {
         cardGrid[i] = [];
         isMatched[i] = [];
         for (let j = 0; j < rowAndColumn[1]; j++) {
-            cardGrid[i][j] = shuffledPairs[m];
+            cardGrid[i][j] = cardPairs[m];
             isMatched[i][j] = false;
             m++;
         }
     }
 
-    const id = prefix + String(1 + prand.unsafeUniformIntDistribution(0, 10000, rng));
+    const id = prefix + String(Math.floor(Math.random() * (10000 + 1)));
 
     return {id, cardGrid, isMatched}
 
