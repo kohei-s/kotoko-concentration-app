@@ -2,25 +2,38 @@ package de.neuefische.koheis.backend.security;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class UserInfoTest {
     @Test
     void testHashCode() {
-        UserInfo user1 = new UserInfo("test", "testAchievement", new String[]{"apple", "banana", "cherry"});
-        UserInfo user2 = new UserInfo("test", "testAchievement", new String[]{"apple", "banana", "cherry"});
+        UserInfo user1 = new UserInfo("test", "8", new String[]{"h1", "k2", "c3"});
+        UserInfo user2 = new UserInfo("test", "8", new String[]{"h1", "k2", "c3"});
 
         assertEquals(user1.hashCode(), user2.hashCode());
     }
 
     @Test
     void testToString() {
-        UserInfo user = new UserInfo("test", "testAchievement", new String[]{"dog", "cat", "bird"});
+        UserInfo user = new UserInfo("test", "8", new String[]{"h1", "k2", "c3"});
         String expectedString = "UserInfo{" +
                 "username='test', " +
-                "achievement='testAchievement', " +
-                "wordbook=[dog, cat, bird]" +
+                "achievement='8', " +
+                "wordbook=[h1, k2, c3]" +
                 '}';
 
         assertEquals(expectedString, user.toString());
     }
+
+    @Test
+    void testEquals() {
+        UserInfo user1 = new UserInfo("test1", "8", new String[]{"h1", "k2", "c3"});
+        UserInfo user2 = new UserInfo("test1", "8", new String[]{"h1", "k2", "c3"});
+        UserInfo user3 = new UserInfo("test2", "12", new String[]{"h3", "k4", "c5"});
+
+        assertEquals(user1, user2);
+        assertNotEquals(user1, user3);
+    }
+
 }
 
