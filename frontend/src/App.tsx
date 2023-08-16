@@ -77,7 +77,7 @@ export default function App() {
                 <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
                 <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
                     <Route path={"/"} element={<MainPage/>}></Route>
-                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard/>}></Route>
+                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard userInfo={userInfo}/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
                     <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                     <Route path={"/*"} element={<Navigate to={"/"}/>}/>

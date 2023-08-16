@@ -11,7 +11,7 @@ type Props = {
 export default function GameRecord(props: Props) {
 
     if (!props.userInfo){
-        return "Lade..."
+        return "Loading data..."
     }
 
     const userData = props.userInfo
