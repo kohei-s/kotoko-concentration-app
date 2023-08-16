@@ -32,7 +32,7 @@ class MongoUserServiceTest {
         mongoUserService.registerUser(mongoUserWithoutId);
 
         //THEN
-        verify(mongoUserRepository).insert(new MongoUser("01", "testName", "123", null, new String[0]));
+        verify(mongoUserRepository).insert(new MongoUser("01", "testName", "123", null, new String[0], new boolean[0], new String[0]));
         verify(idService).createRandomId();
     }
 
@@ -40,7 +40,7 @@ class MongoUserServiceTest {
     void whenUserExists_throwException() {
         //GIVEN
         Mockito.when(mongoUserRepository.findByUsername("testName"))
-                        .thenReturn(Optional.of(new MongoUser("01", "testName", "testPassword", "testAchievement", new String[]{"testWordbook"})));
+                        .thenReturn(Optional.of(new MongoUser("01", "testName", "testPassword", "testAchievement", new String[]{"testWordbook"}, new boolean[]{false, false}, new String[]{"small", "small", "small", "small"})));
 
         //WHEN //THEN
        try {
@@ -53,10 +53,10 @@ class MongoUserServiceTest {
     @Test
     void whenUsernameExists_returnUserInfo() {
         //GIVEN
-        MongoUser mongoUser = new MongoUser("01", "testName", "testPassword", "", new String[]{});
+        MongoUser mongoUser = new MongoUser("01", "testName", "testPassword", "", new String[]{}, new boolean[]{}, new String[]{});
         Mockito.when(mongoUserRepository.findByUsername("testName"))
                 .thenReturn(Optional.of(mongoUser));
-        UserInfo expected = new UserInfo("testName", "", new String[]{});
+        UserInfo expected = new UserInfo("testName", "", new String[]{}, new boolean[]{}, new String[]{});
 
         //WHEN
         UserInfo actual = mongoUserService.findByUsername("testName");
@@ -71,7 +71,7 @@ class MongoUserServiceTest {
         //GIVEN
         Mockito.when(mongoUserRepository.findByUsername("testName"))
                 .thenReturn(Optional.empty());
-        UserInfo expected = new UserInfo("Anonymous User", "", new String[]{});
+        UserInfo expected = new UserInfo("Anonymous User", "", new String[]{}, new boolean[]{}, new String[]{});
 
         //WHEN
         UserInfo actual = mongoUserService.findByUsername("testName");
@@ -84,18 +84,18 @@ class MongoUserServiceTest {
     @Test
     void whenUpdateExistingUserInfo_returnUpdatedUserInfo() {
         //GIVEN
-        MongoUser before = new MongoUser("012", "test", "345", "testA", new String[]{"testB"});
+        MongoUser before = new MongoUser("012", "test", "345", "testA", new String[]{"testB"}, new boolean[]{false, false}, new String[]{"small", "small", "small", "small"});
         Mockito.when(mongoUserRepository.findByUsername("test"))
                 .thenReturn(Optional.of(before));
 
         //WHEN
-        MongoUser after = new MongoUser("012", "test", "345", "testC", new String[]{"testD"});
+        MongoUser after = new MongoUser("012", "test", "345", "testC", new String[]{"testD"}, new boolean[]{false, false}, new String[]{"small", "small", "small", "small"});
         Mockito.when(mongoUserRepository.save(after))
                 .thenReturn(after);
         Mockito.when(mongoUserRepository.findByUsername("test"))
                 .thenReturn(Optional.of(after));
-        UserInfo expected = new UserInfo("test", "testC", new String[]{"testD"});
-        UserInfo actual = mongoUserService.updateUserInfo(new UserInfo("test", "testC", new String[]{"testD"}));
+        UserInfo expected = new UserInfo("test", "testC", new String[]{"testD"}, new boolean[]{false, false}, new String[]{"small", "small", "small", "small"});
+        UserInfo actual = mongoUserService.updateUserInfo(new UserInfo("test", "testC", new String[]{"testD"}, new boolean[]{false, false}, new String[]{"small", "small", "small", "small"}));
 
         //THEN
         verify(mongoUserRepository).save(after);

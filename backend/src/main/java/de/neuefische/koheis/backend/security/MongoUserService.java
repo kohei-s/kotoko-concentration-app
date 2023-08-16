@@ -16,12 +16,12 @@ public class MongoUserService {
 
     public UserInfo findByUsername(String username) {
         if (mongoUserRepository.findByUsername(username).isEmpty()) {
-            return new UserInfo("Anonymous User", "", new String[]{});
+            return new UserInfo("Anonymous User", "", new String[]{}, new boolean[]{}, new String[]{});
         }
         MongoUser mongoUser = mongoUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username:" + username + " not found!"));
 
-        return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook());
+        return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook(), mongoUser.diacritics(), mongoUser.levels());
     }
 
     public void registerUser(MongoUserCreation mongoUserWithoutId) {
@@ -31,7 +31,7 @@ public class MongoUserService {
 
         String encoderPassword = passwordEncoder.encode(mongoUserWithoutId.password());
 
-        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new String[0]);
+        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new String[0], new boolean[0], new String[0]);
         mongoUserRepository.insert(newUser);
     }
 
@@ -44,10 +44,13 @@ public class MongoUserService {
                 userInfo.username(),
                 mongoUser.password(),
                 userInfo.achievement(),
-                userInfo.wordbook());
+                userInfo.wordbook(),
+                userInfo.diacritics(),
+                userInfo.levels()
+        );
 
         MongoUser returnedMongoUser = mongoUserRepository.save(updatedMongoUser);
-        return new UserInfo(returnedMongoUser.username(), returnedMongoUser.achievement(), returnedMongoUser.wordbook());
+        return new UserInfo(returnedMongoUser.username(), returnedMongoUser.achievement(), returnedMongoUser.wordbook(), returnedMongoUser.diacritics(), returnedMongoUser.levels());
     }
 
 }

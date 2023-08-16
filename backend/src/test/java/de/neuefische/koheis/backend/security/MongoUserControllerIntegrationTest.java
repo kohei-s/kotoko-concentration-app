@@ -67,7 +67,9 @@ class MongoUserControllerIntegrationTest {
         String userInfo = """
                 {"username": "test",
                 "achievement": "testA",
-                "wordbook": ["testB"]
+                "wordbook": ["testB"],
+                "diacritics": [false, false],
+                "levels": ["small", "medium", "large", "small"]
                 }
                 """;
 

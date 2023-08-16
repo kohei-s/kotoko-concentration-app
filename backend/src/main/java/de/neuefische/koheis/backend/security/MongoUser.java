@@ -12,7 +12,11 @@ public record MongoUser(
         String username,
         String password,
         String achievement,
-        String[] wordbook
+        String[] wordbook,
+
+        boolean[] diacritics,
+
+        String[] levels
 ) {
 
         public String getAchievement() {
@@ -23,18 +27,24 @@ public record MongoUser(
                 return wordbook;
         }
 
+        public boolean[] getDiacritics() {return diacritics;}
+
+        public String[] getLevels() {return levels;}
+
         @Override
         public boolean equals(Object o) {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
                 MongoUser mongoUser = (MongoUser) o;
-                return Objects.equals(id, mongoUser.id) && Objects.equals(username, mongoUser.username) && Objects.equals(password, mongoUser.password) && Objects.equals(achievement, mongoUser.achievement) && Arrays.equals(wordbook, mongoUser.wordbook);
+                return Objects.equals(id, mongoUser.id) && Objects.equals(username, mongoUser.username) && Objects.equals(password, mongoUser.password) && Objects.equals(getAchievement(), mongoUser.getAchievement()) && Arrays.equals(getWordbook(), mongoUser.getWordbook()) && Arrays.equals(getDiacritics(), mongoUser.getDiacritics()) && Arrays.equals(getLevels(), mongoUser.getLevels());
         }
 
         @Override
         public int hashCode() {
-                int result = Objects.hash(id, username, password, achievement);
-                result = 31 * result + Arrays.hashCode(wordbook);
+                int result = Objects.hash(id, username, password, getAchievement());
+                result = 31 * result + Arrays.hashCode(getWordbook());
+                result = 31 * result + Arrays.hashCode(getDiacritics());
+                result = 31 * result + Arrays.hashCode(getLevels());
                 return result;
         }
 
@@ -46,6 +56,8 @@ public record MongoUser(
                         ", password='" + password + '\'' +
                         ", achievement='" + achievement + '\'' +
                         ", wordbook=" + Arrays.toString(wordbook) +
+                        ", diacritics=" + Arrays.toString(diacritics) +
+                        ", levels=" + Arrays.toString(levels) +
                         '}';
         }
 }
