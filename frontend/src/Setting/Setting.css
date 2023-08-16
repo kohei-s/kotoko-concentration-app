@@ -1,0 +1,9 @@
+.selector {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+#title {
+    color: #213547;
+}
