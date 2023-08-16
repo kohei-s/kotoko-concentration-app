@@ -1,5 +1,6 @@
 package de.neuefische.koheis.backend.gamegcards;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +42,13 @@ public class GameCardsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    GameCard addGameCard(@RequestBody GameCardWithoutId gameCardWithoutId) {
+    GameCard addGameCard(@Valid @RequestBody GameCardWithoutId gameCardWithoutId) {
 
         return gameCardsService.addGameCard(gameCardWithoutId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GameCard> updateGameCard(@PathVariable("id") String id, @RequestBody GameCardWithoutId gameCardWithoutId) {
+    public ResponseEntity<GameCard> updateGameCard(@PathVariable("id") String id, @Valid @RequestBody GameCardWithoutId gameCardWithoutId) {
         try {
             GameCard updatedGameCard = gameCardsService.updateGameCard(gameCardWithoutId, id);
             return ResponseEntity.ok(updatedGameCard);
