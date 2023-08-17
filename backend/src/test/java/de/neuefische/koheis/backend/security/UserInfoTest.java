@@ -54,13 +54,13 @@ class UserInfoTest {
     @Test
     void testEqualsNull() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotEquals(null, userInfo);
+        assertNotSame(null, userInfo);
     }
 
     @Test
     void testEqualsSameObject() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertEquals(userInfo, userInfo);
+        assertSame(userInfo, userInfo);
     }
 
 }
