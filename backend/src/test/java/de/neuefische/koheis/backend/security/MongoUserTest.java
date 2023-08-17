@@ -55,19 +55,8 @@ class MongoUserTest {
     @Test
     void testEqualsNull() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotSame(null, mongoUser);
-    }
-
-    @Test
-    void testNotEqualsNull() {
-        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotNull(mongoUser);
-    }
-
-    @Test
-    void testEqualsObject() {
-        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertTrue((mongoUser instanceof MongoUser));
+        boolean test = mongoUser.equals(null);
+        assertEquals(false, test);
     }
 
     @Test
@@ -76,7 +65,8 @@ class MongoUserTest {
         String test = "test";
         Class class1 = mongoUser.getClass();
         Class class2 = test.getClass();
-        assertNotSame(class1, class2);
+        boolean test2 = class1.equals(class2);
+        assertEquals(false, test2);
     }
 
 }

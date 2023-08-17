@@ -46,29 +46,27 @@ class UserInfoTest {
 
     @Test
     void testEqualsSameValues() {
+        UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        boolean test = userInfo.equals(null);
+        assertFalse(test);
+    };
+
+    @Test
+    void testEqualsSameObject() {
         UserInfo userInfo1 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
         UserInfo userInfo2 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertEquals(userInfo1, userInfo2);
+        boolean test = userInfo1.equals(userInfo2);
+        assertTrue(test);
     }
 
     @Test
-    void testEqualsNull() {
-        UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotNull(userInfo);
-    }
-    @Test
-    void testEqualsDifferentClass() {
-        UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertTrue(userInfo instanceof UserInfo);
-    }
-
-    @Test
-    void testEqualsObject() {
-        UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+    void testNotEqualsClass() {
+        UserInfo userInfo3 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
         String test = "test";
-        Class class1 = userInfo.getClass();
+        Class class1 = userInfo3.getClass();
         Class class2 = test.getClass();
-        assertNotSame(class1, class2);
+        boolean test2 = class1.equals(class2);
+        assertFalse(test2);
     }
 
 }
