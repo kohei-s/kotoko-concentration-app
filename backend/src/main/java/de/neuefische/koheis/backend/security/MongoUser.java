@@ -2,8 +2,8 @@ package de.neuefische.koheis.backend.security;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.Arrays;
-import java.util.Objects;
+/*import java.util.Arrays;
+import java.util.Objects;*/
 
 @Document("users")
 public record MongoUser(
@@ -19,7 +19,7 @@ public record MongoUser(
         String[] levels
 ) {
 
-        public String getAchievement() {
+       /* public String getAchievement() {
                 return achievement;
         }
 
@@ -59,5 +59,5 @@ public record MongoUser(
                         ", diacritics=" + Arrays.toString(diacritics) +
                         ", levels=" + Arrays.toString(levels) +
                         '}';
-        }
+        }*/
 }

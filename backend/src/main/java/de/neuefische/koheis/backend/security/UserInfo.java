@@ -1,7 +1,7 @@
 package de.neuefische.koheis.backend.security;
 
-import java.util.Arrays;
-import java.util.Objects;
+/*import java.util.Arrays;
+import java.util.Objects;*/
 
 public record UserInfo (
     String username,
@@ -11,7 +11,7 @@ public record UserInfo (
     String[] levels
 
 ){
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -37,5 +37,5 @@ public record UserInfo (
                 ", diacritics=" + Arrays.toString(diacritics) +
                 ", levels=" + Arrays.toString(levels) +
                 '}';
-    }
+    }*/
 }
