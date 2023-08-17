@@ -1,6 +1,10 @@
 package de.neuefische.koheis.backend.security;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MongoUserTest {
@@ -75,6 +79,21 @@ class MongoUserTest {
         boolean test2 = class1.equals(class2);
         assertEquals(false, test2);
     }
+
+    @Test
+    void testEqualsValues() {
+        MongoUser mongoUser1 = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        MongoUser mongoUser2 = new MongoUser("34", "user2", "achieve2", "31", new String[]{"word2"}, new boolean[]{false}, new String[]{"level2"});
+        boolean test = Objects.equals(mongoUser1.username(), mongoUser2.username())
+                && Objects.equals(mongoUser1.achievement(), mongoUser2.achievement() )
+                && Arrays.equals(mongoUser1.wordbook(), mongoUser2.wordbook())
+                && Arrays.equals(mongoUser1.diacritics(), mongoUser2.diacritics())
+                && Arrays.equals(mongoUser1.levels(), mongoUser2.levels());
+        boolean test2 = mongoUser1.equals(mongoUser2);
+        assertEquals(test, test2);
+    }
+
+
 
 }
 

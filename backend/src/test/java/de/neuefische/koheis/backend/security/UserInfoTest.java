@@ -2,6 +2,9 @@ package de.neuefische.koheis.backend.security;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserInfoTest {
@@ -66,6 +69,19 @@ class UserInfoTest {
         Class class2 = test.getClass();
         boolean test2 = class1.equals(class2);
         assertFalse(test2);
+    }
+
+    @Test
+    void testEqualsValues() {
+        UserInfo userInfo1 = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        UserInfo userInfo2 = new UserInfo("user2", "achieve2", new String[]{"word2"}, new boolean[]{false}, new String[]{"level2"});
+        boolean test = Objects.equals(userInfo1.username(), userInfo2.username())
+                && Objects.equals(userInfo1.achievement(), userInfo2.achievement() )
+                && Arrays.equals(userInfo1.wordbook(), userInfo2.wordbook())
+                && Arrays.equals(userInfo1.diacritics(), userInfo2.diacritics())
+                && Arrays.equals(userInfo1.levels(), userInfo2.levels());
+        boolean test2 = userInfo1.equals(userInfo2);
+        assertEquals(test, test2);
     }
 
 }
