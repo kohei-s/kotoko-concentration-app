@@ -176,7 +176,7 @@ export default function FlipCard(props: Props) {
                 {renderGameTitle()}
                 {confetti()}
             </div>
-            <div className={"concentration"}>
+            <div className={(props.gameSize==="small")? "concentration-small" : (props.gameSize==="medium")? "concentration-medium" : "concentration-large"}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
                             if (!card) {

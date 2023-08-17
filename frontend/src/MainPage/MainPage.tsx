@@ -44,7 +44,7 @@ export default function MainPage(props: Props) {
                 </Tooltip>
                 <Tooltip title="Katakana">
                     <Button variant="contained" sx={{background: "#4D6A9A", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to={"/game/" + katakanaLevel + "katakana"}>ア</Link>
+                        <Link to={"/game/" + katakanaLevel + "/katakana"}>ア</Link>
                     </Button>
                 </Tooltip>
                 <Tooltip title="Playing Card">

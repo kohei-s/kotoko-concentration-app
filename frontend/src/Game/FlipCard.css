@@ -1,10 +1,30 @@
-.concentration {
+.concentration-small {
     display: grid;
     width: 300px;
     height: 300px;
     grid-gap: 7px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    padding-block-end: 25px;
+}
+
+.concentration-medium {
+    display: grid;
+    width: 300px;
+    height: 400px;
+    grid-gap: 7px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    padding-block-end: 25px;
+}
+
+.concentration-large {
+    display: grid;
+    width: 320px;
+    height: 320px;
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     padding-block-end: 25px;
 }
 

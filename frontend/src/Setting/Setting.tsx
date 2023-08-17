@@ -54,8 +54,11 @@ export default function Setting(props: Props) {
 
     return (
         <>
+            <div>
+                <img width={"150px"} height={"150px"} src={"/logos/setting-logo.png"}
+                     alt={"setting-logo"}/>
+            </div>
             <div className={"selector"}>
-                <p id={"title"}>Select Game Levels</p>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="Hiragana-level">Hiragana</InputLabel>
                     <Select
