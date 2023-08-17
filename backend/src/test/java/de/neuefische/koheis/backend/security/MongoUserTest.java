@@ -98,7 +98,37 @@ class MongoUserTest {
         assertEquals(test, test2);
     }
 
+    @Test
+    void testEqualsSame() {
+        MongoUser obj = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        assertTrue(obj.equals(obj));
+    }
 
+    @Test
+    public void testEqualsNullObject() {
+        MongoUser obj = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        assertFalse(obj.equals(null));
+    }
+
+    @Test
+    public void testEqualsDifferentClass() {
+        MongoUser obj = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        assertFalse(obj.equals("Hello"));
+    }
+
+    @Test
+    public void testEqualsSameClassDifferentInstances() {
+        MongoUser obj1 = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        MongoUser obj2 = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        assertTrue(obj1.equals(obj2));
+    }
+
+    @Test
+    public void testEqualsDifferentClassInstances() {
+        MongoUser obj = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        UserInfo other = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        assertFalse(obj.equals(other));
+    }
 
 }
 
