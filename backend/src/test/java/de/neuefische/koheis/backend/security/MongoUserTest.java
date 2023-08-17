@@ -59,16 +59,24 @@ class MongoUserTest {
     }
 
     @Test
-    void testEqualsDifferentClass() {
+    void testNotEqualsNull() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        String test = "some string";
-        assertNotEquals(test.getClass(), mongoUser.getClass());
+        assertNotNull(mongoUser);
     }
 
     @Test
     void testEqualsObject() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertTrue((mongoUser instanceof Object));
+        assertTrue((mongoUser instanceof MongoUser));
+    }
+
+    @Test
+    void testEqualsClass() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        String test = "test";
+        Class class1 = mongoUser.getClass();
+        Class class2 = test.getClass();
+        assertNotSame(class1, class2);
     }
 
 }

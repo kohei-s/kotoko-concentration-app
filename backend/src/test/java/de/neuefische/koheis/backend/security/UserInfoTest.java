@@ -54,19 +54,21 @@ class UserInfoTest {
     @Test
     void testEqualsNull() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotEquals(null, userInfo);
+        assertNotNull(userInfo);
     }
     @Test
     void testEqualsDifferentClass() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        String test = "some string";
-        assertNotEquals(test.getClass(), userInfo.getClass());
+        assertTrue(userInfo instanceof UserInfo);
     }
 
     @Test
     void testEqualsObject() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertTrue((userInfo instanceof Object));
+        String test = "test";
+        Class class1 = userInfo.getClass();
+        Class class2 = test.getClass();
+        assertNotSame(class1, class2);
     }
 
 }
