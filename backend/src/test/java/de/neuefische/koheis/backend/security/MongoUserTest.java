@@ -65,5 +65,11 @@ class MongoUserTest {
         assertNotEquals(test.getClass(), mongoUser.getClass());
     }
 
+    @Test
+    void testEqualsObject() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        assertEquals(true, (mongoUser instanceof Object));
+    }
+
 }
 
