@@ -52,5 +52,17 @@ class MongoUserTest {
         assertEquals(mongoUser1, mongoUser2);
     }
 
+    @Test
+    void testEqualsSameObject() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        assertEquals(mongoUser, mongoUser);
+    }
+
+    @Test
+    void testEqualsNull() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        assertNotEquals(null, mongoUser);
+    }
+
 }
 
