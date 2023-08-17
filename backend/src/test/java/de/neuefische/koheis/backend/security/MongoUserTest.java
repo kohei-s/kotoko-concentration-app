@@ -58,5 +58,12 @@ class MongoUserTest {
         assertNotSame(null, mongoUser);
     }
 
+    @Test
+    void testEqualsDifferentClass() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        String test = "some string";
+        assertNotEquals(test.getClass(), mongoUser.getClass());
+    }
+
 }
 

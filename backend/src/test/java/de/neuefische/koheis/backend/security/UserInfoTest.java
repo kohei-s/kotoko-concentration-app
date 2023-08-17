@@ -54,7 +54,13 @@ class UserInfoTest {
     @Test
     void testEqualsNull() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertNotSame(null, userInfo);
+        assertNotEquals(null, userInfo);
+    }
+    @Test
+    void testEqualsDifferentClass() {
+        UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        String test = "some string";
+        assertNotEquals(test.getClass(), userInfo.getClass());
     }
 
 }
