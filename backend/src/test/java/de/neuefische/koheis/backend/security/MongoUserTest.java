@@ -60,6 +60,13 @@ class MongoUserTest {
     }
 
     @Test
+    void testEqualsThis() {
+        MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        boolean test = mongoUser.equals(mongoUser);
+        assertEquals(true, test);
+    }
+
+    @Test
     void testEqualsClass() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
         String test = "test";

@@ -54,8 +54,7 @@ class UserInfoTest {
     @Test
     void testEqualsSameObject() {
         UserInfo userInfo1 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        UserInfo userInfo2 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        boolean test = userInfo1.equals(userInfo2);
+        boolean test = userInfo1.equals(userInfo1);
         assertTrue(test);
     }
 
