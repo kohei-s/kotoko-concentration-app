@@ -1,8 +1,8 @@
 package de.neuefische.koheis.backend.security;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserInfoTest {
     @Test
@@ -35,6 +35,20 @@ class UserInfoTest {
 
         assertEquals(user1, user2);
         assertNotEquals(user1, user3);
+    }
+
+    @Test
+    void testEqualsDifferentValues() {
+        UserInfo userInfo1 = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        UserInfo userInfo2 = new UserInfo("user2", "achieve2", new String[]{"word2"}, new boolean[]{false}, new String[]{"level2"});
+        assertNotEquals(userInfo1, userInfo2);
+    }
+
+    @Test
+    void testEqualsSameValues() {
+        UserInfo userInfo1 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        UserInfo userInfo2 = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
+        assertEquals(userInfo1, userInfo2);
     }
 
 }
