@@ -66,7 +66,7 @@ class UserInfoTest {
     @Test
     void testEqualsObject() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        assertEquals(true, (userInfo instanceof Object));
+        assertTrue((userInfo instanceof Object));
     }
 
 }
