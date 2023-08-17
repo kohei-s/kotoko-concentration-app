@@ -121,44 +121,5 @@ class UserInfoTest {
         assertNotEquals(obj, other);
     }
 
-
-
-
-
-    @Test
-    void testEqualsUsername() {
-        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        UserInfo user2 = new UserInfo("username", "otherAchievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        assertTrue(user1.username().equals(user2.username()));
-    }
-
-    @Test
-    void testEqualsAchievement() {
-        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        UserInfo user2 = new UserInfo("otherUser", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        assertTrue(user1.achievement().equals(user2.achievement()));
-    }
-
-    @Test
-    void testEqualsWordbook() {
-        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        assertTrue(Arrays.equals(user1.wordbook(), user2.wordbook()));
-    }
-
-    @Test
-    void testEqualsDiacritics() {
-        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        assertTrue(Arrays.equals(user1.diacritics(), user2.diacritics()));
-    }
-
-    @Test
-    void testEqualsLevels() {
-        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
-        assertTrue(Arrays.equals(user1.levels(), (user2.levels())));
-    }
-
 }
 

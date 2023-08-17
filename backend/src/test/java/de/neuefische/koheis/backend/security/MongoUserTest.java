@@ -76,6 +76,12 @@ class MongoUserTest {
     }
 
     @Test
+    void testEqualsNullObject() {
+        MongoUser obj = new MongoUser("id", "user1","pass", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
+        assertNotEquals( null, obj);
+    }
+
+    @Test
     void testEqualsClass() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
         String test2 = "test";
