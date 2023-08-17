@@ -56,7 +56,7 @@ class UserInfoTest {
         Class class2 = testObject.getClass();
         boolean test2 = class1.equals(class2);
         boolean test3 = (test1 || test2);
-        assertEquals(false, test3);
+        assertFalse(test3);
     }
 
     @Test
@@ -92,33 +92,72 @@ class UserInfoTest {
     @Test
     void testEqualsSame() {
         UserInfo obj = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
-        assertTrue(obj.equals(obj));
+        assertEquals(obj, obj);
     }
 
     @Test
     void testEqualsNullObject() {
         UserInfo obj = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
-        assertFalse(obj.equals(null));
+        assertNotEquals( null, obj);
     }
 
     @Test
     void testEqualsDifferentClass() {
         UserInfo obj = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
-        assertFalse(obj.equals("Hello"));
+        assertNotEquals("Hello", obj);
     }
 
     @Test
     void testEqualsSameClassDifferentInstances() {
         UserInfo obj1 = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
         UserInfo obj2 = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
-        assertTrue(obj1.equals(obj2));
+        assertEquals(obj1, obj2);
     }
 
     @Test
     void testEqualsDifferentClassInstances() {
         UserInfo obj = new UserInfo("user1", "achieve1", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
         MongoUser other = new MongoUser("12", "user1", "achieve1", "21", new String[]{"word1"}, new boolean[]{true}, new String[]{"level1"});
-        assertFalse(obj.equals(other));
+        assertNotEquals(obj, other);
+    }
+
+
+
+
+
+    @Test
+    void testEqualsUsername() {
+        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        UserInfo user2 = new UserInfo("username", "otherAchievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        assertTrue(user1.username().equals(user2.username()));
+    }
+
+    @Test
+    void testEqualsAchievement() {
+        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        UserInfo user2 = new UserInfo("otherUser", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        assertTrue(user1.achievement().equals(user2.achievement()));
+    }
+
+    @Test
+    void testEqualsWordbook() {
+        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        assertTrue(Arrays.equals(user1.wordbook(), user2.wordbook()));
+    }
+
+    @Test
+    void testEqualsDiacritics() {
+        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        assertTrue(Arrays.equals(user1.diacritics(), user2.diacritics()));
+    }
+
+    @Test
+    void testEqualsLevels() {
+        UserInfo user1 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        UserInfo user2 = new UserInfo("username", "achievement", new String[]{"word1", "word2"}, new boolean[]{true}, new String[]{"l1", "l2"});
+        assertTrue(Arrays.equals(user1.levels(), (user2.levels())));
     }
 
 }

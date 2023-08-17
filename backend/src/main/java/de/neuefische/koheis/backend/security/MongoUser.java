@@ -60,4 +60,5 @@ public record MongoUser(
                         ", levels=" + Arrays.toString(levels) +
                         '}';
         }
+
 }
