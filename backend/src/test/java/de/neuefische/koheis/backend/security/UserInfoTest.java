@@ -49,7 +49,7 @@ class UserInfoTest {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
         boolean test = userInfo.equals(null);
         assertFalse(test);
-    };
+    }
 
     @Test
     void testEqualsSameObject() {
