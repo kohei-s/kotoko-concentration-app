@@ -1,42 +1,51 @@
 import FlipCard from "./FlipCard.tsx";
 import {UserInfo} from "../UserInfo.ts";
 
+type Props = {
+    update: (userInfo: UserInfo) => void
+    gameSize: string
+    gameName: string
+    userInfo: UserInfo | undefined
+}
+export default function createGameBoard(props: Props) {
 
-export default function createGameBoard(gameSize: string, gameName: string, userInfo: UserInfo | undefined) {
-
-    switch (gameName) {
+    switch (props.gameName) {
         case "hiragana":
             return <FlipCard
-                gameSize={gameSize}
-                gameName={gameName}
+                gameSize={props.gameSize}
+                gameName={props.gameName}
                 colorStyle={"#D05F5F"}
                 colorStyle2={"#73683F"}
                 colorStyle3={"#4D6A9A"}
-                userInfo={userInfo}/>;
+                userInfo={props.userInfo}
+                update={props.update}/>;
         case "katakana":
             return <FlipCard
-                gameSize={gameSize}
-                gameName={gameName}
+                gameSize={props.gameSize}
+                gameName={props.gameName}
                 colorStyle={"#4D6A9A"}
                 colorStyle2={"#D05F5F"}
                 colorStyle3={"#73683F"}
-                userInfo={userInfo}/>;
+                userInfo={props.userInfo}
+                update={props.update}/>;
         case "playing-cards":
             return <FlipCard
-                gameSize={gameSize}
-                gameName={gameName}
+                gameSize={props.gameSize}
+                gameName={props.gameName}
                 colorStyle={"#73683F"}
                 colorStyle2={"#4D6A9A"}
                 colorStyle3={"#D05F5F"}
-                userInfo={userInfo}/>;
+                userInfo={props.userInfo}
+                update={props.update}/>;
         default:
             return <FlipCard
-                gameSize={gameSize}
-                gameName={gameName}
+                gameSize={props.gameSize}
+                gameName={props.gameName}
                 colorStyle={"#587c18"}
                 colorStyle2={"#233d67"}
                 colorStyle3={"#834242"}
-                userInfo={userInfo}/>;
+                userInfo={props.userInfo}
+                update={props.update}/>;
     }
 
 }

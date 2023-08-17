@@ -18,11 +18,9 @@ export default function GameRecord(props: Props) {
     const user: string = userData.username
     const userAchievement: string = userData.achievement
     const uniqueWords: string[] = [...new Set(userData.wordbook)]
-
     const valueHiragana: number = uniqueWords.filter(word  => word.startsWith("h")).length
     const valueKatakana: number = uniqueWords.filter(word => word.startsWith("k")).length
     const valuePlayingCards: number = uniqueWords.filter(word => word.startsWith("c")).length
-
 
     return (
         <>

@@ -35,9 +35,9 @@ public class SecurityConfig {
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
-                                .requestMatchers(HttpMethod.GET, "/api_game_cards").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/game_cards").permitAll()
                                 .requestMatchers("/api/game_cards").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api_game_cards/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/game_cards/**").permitAll()
                                 .requestMatchers("/api/game_cards/**").authenticated()
                                 .requestMatchers("/api/users/me").authenticated()
                                 .anyRequest().permitAll()

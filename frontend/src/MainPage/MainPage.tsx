@@ -12,11 +12,12 @@ export default function MainPage(props: Props) {
     if (!props.userInfo) {
         return "Loading data..."
     }
+
     const userData = props.userInfo
-    let hiraganaLevel;
-    let katakanaLevel;
-    let playingCardLevel;
-    let customLevel;
+    let hiraganaLevel: string;
+    let katakanaLevel: string;
+    let playingCardLevel: string;
+    let customLevel: string;
 
     if (userData.levels.length===0) {
         hiraganaLevel = "small"
@@ -29,7 +30,6 @@ export default function MainPage(props: Props) {
         playingCardLevel = userData.levels[2]
         customLevel = userData.levels[3]
     }
-
 
     return (
         <>
@@ -44,7 +44,7 @@ export default function MainPage(props: Props) {
                 </Tooltip>
                 <Tooltip title="Katakana">
                     <Button variant="contained" sx={{background: "#4D6A9A", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to={"/game/" + katakanaLevel + "/katakana"}>ア</Link>
+                        <Link to={"/game/" + katakanaLevel + "katakana"}>ア</Link>
                     </Button>
                 </Tooltip>
                 <Tooltip title="Playing Card">

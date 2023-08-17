@@ -15,6 +15,7 @@ type Props = {
     colorStyle2: string
     colorStyle3: string
     userInfo: UserInfo | undefined
+    update: (userInfo:UserInfo) => void
 }
 export default function FlipCard(props: Props) {
 
@@ -28,14 +29,14 @@ export default function FlipCard(props: Props) {
     const [userAchievement, setUserAchievement] = useState<string>("");
     const [userWordbook, setUserWordbook] = useState<string[]>([]);
 
-    function update(updatedUserInfo: UserInfo) {
+    /*function update(updatedUserInfo: UserInfo) {
         axios.put<UserInfo>("/api/users/update", updatedUserInfo)
             .then(response => response.data)
             .then(data => {
                 setUserData(data)
             })
             .catch(console.error)
-    }
+    }*/
 
     const loadGameCards = useCallback(() => {
         if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
@@ -154,9 +155,11 @@ export default function FlipCard(props: Props) {
             const updatedUserInfo: UserInfo = {
                 username: userData?.username as string,
                 achievement: userAchievement,
-                wordbook: userWordbook
+                wordbook: userWordbook,
+                diacritics: userData?.diacritics as boolean[],
+                levels: userData?.levels as string[]
             }
-            update(updatedUserInfo)
+            props.update(updatedUserInfo)
         }
     }
 

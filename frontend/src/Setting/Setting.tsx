@@ -1,14 +1,13 @@
 import {UserInfo} from "../UserInfo.ts";
-import axios from "axios";
 import {useEffect, useState} from "react";
-import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import "./Setting.css"
 
 type Props = {
     userInfo: UserInfo | undefined
+    update: (userInfo: UserInfo) => void
 }
 export default function Setting(props: Props) {
-
 
     const [userData, setUserData] = useState<UserInfo>();
     const [userLevels, setUserLevels] = useState<string[]>([]);
@@ -16,15 +15,6 @@ export default function Setting(props: Props) {
     const [katakanaLevel, setKatakanaLevel] = useState<string>("");
     const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("");
     const [customLevel, setCustomLevel] = useState<string>("");
-
-    function updateUserLevels(updatedUserInfo: UserInfo) {
-        axios.put<UserInfo>("/api/users/update", updatedUserInfo)
-            .then(response => response.data)
-            .then(data => {
-                setUserData(data)
-            })
-            .catch(console.error)
-    }
 
     useEffect(() => {
         setUserData(props.userInfo)
@@ -51,26 +41,22 @@ export default function Setting(props: Props) {
 
     function updateLevels() {
         const newLevels: string[] = [hiraganaLevel, katakanaLevel, playingCardsLevel, customLevel]
-        console.log(newLevels)
         setUserLevels(newLevels)
-        console.log(userLevels)
-
-
         const updatedUserInfo: UserInfo = {
             username: userData?.username as string,
             achievement: userData?.achievement as string,
             wordbook: userData?.wordbook as string[],
             diacritics: userData?.diacritics as boolean[],
-            levels: userLevels
+            levels: newLevels
         }
-        updateUserLevels(updatedUserInfo)
+        props.update(updatedUserInfo)
     }
 
     return (
         <>
             <div className={"selector"}>
-                <p id={"title"}>Select Game Level</p>
-                <FormControl fullWidth>
+                <p id={"title"}>Select Game Levels</p>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="Hiragana-level">Hiragana</InputLabel>
                     <Select
                         labelId="Hiragana-level"
@@ -79,12 +65,13 @@ export default function Setting(props: Props) {
                         label="Hiargana"
                         onChange={changeHiraganaLevel}
                     >
-                        <MenuItem value={"small"}>Beginner</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate</MenuItem>
-                        <MenuItem value={"large"}>Advanced</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
+                    <FormHelperText>Your actual level: {(userLevels[0]==="small")? "Beginner": (userLevels[0]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <FormControl fullWidth>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="Katakana-level">Katakana</InputLabel>
                     <Select
                         labelId="Katakana-level"
@@ -93,12 +80,13 @@ export default function Setting(props: Props) {
                         label="Katakana"
                         onChange={changeKatakanaLevel}
                     >
-                        <MenuItem value={"small"}>Beginner</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate</MenuItem>
-                        <MenuItem value={"large"}>Advanced</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
+                    <FormHelperText>Your actual level: {(userLevels[1]==="small")? "Beginner": (userLevels[1]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <FormControl fullWidth>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="PlayingCards-level">Playing Cards</InputLabel>
                     <Select
                         labelId="PlayingCards-level"
@@ -107,12 +95,13 @@ export default function Setting(props: Props) {
                         label="PlayingCards"
                         onChange={changePlayingCardsLevel}
                     >
-                        <MenuItem value={"small"}>Beginner</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate</MenuItem>
-                        <MenuItem value={"large"}>Advanced</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4 cards) </MenuItem>
                     </Select>
+                    <FormHelperText>Your actual level: {(userLevels[2]==="small")? "Beginner": (userLevels[2]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <FormControl fullWidth>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="Cuctom-level">Custom</InputLabel>
                     <Select
                         labelId="Custom-level"
@@ -121,12 +110,13 @@ export default function Setting(props: Props) {
                         label="Custom"
                         onChange={changeCustomLevel}
                     >
-                        <MenuItem value={"small"}>Beginner</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate</MenuItem>
-                        <MenuItem value={"large"}>Advanced</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
+                    <FormHelperText>Your actual level: {(userLevels[3]==="small")? "Beginner": (userLevels[3]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <Button variant="contained" size="small" onClick={() => {
+                <Button variant="contained" size="small" sx={{ m: 1, minWidth: 120 }} onClick={() => {
                     updateLevels()
                 }}>
                     Save Setting

@@ -18,6 +18,10 @@ export default function App() {
     const [userInfo, setUserInfo] = useState<UserInfo>()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        me()
+    },[userName])
+
     function login(username: string, password: string) {
         axios.post<string>
         ("/api/users/login", null, {auth: {username, password}})
@@ -57,6 +61,15 @@ export default function App() {
             })
     }
 
+    function update(updatedUserInfo: UserInfo) {
+        axios.put<UserInfo>("/api/users/update", updatedUserInfo)
+            .then(response => response.data)
+            .then(data => {
+                setUserInfo(data)
+            })
+            .catch(console.error)
+    }
+
     function logout() {
         axios.post("/api/users/logout")
             .then(() => {
@@ -66,11 +79,6 @@ export default function App() {
             .catch(console.error)
     }
 
-    useEffect(() => {
-        me()
-    },[userName])
-
-
     return (
         <>
             <Routes>
@@ -78,10 +86,10 @@ export default function App() {
                 <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
                 <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
                     <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
-                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard userInfo={userInfo}/>}></Route>
+                    <Route path={"/game/:gameSize/:gameName"} element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
                     <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
                     <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
-                    <Route path={"/setting"} element={<Setting userInfo={userInfo}/>}></Route>
+                    <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}/>}></Route>
                     <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                 </Route>
             </Routes>
