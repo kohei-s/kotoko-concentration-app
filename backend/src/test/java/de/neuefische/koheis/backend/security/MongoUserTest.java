@@ -59,8 +59,13 @@ class MongoUserTest {
     @Test
     void testEqualsNull() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        boolean test = mongoUser.equals(null);
-        assertEquals(false, test);
+        boolean test1 = mongoUser.equals(null);
+        String testObject = "test";
+        Class class1 = mongoUser.getClass();
+        Class class2 = testObject.getClass();
+        boolean test2 = class1.equals(class2);
+        boolean test3 = (test1 || test2);
+        assertEquals(false, test3);
     }
 
     @Test
@@ -73,11 +78,11 @@ class MongoUserTest {
     @Test
     void testEqualsClass() {
         MongoUser mongoUser = new MongoUser("id", "user", "pass", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        String test = "test";
+        String test2 = "test";
         Class class1 = mongoUser.getClass();
-        Class class2 = test.getClass();
-        boolean test2 = class1.equals(class2);
-        assertEquals(false, test2);
+        Class class2 = test2.getClass();
+        boolean test3 = class1.equals(class2);
+        assertEquals(false, test3);
     }
 
     @Test

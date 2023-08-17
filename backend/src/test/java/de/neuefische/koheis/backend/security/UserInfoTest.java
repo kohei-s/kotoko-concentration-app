@@ -50,8 +50,13 @@ class UserInfoTest {
     @Test
     void testEqualsSameValues() {
         UserInfo userInfo = new UserInfo("user", "achieve", new String[]{"word"}, new boolean[]{true}, new String[]{"level"});
-        boolean test = userInfo.equals(null);
-        assertFalse(test);
+        boolean test1 = userInfo.equals(null);
+        String testObject = "test";
+        Class class1 = userInfo.getClass();
+        Class class2 = testObject.getClass();
+        boolean test2 = class1.equals(class2);
+        boolean test3 = (test1 || test2);
+        assertEquals(false, test3);
     }
 
     @Test
