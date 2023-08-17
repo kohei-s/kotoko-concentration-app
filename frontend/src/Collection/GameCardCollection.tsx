@@ -3,6 +3,7 @@ import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import GameCardFrame from "./GameCardFrame.tsx";
+import "./GameCardCollection.css"
 
 export default function GameCardCollection() {
 
@@ -37,13 +38,15 @@ export default function GameCardCollection() {
                 <img width={"150px"} height={"150px"} src={"/logos/collection-logo.png"}
                      alt={"collection-logo"}/>
             </div>
-            <NewGameCard></NewGameCard>
+            <NewGameCard/>
+            COLLECTION
             {allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
                 gameCard={card}
                 onGameCardChange={loadAllNonDefaultGameCards}
                 cardSetName={card.cardSetName}
                 title={card.title}></GameCardFrame>)}
+
         </>
     )
 

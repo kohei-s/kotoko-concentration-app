@@ -59,8 +59,8 @@ export default function Setting(props: Props) {
                      alt={"setting-logo"}/>
             </div>
             <div className={"selector"}>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="Hiragana-level">Hiragana</InputLabel>
+                <FormControl sx={{ m: 1, minWidth: 120}}>
+                    <InputLabel id="Hiragana-level">HIRAGANA</InputLabel>
                     <Select
                         labelId="Hiragana-level"
                         id="Hiragana-level"
@@ -72,10 +72,10 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>Your actual level: {(userLevels[0]==="small")? "Beginner": (userLevels[0]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level:  {(userLevels[0]==="small")? "Beginner": (userLevels[0]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="Katakana-level">Katakana</InputLabel>
+                    <InputLabel id="Katakana-level">KATAKANA</InputLabel>
                     <Select
                         labelId="Katakana-level"
                         id="Katakana-level"
@@ -87,10 +87,10 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>Your actual level: {(userLevels[1]==="small")? "Beginner": (userLevels[1]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level:  {(userLevels[1]==="small")? "Beginner": (userLevels[1]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="PlayingCards-level">Playing Cards</InputLabel>
+                    <InputLabel id="PlayingCards-level">CARDS</InputLabel>
                     <Select
                         labelId="PlayingCards-level"
                         id="PlayingCards-level"
@@ -102,10 +102,10 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards) </MenuItem>
                     </Select>
-                    <FormHelperText>Your actual level: {(userLevels[2]==="small")? "Beginner": (userLevels[2]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level:  {(userLevels[2]==="small")? "Beginner": (userLevels[2]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="Cuctom-level">Custom</InputLabel>
+                    <InputLabel id="Cuctom-level">CUSTOM</InputLabel>
                     <Select
                         labelId="Custom-level"
                         id="Custom-level"
@@ -117,12 +117,12 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>Your actual level: {(userLevels[3]==="small")? "Beginner": (userLevels[3]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level:  {(userLevels[3]==="small")? "Beginner": (userLevels[3]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <Button variant="contained" size="small" sx={{ m: 1, minWidth: 120 }} onClick={() => {
+                <Button id={"save"} variant="contained" size="medium" sx={{ m: 10, maxWidth: 60, background: "#508356", boxShadow: 0, borderRadius: '15px'}} onClick={() => {
                     updateLevels()
                 }}>
-                    Save Setting
+                    Save
                 </Button>
             </div>
         </>

@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {GameCard} from "../Game/GameCard.ts";
+import {Button, TextField} from "@mui/material";
+import "./NewGameCard.css"
 
 export default function NewGameCard() {
 
@@ -29,10 +31,11 @@ export default function NewGameCard() {
 
     return (
         <>
-            <div className="">
-                <input type="text" value={title} onInput={inputTitle}/>
-                <input type="text" value={cardSetName} onInput={inputCardSetName}/>
-                <button onClick={saveGameCard}>Save</button>
+            <div className="new-card">
+                <div>Create new card</div>
+                <TextField id="title" label="card title" onInput={inputTitle}/>
+                <TextField id="set" label= "card set name" onInput={inputCardSetName}/>
+                <Button variant="contained" onClick={saveGameCard}>Save</Button>
             </div>
         </>
     )
