@@ -13,7 +13,7 @@ export default function GameBoard(props: Props) {
     const name: string = params.gameName as string;
 
     if ((size === "small") || (size === "medium") || (size === "large")) {
-        if ((name === "hiragana") || (name === "katakana") || (name === "playing-cards") || (name === "testSet")) {
+        if ((name === "hiragana") || (name === "katakana") || (name === "playing-cards") || (name === "kanji")) {
 
             return createGameBoard({gameSize: size, gameName: name, userInfo: props.userInfo, update: props.update});
         } else {

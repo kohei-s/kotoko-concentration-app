@@ -1,6 +1,11 @@
 .selector {
     display: flex;
     flex-direction: column;
+    width: 290px;
+}
+
+.selector button {
+    align-self: end;
 }
 
 #title {

@@ -1,9 +1,9 @@
-body {
-    margin: 0;
+.collection {
     display: flex;
-    place-items: center;
-    justify-content: center;
-    align-items: flex-start;
-    min-width: 320px;
-    min-height: 100vh;
+    width: 290px;
+}
+
+.card-button {
+    display: flex;
+    justify-content: end;
 }

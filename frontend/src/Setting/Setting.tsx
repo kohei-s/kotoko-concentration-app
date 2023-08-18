@@ -1,6 +1,7 @@
 import {UserInfo} from "../UserInfo.ts";
 import {useEffect, useState} from "react";
 import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
 import "./Setting.css"
 
 type Props = {
@@ -119,10 +120,10 @@ export default function Setting(props: Props) {
                     </Select>
                     <FormHelperText>current level:  {(userLevels[3]==="small")? "Beginner": (userLevels[3]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
                 </FormControl>
-                <Button id={"save"} variant="contained" size="medium" sx={{ m: 10, maxWidth: 60, background: "#508356", boxShadow: 0, borderRadius: '15px'}} onClick={() => {
+                <Button id={"save"} size="small" sx={{maxWidth: 60, color: "#FDF6E1", background: "#508356", boxShadow: 0, borderRadius: '15px'}} onClick={() => {
                     updateLevels()
                 }}>
-                    Save
+                    <CheckIcon/>
                 </Button>
             </div>
         </>

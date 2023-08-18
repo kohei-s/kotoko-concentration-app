@@ -54,7 +54,7 @@ export default function MainPage(props: Props) {
                 </Tooltip>
                 <Tooltip title="Custom Card">
                     <Button variant="contained" sx={{background: "#508356", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to={"/game/" + customLevel + "/testSet"}>★</Link>
+                        <Link to={"/game/" + customLevel + "/kanji"}>★</Link>
                     </Button>
                 </Tooltip>
             </Stack>
