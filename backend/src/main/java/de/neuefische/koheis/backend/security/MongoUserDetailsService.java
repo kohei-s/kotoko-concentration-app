@@ -27,9 +27,9 @@ public class MongoUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (mongoUser.achievement() != null) {
-            authorities.add(new SimpleGrantedAuthority(mongoUser.getAchievement()));
+            authorities.add(new SimpleGrantedAuthority(mongoUser.achievement()));
         }
-        for (String role : mongoUser.getWordbook()) {
+        for (String role : mongoUser.wordbook()) {
             authorities.add(new SimpleGrantedAuthority(role));
         }
 

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class MongoUserService {
 
     public UserInfo findByUsername(String username) {
         if (mongoUserRepository.findByUsername(username).isEmpty()) {
-            return new UserInfo("Anonymous User", "", new String[]{}, new boolean[]{}, new String[]{});
+            return new UserInfo("Anonymous User", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         }
         MongoUser mongoUser = mongoUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username:" + username + " not found!"));
@@ -31,7 +33,7 @@ public class MongoUserService {
 
         String encoderPassword = passwordEncoder.encode(mongoUserWithoutId.password());
 
-        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new String[0], new boolean[0], new String[0]);
+        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         mongoUserRepository.insert(newUser);
     }
 
