@@ -58,7 +58,9 @@ export default function FlipCard(props: Props) {
     }, [props.gameName, props.gameSize]);
 
     useEffect(() => {
-        loadGameCards()
+        if (!boardId) {
+            loadGameCards()
+        }
         setUserData(props.userInfo)
         if (props.userInfo) {
             setUserAchievement(props.userInfo.achievement)
@@ -141,11 +143,12 @@ export default function FlipCard(props: Props) {
 
     function updateUserInfo() {
         if (((props.gameSize === "small") && (matchCount === 3)) || ((props.gameSize === "medium") && (matchCount === 5)) || ((props.gameSize === "large") && (matchCount === 7))) {
+            console.log("testUpdate")
             const newAchievement = String(Number(userAchievement) + 1)
             setUserAchievement(newAchievement)
             const updatedUserInfo: UserInfo = {
                 username: userData?.username as string,
-                achievement: userAchievement,
+                achievement: newAchievement,
                 wordbook: userWordbook,
                 diacritics: userData?.diacritics as boolean[],
                 levels: userData?.levels as string[]
@@ -154,12 +157,13 @@ export default function FlipCard(props: Props) {
         }
     }
 
-    function confetti() {
+   function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
-            console.log("test")
+            console.log("testConfetti")
             return <Confetti width={390} height={300}></Confetti>
         }
     }
+
 
     return (
         <>

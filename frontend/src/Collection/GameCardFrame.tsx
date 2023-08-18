@@ -28,7 +28,11 @@ export default function GameCardFrame(props: Props) {
     }
 
     function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
-        setTitle(event.target.value)
+        if (event.target.value) {
+            setTitle(event.target.value)
+        } else {
+            return title
+        }
     }
 
     function changeCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
@@ -41,7 +45,6 @@ export default function GameCardFrame(props: Props) {
 
     function closeEditField() {
         setIsOpenUpdate(false)
-
     }
 
     function updateGameCard() {
@@ -61,7 +64,7 @@ export default function GameCardFrame(props: Props) {
             <Card sx={{
                 maxWidth: 300,
                 margin: 3,
-                background: (isOpenUpdate)? "#ded8c6" : "#FDF6E1",
+                background: (isOpenUpdate) ? "#ffffff" : "#FDF6E1",
                 boxShadow: 0,
                 border: 0.5,
                 borderColor: "rgba(122,119,119,0.3)",
@@ -69,14 +72,16 @@ export default function GameCardFrame(props: Props) {
             }}>
                 <CardContent>
                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                        {(isOpenUpdate)? "Edit": "Game Card"}
+                        {(isOpenUpdate) ? "Edit Card" : "Game Card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {(isOpenUpdate) ? <TextField value={title} onInput={changeTitle} placeholder={props.title}/> : props.title}
+                        {(isOpenUpdate) ?
+                            <TextField value={title} onInput={changeTitle} placeholder={props.title}/> : props.title}
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary">
                         {(isOpenUpdate) ?
-                            <TextField value={cardSetName} onInput={changeCardSetName} placeholder={props.cardSetName}/> : props.cardSetName}
+                            <TextField value={cardSetName} onInput={changeCardSetName}
+                                       placeholder={props.cardSetName}/> : props.cardSetName}
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>
