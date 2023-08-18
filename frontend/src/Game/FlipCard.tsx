@@ -66,7 +66,7 @@ export default function FlipCard(props: Props) {
             setUserAchievement(props.userInfo.achievement)
             setUserWordbook(props.userInfo.wordbook)
         }
-    }, [loadGameCards, props.userInfo]);
+    }, [loadGameCards, props.userInfo, boardId]);
 
 
     function flipCard(rowIndex: number, columnIndex: number) {
