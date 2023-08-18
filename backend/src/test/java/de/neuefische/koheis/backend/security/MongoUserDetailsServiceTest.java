@@ -24,7 +24,7 @@ class MongoUserDetailsServiceTest {
     @Test
     void testLoadUserByUsername() {
         //GIVEN
-        MongoUser mockUser = new MongoUser("1", "test", "1234", "5678", new ArrayList<String>(List.of("a", "i", "u")), new ArrayList<Boolean>(List.of(false, false)), new ArrayList<String>(List.of("small", "small", "small", "small")));
+        MongoUser mockUser = new MongoUser("1", "test", "1234", "5678", new ArrayList<>(List.of("a", "i", "u")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")));
 
         //WHEN
         Mockito.when(mongoUserRepository.findByUsername("test")).thenReturn(Optional.of(mockUser));
