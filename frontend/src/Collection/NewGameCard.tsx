@@ -5,7 +5,7 @@ import {Button, Card, CardActions, CardContent, TextField, Typography} from "@mu
 import "./NewGameCard.css"
 
 type Props = {
-    cancel: () => void
+    onClose: () => void
 }
 export default function NewGameCard(props: Props) {
 
@@ -35,7 +35,7 @@ export default function NewGameCard(props: Props) {
     return (
         <>
             <Card className="new-card" sx={{
-                maxWidth: 300,
+                maxWidth: 220,
                 margin: 3,
                 background: "#FDF6E1",
                 boxShadow: 0,
@@ -45,7 +45,7 @@ export default function NewGameCard(props: Props) {
             }}>
                 <CardContent>
                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                        Game Card
+                        New game card
                     </Typography>
                     <Typography variant="h5" component="div">
                         <TextField id="title" label="card title" onInput={inputTitle}/>
@@ -62,7 +62,7 @@ export default function NewGameCard(props: Props) {
                         boxShadow: 0,
                         borderRadius: '15px'
                     }}>Save</Button>
-                    <Button variant="contained" onClick={props.cancel} sx={{
+                    <Button variant="contained" onClick={props.onClose} sx={{
                         m: 5,
                         maxWidth: 60,
                         background: "#508356",

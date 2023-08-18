@@ -20,31 +20,19 @@ export default function GameCardFrame(props: Props) {
     const [title, setTitle] = useState<string>("");
     const [cardSetName, setCardSetName] = useState<string>("");
     const [isOpenUpdate, setIsOpenUpdate] = useState<boolean>(false);
+    const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
 
-    function deleteGameCard() {
-        axios.delete("/api/game_cards/" + props.gameCard.id)
-            .then(props.onGameCardChange)
-            .catch(console.error)
-    }
 
-    function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
-        if (event.target.value) {
-            setTitle(event.target.value)
-        } else {
-            return title
-        }
-    }
-
-    function changeCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
-        setCardSetName(event.target.value)
-    }
-
-    function openEditField() {
-        setIsOpenUpdate(true)
-    }
-
-    function closeEditField() {
-        setIsOpenUpdate(false)
+    function saveGameCard() {
+        axios.post(
+            "/api/game_cards", {
+                "title": title,
+                "cardSetName": cardSetName
+            } as GameCard)
+            .then(() => {
+                setTitle("")
+                setCardSetName("")
+            }).catch(console.error)
     }
 
     function updateGameCard() {
@@ -59,10 +47,53 @@ export default function GameCardFrame(props: Props) {
             }).catch(console.error)
     }
 
+    function deleteGameCard() {
+        axios.delete("/api/game_cards/" + props.gameCard.id)
+            .then(props.onGameCardChange)
+            .catch(console.error)
+    }
+
+    function inputTitle(event: React.ChangeEvent<HTMLInputElement>) {
+        setTitle(event.target.value)
+    }
+
+    function inputCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
+        setCardSetName(event.target.value)
+    }
+
+    function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.value) {
+            setTitle(event.target.value)
+        } else {
+            return props.title
+        }
+    }
+
+    function changeCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.value) {
+            setCardSetName(event.target.value)
+        } else {
+            return props.cardSetName
+        }
+    }
+
+    function closeAdd() {
+        setIsOpenAdd(false)
+    }
+
+    function openEditField() {
+        setIsOpenUpdate(true)
+    }
+
+    function closeEditField() {
+        setIsOpenUpdate(false)
+    }
+
+
     return (
         <>
             <Card sx={{
-                maxWidth: 300,
+                maxWidth: 220,
                 margin: 3,
                 background: (isOpenUpdate) ? "#ffffff" : "#FDF6E1",
                 boxShadow: 0,
@@ -72,30 +103,69 @@ export default function GameCardFrame(props: Props) {
             }}>
                 <CardContent>
                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                        {(isOpenUpdate) ? "Edit Card" : "Game Card"}
+                        {(isOpenAdd) ? "New game card" : (isOpenUpdate) ? "Edit card" : "Game card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {(isOpenUpdate) ?
-                            <TextField value={title} onInput={changeTitle} placeholder={props.title}/> : props.title}
+                        {(isOpenAdd) ?
+                            <TextField id="title" label="card title" onInput={inputTitle}/> :
+                            (isOpenUpdate) ?
+                                <TextField value={title} onInput={changeTitle}
+                                           placeholder={props.title}/> : props.title}
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary">
-                        {(isOpenUpdate) ?
-                            <TextField value={cardSetName} onInput={changeCardSetName}
-                                       placeholder={props.cardSetName}/> : props.cardSetName}
+                        {(isOpenAdd) ?
+                            <TextField id="set" label="card set name" onInput={inputCardSetName}/> :
+                            (isOpenUpdate) ?
+                                <TextField value={cardSetName} onInput={changeCardSetName}
+                                           placeholder={props.cardSetName}/> : props.cardSetName}
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>
-                    {(isOpenUpdate) ?
-                        <div className={"button-container"}>
-                            <Button onClick={updateGameCard}
-                                    sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><CheckBoxIcon/></Button>
-                            <Button onClick={closeEditField}
-                                    sx={{color: "#4D6A9A", boxShadow: 0, borderRadius: '5px'}}><CancelIcon/></Button>
-                            <Button onClick={deleteGameCard}
-                                    sx={{color: "#D05F5F", boxShadow: 0, borderRadius: '5px'}}><DeleteIcon/></Button>
-                        </div> :
-                        <Button size="small" onClick={openEditField}
-                                sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><EditIcon/></Button>}
+                    <div className={"button-container"}>
+                        {(isOpenAdd) ?
+                            <div>
+                                <Button onClick={saveGameCard}
+                                        sx={{
+                                            m: 5,
+                                            maxWidth: 60,
+                                            background: "#508356",
+                                            boxShadow: 0,
+                                            borderRadius: '15px'
+                                        }}>Save</Button>
+                                <Button onClick={closeAdd}
+                                        sx={{
+                                            m: 5,
+                                            maxWidth: 60,
+                                            background: "#508356",
+                                            boxShadow: 0,
+                                            borderRadius: '15px'
+                                        }}><CancelIcon/></Button>
+                            </div>
+                            : (isOpenUpdate)?
+                            <div>
+                                <Button onClick={updateGameCard}
+                                        sx={{
+                                            color: "#508356",
+                                            boxShadow: 0,
+                                            borderRadius: '5px'
+                                        }}><CheckBoxIcon/></Button>
+                                <Button onClick={closeEditField}
+                                        sx={{
+                                            color: "#4D6A9A",
+                                            boxShadow: 0,
+                                            borderRadius: '5px'
+                                        }}><CancelIcon/></Button>
+                                <Button onClick={deleteGameCard}
+                                        sx={{
+                                            color: "#D05F5F",
+                                            boxShadow: 0,
+                                            borderRadius: '5px'
+                                        }}><DeleteIcon/></Button>
+                            </div> : <></>}
+                    </div>
+                    {(isOpenAdd)? <></> : (isOpenUpdate)? <></> :
+                    <Button size="small" onClick={openEditField}
+                            sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><EditIcon/></Button>}
                 </CardActions>
             </Card>
 

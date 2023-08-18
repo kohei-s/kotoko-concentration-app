@@ -68,7 +68,6 @@ export default function FlipCard(props: Props) {
         }
     }, [loadGameCards, props.userInfo, boardId]);
 
-
     function flipCard(rowIndex: number, columnIndex: number) {
         if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
             return

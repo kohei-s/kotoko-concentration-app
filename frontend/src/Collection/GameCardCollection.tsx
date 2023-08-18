@@ -2,20 +2,24 @@ import NewGameCard from "./NewGameCard.tsx";
 import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import ReactModal from "react-modal";
 import GameCardFrame from "./GameCardFrame.tsx";
-import "./GameCardCollection.css"
-import {IconButton, Tooltip} from "@mui/material";
+import {IconButton, Modal, Tooltip} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
+import "./GameCardCollection.css"
 
 export default function GameCardCollection() {
 
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
+    const [allCardSetNames, setAllCardSetNames] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [cardSetName, setCardSetname] = useState<string>("");
+
+    const gameCard1: GameCard = {id: "0", title: "test", cardSetName: "testSet"};
 
     useEffect(
         () => {
             loadAllNonDefaultGameCards()
+            getAllSetNames()
         }, []
     )
 
@@ -35,14 +39,17 @@ export default function GameCardCollection() {
             }).catch(console.error)
     }
 
-    function openModal() {
+    function getAllSetNames() {
+        const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
+        const uniqueSetNames = new Set(listSetNames)
+        setAllCardSetNames(Array.from(uniqueSetNames))
+    }
+
+    const openModal = () =>
         setIsModalOpen(true);
-    }
 
-    function closeModal() {
+    const closeModal = () =>
         setIsModalOpen(false);
-    }
-
 
 
     return (
@@ -52,20 +59,41 @@ export default function GameCardCollection() {
                      alt={"collection-logo"}/>
             </div>
             <Tooltip title="Create new card">
-            <IconButton disableRipple={true} size="small" className={"buttonAdd"}
-                        onClick={openModal} sx={{color: "#4D6A9A", boxShadow: 0}}>
-                <AddCircle fontSize={"large"}/>
-            </IconButton>
+                <IconButton disableRipple={true} size="small" className={"buttonAdd"}
+                            onClick={openModal} sx={{color: "#4D6A9A", boxShadow: 0}}>
+                    <AddCircle fontSize={"large"}/>
+                </IconButton>
             </Tooltip>
-
-            <ReactModal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                className="modal"
-                overlayClassName="overlay"
+            <Modal
+                className={"modal"}
+                open={isModalOpen}
+                sx={{mt:20, ml: 6}}
             >
-                <NewGameCard cancel={closeModal}/>
-            </ReactModal>
+                <GameCardFrame title={""}
+                gameCard={gameCard1}
+                onGameCardChange={loadAllNonDefaultGameCards}
+                cardSetName={""}
+                loadAll={loadAllNonDefaultGameCards}/>
+            </Modal>
+
+
+            {/*<FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Select game set</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={cardSetName}
+                    label="Set name"
+                    // onChange={handleChange}
+                >
+                    {allCardSetNames.map(cardSetName => <MenuItem key={cardSetName}>{cardSetName}</MenuItem>)}
+
+                </Select>
+            </FormControl>*/}
+
+
+
+
 
 
             {allNonDefaultGameCards.map(card => <GameCardFrame
