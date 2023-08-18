@@ -15,6 +15,7 @@ type Props = {
     colorStyle2: string
     colorStyle3: string
     userInfo: UserInfo | undefined
+    update: (userInfo: UserInfo) => void
 }
 export default function FlipCard(props: Props) {
 
@@ -27,15 +28,6 @@ export default function FlipCard(props: Props) {
     const [userData, setUserData] = useState<UserInfo>();
     const [userAchievement, setUserAchievement] = useState<string>("");
     const [userWordbook, setUserWordbook] = useState<string[]>([]);
-
-    function update(updatedUserInfo: UserInfo) {
-        axios.put<UserInfo>("/api/users/update", updatedUserInfo)
-            .then(response => response.data)
-            .then(data => {
-                setUserData(data)
-            })
-            .catch(console.error)
-    }
 
     const loadGameCards = useCallback(() => {
         if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
@@ -68,7 +60,7 @@ export default function FlipCard(props: Props) {
     useEffect(() => {
         loadGameCards()
         setUserData(props.userInfo)
-        if (props.userInfo){
+        if (props.userInfo) {
             setUserAchievement(props.userInfo.achievement)
             setUserWordbook(props.userInfo.wordbook)
         }
@@ -154,15 +146,17 @@ export default function FlipCard(props: Props) {
             const updatedUserInfo: UserInfo = {
                 username: userData?.username as string,
                 achievement: userAchievement,
-                wordbook: userWordbook
+                wordbook: userWordbook,
+                diacritics: userData?.diacritics as boolean[],
+                levels: userData?.levels as string[]
             }
-            update(updatedUserInfo)
+            props.update(updatedUserInfo)
         }
     }
 
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
-
+            console.log("test")
             return <Confetti width={390} height={300}></Confetti>
         }
     }
@@ -173,7 +167,8 @@ export default function FlipCard(props: Props) {
                 {renderGameTitle()}
                 {confetti()}
             </div>
-            <div className={"concentration"}>
+            <div
+                className={(props.gameSize === "small") ? "concentration-small" : (props.gameSize === "medium") ? "concentration-medium" : "concentration-large"}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
                             if (!card) {

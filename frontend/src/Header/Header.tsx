@@ -2,8 +2,9 @@ import {Button, IconButton, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import "./Header.css"
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import SettingsIcon from '@mui/icons-material/Settings';
+import "./Header.css"
 
 
 type Props = {
@@ -42,6 +43,12 @@ export default function Header(props: Props) {
                             <IconButton size="small"
                                         sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
                                 <Link to="/game-record"><EmojiEventsIcon/></Link>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Setting">
+                            <IconButton size="small"
+                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
+                                <Link to="/setting"><SettingsIcon/></Link>
                             </IconButton>
                         </Tooltip>
                     </Stack>

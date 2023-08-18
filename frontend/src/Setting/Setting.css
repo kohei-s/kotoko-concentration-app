@@ -1,0 +1,17 @@
+.selector {
+    display: flex;
+    flex-direction: column;
+    width: 290px;
+}
+
+.selector button {
+    align-self: end;
+}
+
+#title {
+    color: #213547;
+}
+
+#save {
+    margin-top: 30px;
+}

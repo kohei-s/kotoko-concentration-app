@@ -1,0 +1,9 @@
+.collection {
+    display: flex;
+    width: 290px;
+}
+
+.card-button {
+    display: flex;
+    justify-content: end;
+}
