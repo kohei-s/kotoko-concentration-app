@@ -1,4 +1,3 @@
-import NewGameCard from "./NewGameCard.tsx";
 import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -20,7 +19,7 @@ export default function GameCardCollection() {
         () => {
             loadAllNonDefaultGameCards()
             getAllSetNames()
-        }, []
+        }, [getAllSetNames]
     )
 
     if (!allNonDefaultGameCards) {
