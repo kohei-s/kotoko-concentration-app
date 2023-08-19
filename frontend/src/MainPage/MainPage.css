@@ -1,9 +1,11 @@
 .menu {
+    font-family: 'Potta One', cursive;
     padding-top: 30px;
     padding-right: 10px;
 }
 
 .start {
+    font-family: 'Potta One', cursive;
     width: 290px;
     padding-top:90px;
     padding-bottom: 20px;

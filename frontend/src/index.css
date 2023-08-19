@@ -1,11 +1,10 @@
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Potta One', cursive, 'Zen Maru Gothic', sans-serif;
     line-height: 1.5;
     font-weight: 400;
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -24,6 +23,7 @@ a:hover {
 }
 
 body {
+    font-family: 'Potta One', cursive;
     margin: 0;
     display: flex;
     place-items: center;
@@ -44,7 +44,7 @@ button {
     padding: 0.6em 1.2em;
     font-size: 1em;
     font-weight: 300;
-    font-family: inherit;
+    font-family: 'Potta One', cursive;
     background-color: #f8e619;
     cursor: pointer;
     transition: border-color 0.25s;
@@ -70,6 +70,7 @@ button:focus-visible {
     }
 
     button {
+        font-family: 'Potta One', cursive;
         border-color: #f8e619;
         margin-left: 200px;
         color: #f8e619;
