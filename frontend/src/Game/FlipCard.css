@@ -33,7 +33,15 @@ body {
 }
 
 h2 {
-    color:#D05F5F;
+    color: #D05F5F;
+}
+
+.game-name {
+    display: grid;
+    align-content: end;
+    max-width: 150px;
+    padding-bottom: 20px;
+    color: #959fa8;
 }
 
 .card {

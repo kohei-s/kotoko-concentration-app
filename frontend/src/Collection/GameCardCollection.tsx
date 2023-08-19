@@ -67,14 +67,12 @@ export default function GameCardCollection() {
     function inputCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
         setCardSetName(event.target.value)
     }
-
     const openModal = () =>
         setIsModalOpen(true);
 
     const closeModal = () => {
         setIsModalOpen(false)
-    };
-
+    }
 
     return (
         <>
@@ -123,24 +121,7 @@ export default function GameCardCollection() {
                     </CardActions>
                 </Card>
             </Modal>
-
             {/*<NewGameCard onClose={closeModal} loadCards={loadAllNonDefaultGameCards}/>*/}
-
-            {/*<FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Select game set</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={cardSetName}
-                    label="Set name"
-                    // onChange={handleChange}
-                >
-                    {allCardSetNames.map(cardSetName => <MenuItem key={cardSetName}>{cardSetName}</MenuItem>)}
-
-                </Select>
-            </FormControl>*/}
-
-
             {allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
                 gameCard={card}
@@ -148,7 +129,6 @@ export default function GameCardCollection() {
                 cardSetName={card.cardSetName}
                 title={card.title}
             ></GameCardFrame>)}
-
         </>
     )
 

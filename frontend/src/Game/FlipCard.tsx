@@ -125,6 +125,10 @@ export default function FlipCard(props: Props) {
             const src = `/${props.gameName}-images/${props.gameName}-${card.title}.png`;
             const alt = `${props.gameName}${card.title}${card.cardSetName}`;
             return <img src={src} alt={alt}/>;
+        } else if (props.gameName === "kanji") {
+            const src = `/${props.gameName}-images/${props.gameName}-${card.title.slice(2)}.png`;
+            const alt = `${props.gameName}${card.title.slice(2)}${card.cardSetName}`;
+            return <img src={src} alt={alt}/>;
         } else {
             return card.title;
         }
@@ -140,9 +144,14 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function displayCustomGameName() {
+        if ((props.gameName !== "hiragana") && (props.gameName !== "playing-cards") && (props.gameName !== "katakana")) {
+            return <div className={"game-name"}>current set: {props.gameName}</div>
+        }
+    }
+
     function updateUserInfo() {
         if (((props.gameSize === "small") && (matchCount === 3)) || ((props.gameSize === "medium") && (matchCount === 5)) || ((props.gameSize === "large") && (matchCount === 7))) {
-            console.log("testUpdate")
             const newAchievement = String(Number(userAchievement) + 1)
             setUserAchievement(newAchievement)
             const updatedUserInfo: UserInfo = {
@@ -156,9 +165,8 @@ export default function FlipCard(props: Props) {
         }
     }
 
-   function confetti() {
+    function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
-            console.log("testConfetti")
             return <Confetti width={390} height={300}></Confetti>
         }
     }
@@ -167,7 +175,10 @@ export default function FlipCard(props: Props) {
     return (
         <>
             <div>
-                {renderGameTitle()}
+                <Stack direction="row" spacing={0.4}>
+                    {renderGameTitle()}
+                    {displayCustomGameName()}
+                </Stack>
                 {confetti()}
             </div>
             <div

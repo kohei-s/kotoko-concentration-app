@@ -21,7 +21,7 @@ export default function Header(props: Props) {
                 <Stack direction="row" spacing={1.0} justifyContent={"space-between"} id={"userButton"}>
                     <Tooltip title="Logout">
                         <Button size="small"
-                                sx={{color: "#FDEEBE", background: "#69d1ca", boxShadow: 0, borderRadius: '50px'}}
+                                sx={{color: "#FDEEBE", background: "#69d1ca", boxShadow: 0, borderRadius: '50px', padding: 1}}
                                 onClick={props.onLogout}>
                             ☺︎ {props.user}
                         </Button>

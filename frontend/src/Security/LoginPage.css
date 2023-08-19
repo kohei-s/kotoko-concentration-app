@@ -1,4 +1,8 @@
-form {
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding-top: 100px;
     padding-left: 25px;
 }

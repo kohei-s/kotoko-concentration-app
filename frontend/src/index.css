@@ -23,7 +23,6 @@ a:hover {
 }
 
 body {
-    font-family: 'Potta One', cursive;
     margin: 0;
     display: flex;
     place-items: center;
@@ -44,7 +43,6 @@ button {
     padding: 0.6em 1.2em;
     font-size: 1em;
     font-weight: 300;
-    font-family: 'Potta One', cursive;
     background-color: #f8e619;
     cursor: pointer;
     transition: border-color 0.25s;
@@ -62,7 +60,6 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
     :root {
         background-color: #FDEEBE;
-        /*#fdf6e1*/
     }
 
     a:hover {
@@ -70,7 +67,6 @@ button:focus-visible {
     }
 
     button {
-        font-family: 'Potta One', cursive;
         border-color: #f8e619;
         margin-left: 200px;
         color: #f8e619;
