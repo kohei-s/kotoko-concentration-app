@@ -17,3 +17,13 @@
     max-height: 80vh;
     overflow-y: auto;
 }
+
+.new-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#new-card-button {
+    margin: 0;
+}

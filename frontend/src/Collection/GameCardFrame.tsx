@@ -23,7 +23,6 @@ type Props = {
     onGameCardChange: () => void
     title: string
     cardSetName: string
-    loadAll: () => void
 }
 
 export default function GameCardFrame(props: Props) {
@@ -39,15 +38,15 @@ export default function GameCardFrame(props: Props) {
                 "title": title,
                 "cardSetName": cardSetName
             } as GameCard)
-            .then(() => {
-                setIsOpenUpdate(false)
-            }).catch(console.error)
+            .then(props.onGameCardChange)
+            .then(() => setIsOpenUpdate(false))
+            .catch(console.error)
     }
 
     function deleteGameCard() {
         axios.delete("/api/game_cards/" + props.gameCard.id)
-            .then(() => {
-            }).catch(console.error)
+            .then(props.onGameCardChange)
+            .catch(console.error)
     }
 
     function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
@@ -105,14 +104,18 @@ export default function GameCardFrame(props: Props) {
                         {(isOpenUpdate) ? "Edit card" : "Game card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {(isOpenUpdate) ?
-                            <TextField value={title} onInput={changeTitle}
-                                       placeholder={props.title}/> : props.title}
+                        <div>
+                            {(isOpenUpdate) ?
+                                <TextField value={title} onInput={changeTitle}
+                                           placeholder={props.title}/> : props.title}
+                        </div>
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary">
+                        <div>
                         {(isOpenUpdate) ?
                             <TextField value={cardSetName} onInput={changeCardSetName}
                                        placeholder={props.cardSetName}/> : props.cardSetName}
+                        </div>
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>
