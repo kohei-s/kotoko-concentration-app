@@ -20,7 +20,7 @@ export default function GameCardCollection() {
         () => {
             loadAllNonDefaultGameCards()
             getAllSetNames()
-        }, []
+        }, [getAllSetNames()]
     )
 
     if (!allNonDefaultGameCards) {

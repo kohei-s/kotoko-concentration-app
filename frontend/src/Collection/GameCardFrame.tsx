@@ -150,7 +150,7 @@ export default function GameCardFrame(props: Props) {
                         open={isOpenModal}
                         sx={{mt: 20, ml: 6}}
                     >
-                        <Dialog open onClose={() => confirmDelete('close')}>
+                        <Dialog open={isOpenModal}>
                             <DialogTitle>
                                 Are you sure you want to delete this card?
                             </DialogTitle>
