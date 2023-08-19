@@ -100,28 +100,24 @@ export default function GameCardFrame(props: Props) {
                 borderRadius: '15px'
             }}>
                 <CardContent>
-                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
                         {(isOpenUpdate) ? "Edit card" : "Game card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        <div>
                             {(isOpenUpdate) ?
                                 <TextField value={title} onInput={changeTitle}
                                            placeholder={props.title}/> : props.title}
-                        </div>
                     </Typography>
-                    <Typography sx={{mb: 1.5}} color="text.secondary">
-                        <div>
-                        {(isOpenUpdate) ?
-                            <TextField value={cardSetName} onInput={changeCardSetName}
-                                       placeholder={props.cardSetName}/> : props.cardSetName}
-                        </div>
+                    <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
+                            {(isOpenUpdate) ?
+                                <TextField value={cardSetName} onInput={changeCardSetName}
+                                           placeholder={props.cardSetName}/> : props.cardSetName}
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>
                     <div className={"button-container"}>
                         {(isOpenUpdate) ?
-                            <div>
+                            <>
                                 <Button onClick={updateGameCard}
                                         sx={{
                                             color: "#508356",
@@ -140,9 +136,9 @@ export default function GameCardFrame(props: Props) {
                                             boxShadow: 0,
                                             borderRadius: '5px'
                                         }}><DeleteIcon/></Button>
-                            </div> : <div></div>}
+                            </> : <></>}
                     </div>
-                    {(isOpenUpdate) ? <div></div> :
+                    {(isOpenUpdate) ? <></> :
                         <Button size="small" onClick={openEditField}
                                 sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><EditIcon/></Button>}
                     <Modal

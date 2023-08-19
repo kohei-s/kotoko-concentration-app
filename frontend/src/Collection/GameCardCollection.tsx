@@ -101,13 +101,13 @@ export default function GameCardCollection() {
                     borderRadius: '15px'
                 }}>
                     <CardContent>
-                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
                             Create new game card
                         </Typography>
                         <Typography variant="h5" component="div">
                             <TextField id="title" label="card title?" onInput={inputTitle}/>
                         </Typography>
-                        <Typography sx={{mb: 1.5}} color="text.secondary">
+                        <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
                             <TextField id="set" label="set name?" onInput={inputCardSetName}/>
                         </Typography>
                     </CardContent>
