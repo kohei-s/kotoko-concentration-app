@@ -1,7 +1,18 @@
 import React, {useState} from "react";
 import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
-import {Button, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    Modal,
+    TextField,
+    Typography
+} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,20 +31,7 @@ export default function GameCardFrame(props: Props) {
     const [title, setTitle] = useState<string>("");
     const [cardSetName, setCardSetName] = useState<string>("");
     const [isOpenUpdate, setIsOpenUpdate] = useState<boolean>(false);
-    const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
-
-
-    function saveGameCard() {
-        axios.post(
-            "/api/game_cards", {
-                "title": title,
-                "cardSetName": cardSetName
-            } as GameCard)
-            .then(() => {
-                setTitle("")
-                setCardSetName("")
-            }).catch(console.error)
-    }
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     function updateGameCard() {
         axios.put(
@@ -42,23 +40,14 @@ export default function GameCardFrame(props: Props) {
                 "cardSetName": cardSetName
             } as GameCard)
             .then(() => {
-                props.loadAll()
                 setIsOpenUpdate(false)
             }).catch(console.error)
     }
 
     function deleteGameCard() {
         axios.delete("/api/game_cards/" + props.gameCard.id)
-            .then(props.onGameCardChange)
-            .catch(console.error)
-    }
-
-    function inputTitle(event: React.ChangeEvent<HTMLInputElement>) {
-        setTitle(event.target.value)
-    }
-
-    function inputCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
-        setCardSetName(event.target.value)
+            .then(() => {
+            }).catch(console.error)
     }
 
     function changeTitle(event: React.ChangeEvent<HTMLInputElement>) {
@@ -77,10 +66,6 @@ export default function GameCardFrame(props: Props) {
         }
     }
 
-    function closeAdd() {
-        setIsOpenAdd(false)
-    }
-
     function openEditField() {
         setIsOpenUpdate(true)
     }
@@ -89,9 +74,23 @@ export default function GameCardFrame(props: Props) {
         setIsOpenUpdate(false)
     }
 
+    const openModal = () =>
+        setIsOpenModal(true);
+
+    const closeModal = () =>
+        setIsOpenModal(false);
+
+    function confirmDelete(result: string) {
+        console.log(result)
+        if (result === "ok") {
+            deleteGameCard()
+        }
+        closeModal()
+    }
+
 
     return (
-        <>
+        <div>
             <Card sx={{
                 maxWidth: 220,
                 margin: 3,
@@ -103,45 +102,22 @@ export default function GameCardFrame(props: Props) {
             }}>
                 <CardContent>
                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                        {(isOpenAdd) ? "New game card" : (isOpenUpdate) ? "Edit card" : "Game card"}
+                        {(isOpenUpdate) ? "Edit card" : "Game card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {(isOpenAdd) ?
-                            <TextField id="title" label="card title" onInput={inputTitle}/> :
-                            (isOpenUpdate) ?
-                                <TextField value={title} onInput={changeTitle}
-                                           placeholder={props.title}/> : props.title}
+                        {(isOpenUpdate) ?
+                            <TextField value={title} onInput={changeTitle}
+                                       placeholder={props.title}/> : props.title}
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary">
-                        {(isOpenAdd) ?
-                            <TextField id="set" label="card set name" onInput={inputCardSetName}/> :
-                            (isOpenUpdate) ?
-                                <TextField value={cardSetName} onInput={changeCardSetName}
-                                           placeholder={props.cardSetName}/> : props.cardSetName}
+                        {(isOpenUpdate) ?
+                            <TextField value={cardSetName} onInput={changeCardSetName}
+                                       placeholder={props.cardSetName}/> : props.cardSetName}
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>
                     <div className={"button-container"}>
-                        {(isOpenAdd) ?
-                            <div>
-                                <Button onClick={saveGameCard}
-                                        sx={{
-                                            m: 5,
-                                            maxWidth: 60,
-                                            background: "#508356",
-                                            boxShadow: 0,
-                                            borderRadius: '15px'
-                                        }}>Save</Button>
-                                <Button onClick={closeAdd}
-                                        sx={{
-                                            m: 5,
-                                            maxWidth: 60,
-                                            background: "#508356",
-                                            boxShadow: 0,
-                                            borderRadius: '15px'
-                                        }}><CancelIcon/></Button>
-                            </div>
-                            : (isOpenUpdate)?
+                        {(isOpenUpdate) ?
                             <div>
                                 <Button onClick={updateGameCard}
                                         sx={{
@@ -155,22 +131,39 @@ export default function GameCardFrame(props: Props) {
                                             boxShadow: 0,
                                             borderRadius: '5px'
                                         }}><CancelIcon/></Button>
-                                <Button onClick={deleteGameCard}
+                                <Button onClick={openModal}
                                         sx={{
                                             color: "#D05F5F",
                                             boxShadow: 0,
                                             borderRadius: '5px'
                                         }}><DeleteIcon/></Button>
-                            </div> : <></>}
+                            </div> : <div></div>}
                     </div>
-                    {(isOpenAdd)? <></> : (isOpenUpdate)? <></> :
-                    <Button size="small" onClick={openEditField}
-                            sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><EditIcon/></Button>}
+                    {(isOpenUpdate) ? <div></div> :
+                        <Button size="small" onClick={openEditField}
+                                sx={{color: "#508356", boxShadow: 0, borderRadius: '5px'}}><EditIcon/></Button>}
+                    <Modal
+                        className={"modal-delete-card"}
+                        open={isOpenModal}
+                        sx={{mt: 20, ml: 6}}
+                    >
+                        <Dialog open onClose={() => confirmDelete('close')}>
+                            <DialogTitle>
+                                Are you sure you want to delete this card?
+                            </DialogTitle>
+                            <DialogActions>
+                                <Button onClick={() => confirmDelete('ok')}>
+                                    OK
+                                </Button>
+                                <Button onClick={() => confirmDelete('cancel')}>
+                                    CANCEL
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Modal>
                 </CardActions>
             </Card>
-
-
-        </>
+        </div>
 
     )
 

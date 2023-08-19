@@ -2,24 +2,22 @@ import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import GameCardFrame from "./GameCardFrame.tsx";
-import {IconButton, Modal, Tooltip} from "@mui/material";
+import {IconButton, Modal} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
+import NewGameCard from "./NewGameCard.tsx";
 import "./GameCardCollection.css"
 
 export default function GameCardCollection() {
 
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [allCardSetNames, setAllCardSetNames] = useState<string[]>([])
+    const [, setAllCardSetNames] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [cardSetName, setCardSetname] = useState<string>("");
-
-    const gameCard1: GameCard = {id: "0", title: "test", cardSetName: "testSet"};
 
     useEffect(
         () => {
             loadAllNonDefaultGameCards()
             getAllSetNames()
-        }, [getAllSetNames]
+        }, []
     )
 
     if (!allNonDefaultGameCards) {
@@ -57,22 +55,16 @@ export default function GameCardCollection() {
                 <img width={"150px"} height={"150px"} src={"/logos/collection-logo.png"}
                      alt={"collection-logo"}/>
             </div>
-            <Tooltip title="Create new card">
-                <IconButton disableRipple={true} size="small" className={"buttonAdd"}
-                            onClick={openModal} sx={{color: "#4D6A9A", boxShadow: 0}}>
-                    <AddCircle fontSize={"large"}/>
-                </IconButton>
-            </Tooltip>
+            <IconButton disableRipple={true} size="small" className={"buttonAdd"}
+                        onClick={openModal} sx={{color: "#4D6A9A", boxShadow: 0}}>
+                <AddCircle fontSize={"large"}/>
+            </IconButton>
             <Modal
-                className={"modal"}
+                className={"modal-new-card"}
                 open={isModalOpen}
-                sx={{mt:20, ml: 6}}
+                sx={{mt: 20, ml: 6}}
             >
-                <GameCardFrame title={""}
-                gameCard={gameCard1}
-                onGameCardChange={loadAllNonDefaultGameCards}
-                cardSetName={""}
-                loadAll={loadAllNonDefaultGameCards}/>
+                <NewGameCard onClose={closeModal} loadCards={loadAllNonDefaultGameCards}/>
             </Modal>
 
 
@@ -89,10 +81,6 @@ export default function GameCardCollection() {
 
                 </Select>
             </FormControl>*/}
-
-
-
-
 
 
             {allNonDefaultGameCards.map(card => <GameCardFrame
