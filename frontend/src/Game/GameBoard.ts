@@ -1,6 +1,6 @@
 import createGameBoard from "./createGameBoard.tsx";
 import {useParams} from "react-router-dom";
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 
 type Props = {
     userInfo: UserInfo| undefined

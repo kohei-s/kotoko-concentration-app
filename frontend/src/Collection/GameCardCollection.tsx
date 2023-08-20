@@ -1,19 +1,16 @@
 import {GameCard} from "../Game/GameCard.ts";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import GameCardFrame from "./GameCardFrame.tsx";
-import {Button, Card, CardActions, CardContent, IconButton, Modal, Stack, TextField, Typography} from "@mui/material";
+import {IconButton, Modal} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
 import "./GameCardCollection.css"
+import NewGameCard from "./NewGameCard.tsx";
 
 export default function GameCardCollection() {
 
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
     const [, setAllCardSetNames] = useState<string[]>([]);
-    const [title, setTitle] = useState<string>("");
-    const [cardSetName, setCardSetName] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(
@@ -44,33 +41,11 @@ export default function GameCardCollection() {
         const uniqueSetNames = new Set(listSetNames)
         setAllCardSetNames(Array.from(uniqueSetNames))
     }
-
-    function saveGameCard() {
-        axios.post(
-            "/api/game_cards", {
-                "title": title,
-                "cardSetName": cardSetName
-            } as GameCard)
-            .then(() => {
-                setTitle("")
-                setCardSetName("")
-                loadAllNonDefaultGameCards()
-            })
-            .catch(console.error)
-            .finally(closeModal)
+    function openModal() {
+        setIsModalOpen(true)
     }
 
-    function inputTitle(event: React.ChangeEvent<HTMLInputElement>) {
-        setTitle(event.target.value)
-    }
-
-    function inputCardSetName(event: React.ChangeEvent<HTMLInputElement>) {
-        setCardSetName(event.target.value)
-    }
-    const openModal = () =>
-        setIsModalOpen(true);
-
-    const closeModal = () => {
+    function closeModal() {
         setIsModalOpen(false)
     }
 
@@ -89,39 +64,8 @@ export default function GameCardCollection() {
                 open={isModalOpen}
                 sx={{mt: 20, ml: 6}}
             >
-                <Card className="new-card" sx={{
-                    maxWidth: 220,
-                    margin: 3,
-                    background: "#FDF6E1",
-                    boxShadow: 0,
-                    border: 0.5,
-                    borderColor: "rgba(122,119,119,0.3)",
-                    borderRadius: '15px'
-                }}>
-                    <CardContent>
-                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
-                            Create new game card
-                        </Typography>
-                        <Typography variant="h5" component="div">
-                            <TextField id="title" label="card title?" onInput={inputTitle}/>
-                        </Typography>
-                        <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
-                            <TextField id="set" label="set name?" onInput={inputCardSetName}/>
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Stack className={"new-card-stack"} direction="row" paddingBottom={3}>
-                            <Button id={"new-card-button"} onClick={saveGameCard} sx={{
-                                m: 5, maxWidth: 60, color: "#508356", boxShadow: 0, borderRadius: '15px'
-                            }}><CheckBoxIcon/></Button>
-                            <Button id={"new-card-button"} onClick={closeModal} sx={{
-                                m: 5, maxWidth: 60, color: "#D05F5F", boxShadow: 0, borderRadius: '15px'
-                            }}><DoDisturbOnIcon/></Button>
-                        </Stack>
-                    </CardActions>
-                </Card>
+                <NewGameCard onClose={closeModal} onAddNewCard={loadAllNonDefaultGameCards}/>
             </Modal>
-            {/*<NewGameCard onClose={closeModal} loadCards={loadAllNonDefaultGameCards}/>*/}
             {allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
                 gameCard={card}

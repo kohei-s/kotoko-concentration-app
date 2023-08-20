@@ -5,7 +5,7 @@ import {IconButton, Stack} from "@mui/material";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import {createGameCards} from "./createGameCards.ts";
 import Confetti from 'react-confetti'
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 import './FlipCard.css';
 
 type Props = {
@@ -68,10 +68,16 @@ export default function FlipCard(props: Props) {
         }
     }, [loadGameCards, props.userInfo, boardId]);
 
-    function flipCard(rowIndex: number, columnIndex: number) {
+    function checkAlreadyOpenedOrIsLocked(rowIndex: number, columnIndex: number) {
         if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
             return
         }
+    }
+
+
+    function flipCard(rowIndex: number, columnIndex: number) {
+
+        checkAlreadyOpenedOrIsLocked(rowIndex, columnIndex)
 
         const selectedCard = gameCards.cardsGrid[rowIndex][columnIndex]
         const newIsMatched = JSON.parse(JSON.stringify(isMatched)) as { isMatched: boolean[][] }
@@ -88,7 +94,7 @@ export default function FlipCard(props: Props) {
                 setMatchCount(matchCount + 1)
                 updateUserInfo()
 
-                if (userData && userData.wordbook) {
+                if (userData?.wordbook) {
                     const wordList = userData.wordbook
                     if (wordList.includes(selectedCard.id)) {
                         return
@@ -165,6 +171,17 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function setClassName() {
+        switch (props.gameSize) {
+            case "small":
+                return "concentration-small";
+            case "medium":
+                return "concentration-medium";
+            default:
+                return "concentration-large"
+        }
+    }
+
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
             return <Confetti width={390} height={300}></Confetti>
@@ -182,7 +199,7 @@ export default function FlipCard(props: Props) {
                 {confetti()}
             </div>
             <div
-                className={(props.gameSize === "small") ? "concentration-small" : (props.gameSize === "medium") ? "concentration-medium" : "concentration-large"}>
+                className={setClassName()}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
                             if (!card) {

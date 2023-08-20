@@ -6,9 +6,9 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SettingsIcon from '@mui/icons-material/Settings';
 import "./Header.css"
 
-
 type Props = {
     user: string | undefined
+    achievement: string | undefined
     onLogout: () => void
 }
 
@@ -23,7 +23,7 @@ export default function Header(props: Props) {
                         <Button size="small"
                                 sx={{color: "#FDEEBE", background: "#69d1ca", boxShadow: 0, borderRadius: '50px', padding: 1}}
                                 onClick={props.onLogout}>
-                            ☺︎ {props.user}
+                            ☻{props.user} <span>&nbsp;♥︎{props.achievement}</span>
                         </Button>
                     </Tooltip>
                     <Stack direction="row" spacing={0.5}>

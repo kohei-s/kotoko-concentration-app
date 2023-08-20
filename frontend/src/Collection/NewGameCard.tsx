@@ -5,8 +5,8 @@ import {Button, Card, CardActions, CardContent, TextField, Typography} from "@mu
 import "./NewGameCard.css"
 
 type Props = {
-    onCancel: () => void
-    onAddNewCard: () => void //LoadAllCard
+    onClose: () => void
+    onAddNewCard: () => void
 }
 export default function NewGameCard(props: Props) {
 
@@ -30,7 +30,7 @@ export default function NewGameCard(props: Props) {
             .then(() => {
                 setTitle("")
                 setCardSetName("")
-                props.onAddNewCard
+                props.onAddNewCard()
             }).catch(console.error)
     }
 
@@ -64,7 +64,7 @@ export default function NewGameCard(props: Props) {
                         boxShadow: 0,
                         borderRadius: '15px'
                     }}>Save</Button>
-                    <Button variant="contained" onClick={props.onCancel} sx={{
+                    <Button variant="contained" onClick={props.onClose} sx={{
                         m: 5,
                         maxWidth: 60,
                         background: "#508356",

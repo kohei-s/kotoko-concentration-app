@@ -1,6 +1,6 @@
 import {Button, Stack, Tooltip} from "@mui/material";
 import {Link} from "react-router-dom";
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 import "./MainPage.css"
 
 type Props = {

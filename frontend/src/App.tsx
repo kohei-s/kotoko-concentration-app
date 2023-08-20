@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import ProtectedRoutes from "./Security/ProtectedRoutes.tsx";
 import MainPage from "./MainPage/MainPage.tsx";
-import {UserInfo} from "./UserInfo.ts";
+import {UserInfo} from "./Security/UserInfo.ts";
 import RegisterPage from "./Security/RegisterPage.tsx";
 import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
@@ -97,7 +97,7 @@ export default function App() {
                 <Routes>
                     <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
                     <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
-                    <Route element={<ProtectedRoutes user={userName} logout={logout}/>}>
+                    <Route element={<ProtectedRoutes user={userName} achievement={userInfo?.achievement} logout={logout}/>}>
                         <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
                         <Route path={"/game/:gameSize/:gameName"}
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
