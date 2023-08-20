@@ -33,6 +33,7 @@ export default function NewGameCard(props: Props) {
                 setTitle("")
                 setCardSetName("")
                 props.onAddNewCard()
+                props.onClose()
             }).catch(console.error)
     }
 

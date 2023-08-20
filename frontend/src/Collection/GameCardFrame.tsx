@@ -80,7 +80,6 @@ export default function GameCardFrame(props: Props) {
         setIsOpenModal(false);
 
     function confirmDelete(result: string) {
-        console.log(result)
         if (result === "ok") {
             deleteGameCard()
         }
