@@ -41,6 +41,7 @@ export default function GameCardCollection() {
         const uniqueSetNames = new Set(listSetNames)
         setAllCardSetNames(Array.from(uniqueSetNames))
     }
+
     function openModal() {
         setIsModalOpen(true)
     }
@@ -64,7 +65,9 @@ export default function GameCardCollection() {
                 open={isModalOpen}
                 sx={{mt: 20, ml: 6}}
             >
-                <NewGameCard onClose={closeModal} onAddNewCard={loadAllNonDefaultGameCards}/>
+                <div>
+                    <NewGameCard onClose={closeModal} onAddNewCard={loadAllNonDefaultGameCards}/>
+                </div>
             </Modal>
             {allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
