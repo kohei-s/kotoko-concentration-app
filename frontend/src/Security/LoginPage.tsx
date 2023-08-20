@@ -29,7 +29,7 @@ export default function LoginPage(props: Props) {
                     <TextField id="login-passwort" label="login-passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
                                placeholder={"Password"} type={"password"}/>
                 </Typography>
-                <Button variant="contained" onClick={onLogin} sx={{
+                <Button variant="contained" onClick={onLogin}  disableRipple={true} sx={{
                     maxWidth: 100,
                     margin: 5,
                     background: "#69d1ca",

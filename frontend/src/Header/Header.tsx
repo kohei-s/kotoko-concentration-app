@@ -29,25 +29,25 @@ export default function Header(props: Props) {
                     <Stack direction="row" spacing={0.5}>
                         <Tooltip title={"home"}>
                             <IconButton size={"small"}
-                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0}}>
+                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0}} disableRipple={true}>
                                 <Link to="/"><HomeRoundedIcon/></Link>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Card Collection">
                             <IconButton size="small"
-                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
+                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} disableRipple={true}>
                                 <Link to="/card-collection"><MenuBookIcon/></Link>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Game Record">
                             <IconButton size="small"
-                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
+                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} disableRipple={true}>
                                 <Link to="/game-record"><EmojiEventsIcon/></Link>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Setting">
                             <IconButton size="small"
-                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}}>
+                                        sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} disableRipple={true}>
                                 <Link to="/setting"><SettingsIcon/></Link>
                             </IconButton>
                         </Tooltip>

@@ -26,7 +26,7 @@ export default function RegisterPage(props: Props) {
                     <TextField id="register-passwort" label="register-passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
                                placeholder={"Password"} type={"password"}/>
                 </Typography>
-                <Button variant="contained" onClick={onRegister} sx={{
+                <Button variant="contained" onClick={onRegister} disableRipple={true} sx={{
                     maxWidth: 100,
                     margin: 5,
                     background: "#55a8a2",

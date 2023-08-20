@@ -50,12 +50,12 @@ export default function Setting(props: Props) {
 
     function setUserLevelText(index: number) {
         switch (userLevels[index]) {
-            case "small":
-                return "Beginner";
+            case "large":
+                return "Advanced";
             case "medium":
                 return "Intermediate";
             default:
-                return "Advanced";
+                return "Beginner";
         }
     }
 
@@ -140,7 +140,7 @@ export default function Setting(props: Props) {
                     <FormHelperText>current
                         level: {setUserLevelText(3)}</FormHelperText>
                 </FormControl>
-                <IconButton id={"save"} size="small" sx={{
+                <IconButton id={"save"} size="small" disableRipple={true} sx={{
                     maxWidth: 60,
                     color: "#FDF6E1",
                     background: "#508356",

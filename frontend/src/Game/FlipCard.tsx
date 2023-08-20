@@ -68,16 +68,12 @@ export default function FlipCard(props: Props) {
         }
     }, [loadGameCards, props.userInfo, boardId]);
 
-    function checkAlreadyOpenedOrIsLocked(rowIndex: number, columnIndex: number) {
-        if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
-            return
-        }
-    }
-
 
     function flipCard(rowIndex: number, columnIndex: number) {
 
-        checkAlreadyOpenedOrIsLocked(rowIndex, columnIndex)
+        if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
+            return
+        }
 
         const selectedCard = gameCards.cardsGrid[rowIndex][columnIndex]
         const newIsMatched = JSON.parse(JSON.stringify(isMatched)) as { isMatched: boolean[][] }
@@ -94,7 +90,7 @@ export default function FlipCard(props: Props) {
                 setMatchCount(matchCount + 1)
                 updateUserInfo()
 
-                if (userData?.wordbook) {
+                if (userData && userData.wordbook) {
                     const wordList = userData.wordbook
                     if (wordList.includes(selectedCard.id)) {
                         return
