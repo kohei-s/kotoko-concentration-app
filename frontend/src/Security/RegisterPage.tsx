@@ -19,11 +19,11 @@ export default function RegisterPage(props: Props) {
         <>
             <div className={"register-form"}>
                 <Typography component="div">
-                    <TextField id="username" label="username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
+                    <TextField id="register-username" label="register-username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
                                placeholder={"Username"}/>
                 </Typography>
                 <Typography component="div">
-                    <TextField id="passwort" label="passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
+                    <TextField id="register-passwort" label="register-passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
                                placeholder={"Password"} type={"password"}/>
                 </Typography>
                 <Button variant="contained" onClick={onRegister} sx={{
