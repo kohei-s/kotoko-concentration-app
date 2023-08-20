@@ -32,6 +32,7 @@ export default function GameCardCollection() {
             .then(data => {
                 const responseDataCardList = data.filter(card =>
                     card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
+                responseDataCardList.reverse()
                 setAllNonDefaultGameCards(responseDataCardList)
             }).catch(console.error)
     }
