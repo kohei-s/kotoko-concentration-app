@@ -1,7 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {GameCard} from "../Game/GameCard.ts";
-import {Button, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, Stack, TextField, Typography} from "@mui/material";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import "./NewGameCard.css"
 
 type Props = {
@@ -46,31 +48,33 @@ export default function NewGameCard(props: Props) {
                 borderRadius: '15px'
             }}>
                 <CardContent>
-                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
-                        Game Card
+                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                        Create new game card
                     </Typography>
                     <Typography variant="h5" component="div">
-                        <TextField id="title" label="card title" onInput={inputTitle}/>
+                        <TextField id="title" label="card title?" onInput={inputTitle}/>
                     </Typography>
-                    <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
-                        <TextField id="set" label="card set name" onInput={inputCardSetName}/>
+                    <Typography sx={{mb: 1.5}} color="text.secondary">
+                        <TextField id="set" label="set name?" onInput={inputCardSetName}/>
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" onClick={saveGameCard} sx={{
-                        m: 5,
-                        maxWidth: 60,
-                        background: "#508356",
-                        boxShadow: 0,
-                        borderRadius: '15px'
-                    }}>Save</Button>
-                    <Button variant="contained" onClick={props.onClose} sx={{
-                        m: 5,
-                        maxWidth: 60,
-                        background: "#508356",
-                        boxShadow: 0,
-                        borderRadius: '15px'
-                    }}>Cancel</Button>
+                    <Stack className={"new-card-stack"} direction="row" paddingBottom={3}>
+                        <Button id={"new-card-button"} onClick={saveGameCard} sx={{
+                            m: 5,
+                            maxWidth: 60,
+                            color: "#508356",
+                            boxShadow: 0,
+                            borderRadius: '15px'
+                        }}><CheckBoxIcon/></Button>
+                        <Button id={"new-card-button"} onClick={props.onClose} sx={{
+                            m: 5,
+                            maxWidth: 60,
+                            color: "#D05F5F",
+                            boxShadow: 0,
+                            borderRadius: '15px'
+                        }}><DoDisturbOnIcon/></Button>
+                    </Stack>
                 </CardActions>
             </Card>
         </>
