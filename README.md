@@ -4,7 +4,7 @@ This mobile application is being developed 🛠️ as my personal capstone proje
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend)
 ## 1. Concept 📱
-New concentration game app aims to support learning Japanese for so called [third culture kids](https://en.wikipedia.org/wiki/Third_culture_kid) grwoing up speaking a different language in kindergarten or school. The name of the app *KoToKO (言と言)* is a neologism that could mean *Word & Word*.
+New concentration game app aims to support learning Japanese for so called [third culture kids](https://en.wikipedia.org/wiki/Third_culture_kid) growing up speaking a different language in kindergarten or school. The name of the app *KoToKO (言と言)* is a neologism that could mean *Word & Word*.
 ## 2. Problem 😦
 - Difficulty of staying motivated to learn the Japanese language in non-Japanese speaking countries
 - Frustration of not being properly understood in Japanese by their own families
@@ -15,7 +15,8 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
 ## 5. Core function
   🪄 Personalize game contents with your favorite Japanese characters \
   📖 Add new characters you're about to learn \
-  🔎 Search Japanese character in your strongest language e.g. English or German \
   🗻 Show game records you achieved \
+  🛝 Child friendly design \
+
+  🔎 Search Japanese character in your strongest language e.g. English or German \
   ❤️ Praise your kids for thier achivements and keep cheering them (feature for parents) \
-  🛝 Child friendly design
