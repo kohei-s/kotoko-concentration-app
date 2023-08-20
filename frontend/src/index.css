@@ -18,8 +18,8 @@ a {
     text-decoration: inherit;
 }
 
-a:hover {
-    color: #535bf2;
+a:active {
+    color: #69d1ca;
 }
 
 body {
@@ -48,22 +48,9 @@ button {
     transition: border-color 0.25s;
 }
 
-button:hover {
-
-}
-
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
     :root {
         background-color: #FDEEBE;
-    }
-
-    a:hover {
-
     }
 
     button {
@@ -72,4 +59,5 @@ button:focus-visible {
         color: #f8e619;
         background-color: #69d1ca;
     }
+
 }
