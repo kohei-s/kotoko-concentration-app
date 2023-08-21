@@ -17,7 +17,6 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
   📖 Add new characters you're about to learn \
   🗻 Show game records you achieved \
   🛝 Child friendly design \
-  🔎 Search Japanese character in your strongest language e.g. English or German** \
-  ❤️ Praise your kids for their achievements and keep cheering them** \
-  📚 Expand your Hiragana & Katakana knowledge with Diacritics Cards** \
-  (** upcoming features for kids & parents)
+  (upcoming features) \
+  🔎 Search Japanese character in your strongest language e.g. English or German \
+  ❤️ Praise your kids for their achievements and keep cheering them (feature for parents)

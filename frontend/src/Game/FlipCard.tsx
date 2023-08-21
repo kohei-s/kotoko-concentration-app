@@ -148,7 +148,7 @@ export default function FlipCard(props: Props) {
 
     function displayCustomGameName() {
         if ((props.gameName !== "hiragana") && (props.gameName !== "playing-cards") && (props.gameName !== "katakana")) {
-            return <div className={"game-name"}>current set: <span>{props.gameName}</span></div>
+            return <div className={"game-name"}>current set: {props.gameName}</div>
         }
     }
 
@@ -188,7 +188,7 @@ export default function FlipCard(props: Props) {
     return (
         <>
             <div>
-                <Stack direction="row" spacing={2.5}>
+                <Stack direction="row" spacing={0.4}>
                     {renderGameTitle()}
                     {displayCustomGameName()}
                 </Stack>
