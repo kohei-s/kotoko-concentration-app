@@ -4,6 +4,7 @@
 }
 
 .start {
+    width: 290px;
     padding-top:90px;
     padding-bottom: 20px;
     display: flex;

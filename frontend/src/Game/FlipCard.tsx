@@ -5,7 +5,7 @@ import {IconButton, Stack} from "@mui/material";
 import ReplayRoundedIcon from "@mui/icons-material/ReplayRounded";
 import {createGameCards} from "./createGameCards.ts";
 import Confetti from 'react-confetti'
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 import './FlipCard.css';
 
 type Props = {
@@ -58,16 +58,19 @@ export default function FlipCard(props: Props) {
     }, [props.gameName, props.gameSize]);
 
     useEffect(() => {
-        loadGameCards()
+        if (!boardId) {
+            loadGameCards()
+        }
         setUserData(props.userInfo)
         if (props.userInfo) {
             setUserAchievement(props.userInfo.achievement)
             setUserWordbook(props.userInfo.wordbook)
         }
-    }, [loadGameCards, props.userInfo]);
+    }, [loadGameCards, props.userInfo, boardId]);
 
 
     function flipCard(rowIndex: number, columnIndex: number) {
+
         if ((isMatched.isMatched[rowIndex][columnIndex]) || (isLocked)) {
             return
         }
@@ -124,6 +127,10 @@ export default function FlipCard(props: Props) {
             const src = `/${props.gameName}-images/${props.gameName}-${card.title}.png`;
             const alt = `${props.gameName}${card.title}${card.cardSetName}`;
             return <img src={src} alt={alt}/>;
+        } else if (props.gameName === "kanji") {
+            const src = `/${props.gameName}-images/${props.gameName}-${card.title.slice(2)}.png`;
+            const alt = `${props.gameName}${card.title.slice(2)}${card.cardSetName}`;
+            return <img src={src} alt={alt}/>;
         } else {
             return card.title;
         }
@@ -139,13 +146,19 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function displayCustomGameName() {
+        if ((props.gameName !== "hiragana") && (props.gameName !== "playing-cards") && (props.gameName !== "katakana")) {
+            return <div className={"game-name"}>current set: {props.gameName}</div>
+        }
+    }
+
     function updateUserInfo() {
         if (((props.gameSize === "small") && (matchCount === 3)) || ((props.gameSize === "medium") && (matchCount === 5)) || ((props.gameSize === "large") && (matchCount === 7))) {
             const newAchievement = String(Number(userAchievement) + 1)
             setUserAchievement(newAchievement)
             const updatedUserInfo: UserInfo = {
                 username: userData?.username as string,
-                achievement: userAchievement,
+                achievement: newAchievement,
                 wordbook: userWordbook,
                 diacritics: userData?.diacritics as boolean[],
                 levels: userData?.levels as string[]
@@ -154,21 +167,35 @@ export default function FlipCard(props: Props) {
         }
     }
 
+    function setClassName() {
+        switch (props.gameSize) {
+            case "small":
+                return "concentration-small";
+            case "medium":
+                return "concentration-medium";
+            default:
+                return "concentration-large"
+        }
+    }
+
     function confetti() {
         if (((props.gameSize === "small") && (matchCount === 4)) || ((props.gameSize === "medium") && (matchCount === 6)) || ((props.gameSize === "large") && (matchCount === 8))) {
-            console.log("test")
             return <Confetti width={390} height={300}></Confetti>
         }
     }
 
+
     return (
         <>
             <div>
-                {renderGameTitle()}
+                <Stack direction="row" spacing={0.4}>
+                    {renderGameTitle()}
+                    {displayCustomGameName()}
+                </Stack>
                 {confetti()}
             </div>
             <div
-                className={(props.gameSize === "small") ? "concentration-small" : (props.gameSize === "medium") ? "concentration-medium" : "concentration-large"}>
+                className={setClassName()}>
                 {gameCards.cardsGrid.map((row, rowIndex) => {
                     return row.map((card, columnIndex) => {
                             if (!card) {

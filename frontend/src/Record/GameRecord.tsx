@@ -2,7 +2,7 @@ import {Stack} from "@mui/material";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import "./GameRecord.css"
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 
 type Props = {
     userInfo?: UserInfo
@@ -62,12 +62,13 @@ export default function GameRecord(props: Props) {
                     </div>
                 </Stack>
                 <div>
-                    <h5>Keep up the good work ☺︎ {user}!!</h5>
-                    <h5>You have already learned & played with</h5>
-                    <h4><p>♥</p><span id={"hiragana"}>{valueHiragana} of 46 Hiragana</span></h4>
+                    <h4>Keep up the good work !!</h4>
+                    <h3 id={"user-name"}>☺︎ {user}</h3>
+                    <h4>You have already learned & played with</h4>
+                    <h4><span id={"hiragana"}>{valueHiragana} of 46 Hiragana</span></h4>
                     <h4><span id={"katakana"}>{valueKatakana} of 46 Katakana</span></h4>
                     <h4><span id={"playing-cards"}>{valuePlayingCards} of 52 Playing Cards</span><p>♥</p></h4>
-                    <h5>Total {userAchievement} games</h5>
+                    <h4 id={"achievement"}>Total <span>&nbsp;{userAchievement}&nbsp;</span> games</h4>
                 </div>
             </div>
         </>

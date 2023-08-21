@@ -1,5 +1,19 @@
+.modal-new-card {
+    right: auto;
+    left: auto;
+    border-radius: 8px;
+    max-width: 290px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
 .new-card {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+#new-card-button {
+    margin: 0;
 }

@@ -1,6 +1,14 @@
-import {UserInfo} from "../UserInfo.ts";
+import {UserInfo} from "../Security/UserInfo.ts";
 import {useEffect, useState} from "react";
-import {Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {
+    FormControl,
+    FormHelperText,
+    IconButton,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent
+} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 import "./Setting.css"
 
@@ -40,6 +48,17 @@ export default function Setting(props: Props) {
         setCustomLevel(event.target.value)
     }
 
+    function setUserLevelText(index: number) {
+        switch (userLevels[index]) {
+            case "large":
+                return "Advanced";
+            case "medium":
+                return "Intermediate";
+            default:
+                return "Beginner";
+        }
+    }
+
     function updateLevels() {
         const newLevels: string[] = [hiraganaLevel, katakanaLevel, playingCardsLevel, customLevel]
         setUserLevels(newLevels)
@@ -60,7 +79,7 @@ export default function Setting(props: Props) {
                      alt={"setting-logo"}/>
             </div>
             <div className={"selector"}>
-                <FormControl sx={{ m: 1, minWidth: 120}}>
+                <FormControl sx={{m: 1, maxWidth: 220}}>
                     <InputLabel id="Hiragana-level">HIRAGANA</InputLabel>
                     <Select
                         labelId="Hiragana-level"
@@ -73,9 +92,9 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>current level:  {(userLevels[0]==="small")? "Beginner": (userLevels[0]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level: {setUserLevelText(0)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl sx={{m: 1, maxWidth: 220}}>
                     <InputLabel id="Katakana-level">KATAKANA</InputLabel>
                     <Select
                         labelId="Katakana-level"
@@ -88,9 +107,9 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>current level:  {(userLevels[1]==="small")? "Beginner": (userLevels[1]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level: {setUserLevelText(1)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl sx={{m: 1, maxWidth: 220}}>
                     <InputLabel id="PlayingCards-level">CARDS</InputLabel>
                     <Select
                         labelId="PlayingCards-level"
@@ -103,9 +122,9 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards) </MenuItem>
                     </Select>
-                    <FormHelperText>current level:  {(userLevels[2]==="small")? "Beginner": (userLevels[2]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current level: {setUserLevelText(2)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl sx={{m: 1, maxWidth: 220}}>
                     <InputLabel id="Cuctom-level">CUSTOM</InputLabel>
                     <Select
                         labelId="Custom-level"
@@ -118,13 +137,20 @@ export default function Setting(props: Props) {
                         <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
                         <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
                     </Select>
-                    <FormHelperText>current level:  {(userLevels[3]==="small")? "Beginner": (userLevels[3]==="medium")? "Intermediate": "Advanced"}</FormHelperText>
+                    <FormHelperText>current
+                        level: {setUserLevelText(3)}</FormHelperText>
                 </FormControl>
-                <Button id={"save"} size="small" sx={{maxWidth: 60, color: "#FDF6E1", background: "#508356", boxShadow: 0, borderRadius: '15px'}} onClick={() => {
+                <IconButton id={"save"} size="small" disableRipple={true} sx={{
+                    maxWidth: 60,
+                    color: "#FDF6E1",
+                    background: "#508356",
+                    boxShadow: 0,
+                    borderRadius: '10px'
+                }} onClick={() => {
                     updateLevels()
                 }}>
                     <CheckIcon/>
-                </Button>
+                </IconButton>
             </div>
         </>
     );

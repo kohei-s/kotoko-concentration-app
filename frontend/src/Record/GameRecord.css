@@ -1,10 +1,25 @@
 .records {
+    font-family: 'Potta One', cursive;
     width: 290px;
 }
 
 h4 {
     color: #404040;
     text-align: center;
+}
+
+#user-name {
+    color: #55a8a2;
+    text-align: center;
+    padding-right: 15px;
+}
+
+#achievement {
+    padding-left: 10px;
+}
+
+span {
+    color:#55a8a2;
 }
 
 h5 {

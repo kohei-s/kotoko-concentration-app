@@ -1,6 +1,7 @@
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
 import "./LoginPage.css"
+import {Button, TextField, Typography} from "@mui/material";
 
 type Props = {
     onLogin: (username: string, password: string) => void
@@ -19,14 +20,25 @@ export default function LoginPage(props: Props) {
 
     return (
         <>
-            <form onSubmit={onLogin}>
-                <input value={username} onChange={event => setUsername(event.target.value)} placeholder={"Username"}/>
-                <input value={password} onChange={event => setPassword(event.target.value)} placeholder={"Password"}
-                       type="password"/>
-                <button style={{color: "#f8e619", backgroundColor: "#69d1ca", borderColor: "#f8e619"}}>LOGIN</button>
-            </form>
-            <div>
-                <Link to="/register" className="link">☺︎ Not registered yet?</Link>
+            <div className={"login-form"}>
+                <Typography component="div">
+                    <TextField id="login-username" label="login-username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
+                               placeholder={"Username"}/>
+                </Typography>
+                <Typography component="div">
+                    <TextField id="login-passwort" label="login-passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
+                               placeholder={"Password"} type={"password"}/>
+                </Typography>
+                <Button variant="contained" onClick={onLogin}  disableRipple={true} sx={{
+                    maxWidth: 100,
+                    margin: 5,
+                    background: "#69d1ca",
+                    boxShadow: 0,
+                    borderRadius: '15px'
+                }}>Login</Button>
+                <div>
+                    <Link to="/register" className="link">☺︎ Not registered yet?</Link>
+                </div>
             </div>
         </>
     )

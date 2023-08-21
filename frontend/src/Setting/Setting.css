@@ -2,10 +2,12 @@
     display: flex;
     flex-direction: column;
     width: 290px;
+    align-items: center;
 }
 
 .selector button {
-    align-self: end;
+    align-self: flex-end;
+
 }
 
 #title {
@@ -13,5 +15,6 @@
 }
 
 #save {
-    margin-top: 30px;
+    margin-top: 40px;
+    margin-right: 55px;
 }
