@@ -20,10 +20,10 @@ export default function Setting(props: Props) {
 
     const [userData, setUserData] = useState<UserInfo>();
     const [userLevels, setUserLevels] = useState<string[]>([]);
-    const [hiraganaLevel, setHiraganaLevel] = useState<string>("");
-    const [katakanaLevel, setKatakanaLevel] = useState<string>("");
-    const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("");
-    const [customLevel, setCustomLevel] = useState<string>("");
+    const [hiraganaLevel, setHiraganaLevel] = useState<string>("small");
+    const [katakanaLevel, setKatakanaLevel] = useState<string>("small");
+    const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("small");
+    const [customLevel, setCustomLevel] = useState<string>("small");
 
     useEffect(() => {
         setUserData(props.userInfo)
