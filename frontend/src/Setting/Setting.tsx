@@ -80,7 +80,7 @@ export default function Setting(props: Props) {
                      alt={"setting-logo"}/>
             </div>
             <div className={"selector"}>
-                <FormControl sx={{m: 1, maxWidth: 220}}>
+                <FormControl sx={{m: 1, maxWidth: 230}}>
                     <InputLabel id="Hiragana-level">HIRAGANA</InputLabel>
                     <Select
                         labelId="Hiragana-level"
@@ -95,7 +95,7 @@ export default function Setting(props: Props) {
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(0)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 220}}>
+                <FormControl sx={{m: 1, maxWidth: 230}}>
                     <InputLabel id="Katakana-level">KATAKANA</InputLabel>
                     <Select
                         labelId="Katakana-level"
@@ -110,7 +110,7 @@ export default function Setting(props: Props) {
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(1)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 220}}>
+                <FormControl sx={{m: 1, maxWidth: 230}}>
                     <InputLabel id="PlayingCards-level">CARDS</InputLabel>
                     <Select
                         labelId="PlayingCards-level"
@@ -125,7 +125,7 @@ export default function Setting(props: Props) {
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(2)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 220}}>
+                <FormControl sx={{m: 1, maxWidth: 230}}>
                     <InputLabel id="Cuctom-level">CUSTOM</InputLabel>
                     <Select
                         labelId="Custom-level"
