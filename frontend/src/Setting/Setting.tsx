@@ -72,6 +72,7 @@ export default function Setting(props: Props) {
         props.update(updatedUserInfo)
     }
 
+
     return (
         <>
             <div>

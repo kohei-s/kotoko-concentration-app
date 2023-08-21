@@ -131,6 +131,10 @@ export default function FlipCard(props: Props) {
             const src = `/${props.gameName}-images/${props.gameName}-${card.title.slice(2)}.png`;
             const alt = `${props.gameName}${card.title.slice(2)}${card.cardSetName}`;
             return <img src={src} alt={alt}/>;
+        } else if (props.gameName === "animal") {
+            const src = `/${props.gameName}-images/${props.gameName}-${card.title.split(" ")[1]}.png`;
+            const alt = `${props.gameName}${card.title.split(" ")[1]}${card.cardSetName}`;
+            return <img src={src} alt={alt}/>;
         } else {
             return card.title;
         }
