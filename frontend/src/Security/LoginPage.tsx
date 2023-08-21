@@ -22,11 +22,11 @@ export default function LoginPage(props: Props) {
         <>
             <div className={"login-form"}>
                 <Typography component="div">
-                    <TextField id="login-username" label="login-username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
+                    <TextField id="login-username" label="username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
                                placeholder={"Username"}/>
                 </Typography>
                 <Typography component="div">
-                    <TextField id="login-passwort" label="login-passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
+                    <TextField id="login-passwort" label="passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
                                placeholder={"Password"} type={"password"}/>
                 </Typography>
                 <Button variant="contained" onClick={onLogin}  disableRipple={true} sx={{
