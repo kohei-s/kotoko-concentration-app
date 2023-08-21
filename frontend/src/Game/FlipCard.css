@@ -39,9 +39,14 @@ h2 {
 .game-name {
     display: grid;
     align-content: end;
+    text-align: end;
     max-width: 150px;
     padding-bottom: 20px;
     color: #959fa8;
+}
+
+.game-name span {
+    color: #69d1ca;
 }
 
 .card {
