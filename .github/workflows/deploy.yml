@@ -76,7 +76,7 @@ jobs:
         with:
           push: true
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
-          tags: kokoyuyu/kotoko-app
+          tags: kokoyuyu/kotoko-app:latest
           context: .
 
   deploy:
@@ -98,7 +98,6 @@ jobs:
             sudo docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
             sleep 15s
             sudo docker logs ec2-user
-
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
