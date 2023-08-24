@@ -10,10 +10,10 @@ jobs:
       - name: Get logs from docker
         uses: appleboy/ssh-action@master
         with:
-          host: capstone-project.de
+          host: ip-172-31-28-134.eu-central-1.compute.internal
           #Set App Name (replace "example" with "alpha"-"tango")
-          username: cgn-java-23-2-kohei
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: ec2-user
+          password: ${{ secrets.SSH_KEY }}
           #Set App Name (replace "example" with "alpha"-"tango")
           script: |
             sudo docker logs cgn-java-23-2-kohei
@@ -21,7 +21,7 @@ jobs:
         uses: jtalk/url-health-check-action@v3
         with:
           #Set App Name (replace "example" with "alpha"-"tango")
-          url: http://cgn-java-23-2-kohei.capstone-project.de
+          url: http://ip-172-31-28-134.eu-central-1.compute.internal
           max-attempts: 3
           retry-delay: 5s
           retry-all: true
