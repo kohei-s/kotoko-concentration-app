@@ -86,7 +86,7 @@ jobs:
       - name: Restart docker container
         uses: appleboy/ssh-action@master
         with:
-          host: ip-172-31-28-134.eu-central-1.compute.internal
+          host: ec2-3-75-170-172.eu-central-1.compute.amazonaws.com
           #Set App Name (replace "example" with your ssh user name)
           username: ec2-user
           password: ${{ secrets.SSH_KEY }}
@@ -103,7 +103,7 @@ jobs:
         uses: jtalk/url-health-check-action@v3
         with:
           #Set App Name (replace "example" with your ssh user name)
-          url: http://ip-172-31-28-134.eu-central-1.compute.internal
+          url: http://ec2-3-75-170-172.eu-central-1.compute.amazonaws.com
           max-attempts: 3
           retry-delay: 5s
           retry-all: true
