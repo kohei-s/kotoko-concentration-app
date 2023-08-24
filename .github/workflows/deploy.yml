@@ -89,7 +89,7 @@ jobs:
           host: ip-172-31-28-134.eu-central-1.compute.internal
           #Set App Name (replace "example" with your ssh user name)
           username: ec2-user
-          password: ${{ secrets.SSH_KEY　 }}
+          password: ${{ secrets.SSH_KEY }}
           #Set App Name (replace "example" with your ssh user name)
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
           script: |
