@@ -86,25 +86,24 @@ jobs:
       - name: Restart docker container
         uses: appleboy/ssh-action@master
         with:
-          host: capstone-project.de
+          host: ip-172-31-28-134.eu-central-1.compute.internal
           #Set App Name (replace "example" with your ssh user name)
-          username: cgn-java-23-2-kohei
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: ec2-user
+          password: ${{ secrets.SSH_KEY　 }}
           #Set App Name (replace "example" with your ssh user name)
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
-          #Set IP (replace "10.0.1.99" with your ip address)
           script: |
-            sudo docker stop cgn-java-23-2-kohei
-            sudo docker rm cgn-java-23-2-kohei
-            sudo docker run --pull=always --name cgn-java-23-2-kohei --network capstones --ip 10.0.5.12 --restart always --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
+            sudo docker stop ec2-user
+            sudo docker rm ec2-user
+            sudo docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
             sleep 15s
-            sudo docker logs cgn-java-23-2-kohei
+            sudo docker logs ec2-user
 
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
           #Set App Name (replace "example" with your ssh user name)
-          url: http://cgn-java-23-2-kohei.capstone-project.de
+          url: http://ip-172-31-28-134.eu-central-1.compute.internal
           max-attempts: 3
           retry-delay: 5s
           retry-all: true
