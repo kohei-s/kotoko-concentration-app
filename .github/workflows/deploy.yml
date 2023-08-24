@@ -93,11 +93,11 @@ jobs:
           #Set App Name (replace "example" with your ssh user name)
           #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
           script: |
-            sudo docker stop ec2-user
-            sudo docker rm ec2-user
-            sudo docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
+            docker stop ec2-user
+            docker rm ec2-user
+            docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
             sleep 15s
-            sudo docker logs ec2-user
+            docker logs ec2-user
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
