@@ -13,7 +13,7 @@ jobs:
           host: ec2-3-75-170-172.eu-central-1.compute.amazonaws.com
           #Set App Name (replace "example" with "alpha"-"tango")
           username: ec2-user
-          password: ${{ secrets.SSH_KEY }}
+          key: ${{ secrets.SSH_KEY }}
           #Set App Name (replace "example" with "alpha"-"tango")
           script: |
             sudo docker logs ec2-user
