@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class ConfigTest {
@@ -46,4 +47,6 @@ class ConfigTest {
         // Verify that the method returned the default starting page resource
         assertEquals(new ClassPathResource(Config.DEFAULT_STARTING_PAGE), result);
     }
+
 }
+
