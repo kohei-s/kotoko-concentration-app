@@ -1,5 +1,6 @@
 package de.neuefische.koheis.backend;
 
+import org.springframework.lang.NonNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -10,27 +11,28 @@ import java.io.IOException;
 
 @Configuration
 public class Config implements WebMvcConfigurer {
+    public static final String DEFAULT_STARTING_PAGE = "static/index.html";
+
+    static class ReactRoutingPathResourceResolver extends PathResourceResolver {
+        @Override
+        protected Resource getResource(@NonNull String resourcePath, Resource location) throws IOException {
+            var requestedResource = location.createRelative(resourcePath);
+
+            // Is this a request to a real file?
+            if (requestedResource.exists() && requestedResource.isReadable()) {
+                return requestedResource;
+            }
+
+            // It seems to be only a frontend-routing request (Single-Page-Application).
+            return new ClassPathResource(DEFAULT_STARTING_PAGE);
+        }
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(true)
-                .addResolver(new PathResourceResolver() {
-                    @Override
-                    protected Resource getResource(
-                            String resourcePath,
-                            Resource location
-                    ) throws IOException {
-                        Resource requestedResource = location.createRelative(
-                                resourcePath
-                        );
-
-                        return (
-                                requestedResource.exists() &&
-                                        requestedResource.isReadable()
-                        ) ? requestedResource
-                                : new ClassPathResource("/static/index.html");
-                    }
-                });
+                .addResolver(new ReactRoutingPathResourceResolver());
     }
 }
