@@ -10,7 +10,7 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ConfigTest {
@@ -45,6 +45,46 @@ class ConfigTest {
 
         // Verify that the method returned the default starting page resource
         assertEquals(new ClassPathResource(Config.DEFAULT_STARTING_PAGE), result);
+    }
+
+    @Test
+    void testReactRoutingPathResourceResolverForNonExistingResource() throws IOException {
+        String resourcePath = "/test.html";
+        Resource location = mock(Resource.class);
+        Resource requestedResource = mock(Resource.class);
+
+        when(location.createRelative(resourcePath)).thenReturn(requestedResource);
+        when(requestedResource.exists()).thenReturn(false);
+
+        Config.ReactRoutingPathResourceResolver resolver = new Config.ReactRoutingPathResourceResolver();
+        Resource resolvedResource = resolver.getResource(resourcePath, location);
+
+        assertEquals(new ClassPathResource(Config.DEFAULT_STARTING_PAGE), resolvedResource);
+
+        verify(location).createRelative(resourcePath);
+        verify(requestedResource).exists();
+        verifyNoMoreInteractions(location, requestedResource);
+    }
+
+    @Test
+    void testReactRoutingPathResourceResolverForExistingResource() throws IOException {
+        String resourcePath = "/test.html";
+        Resource location = mock(Resource.class);
+        Resource requestedResource = mock(Resource.class);
+
+        when(location.createRelative(resourcePath)).thenReturn(requestedResource);
+        when(requestedResource.exists()).thenReturn(true);
+        when(requestedResource.isReadable()).thenReturn(true);
+
+        Config.ReactRoutingPathResourceResolver resolver = new Config.ReactRoutingPathResourceResolver();
+        Resource resolvedResource = resolver.getResource(resourcePath, location);
+
+        assertEquals(requestedResource, resolvedResource);
+
+        verify(location).createRelative(resourcePath);
+        verify(requestedResource).exists();
+        verify(requestedResource).isReadable();
+        verifyNoMoreInteractions(location, requestedResource);
     }
 
 }
