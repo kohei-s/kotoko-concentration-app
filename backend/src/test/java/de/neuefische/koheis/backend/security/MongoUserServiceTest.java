@@ -34,7 +34,7 @@ class MongoUserServiceTest {
         mongoUserService.registerUser(mongoUserWithoutId);
 
         //THEN
-        verify(mongoUserRepository).insert(new MongoUser("01", "testName", "123", null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+        verify(mongoUserRepository).insert(new MongoUser("01", "testName", "123", null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), ""));
         verify(idService).createRandomId();
     }
 
@@ -42,7 +42,7 @@ class MongoUserServiceTest {
     void whenUserExists_throwException() {
         //GIVEN
         Mockito.when(mongoUserRepository.findByUsername("testName"))
-                        .thenReturn(Optional.of(new MongoUser("01", "testName", "testPassword", "testAchievement", new ArrayList<>(List.of("testWordbook")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")))));
+                        .thenReturn(Optional.of(new MongoUser("01", "testName", "testPassword", "testAchievement", new ArrayList<>(List.of("testWordbook")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")), "testSet")));
 
         //WHEN //THEN
        try {
@@ -55,10 +55,10 @@ class MongoUserServiceTest {
     @Test
     void whenUsernameExists_returnUserInfo() {
         //GIVEN
-        MongoUser mongoUser = new MongoUser("01", "testName", "testPassword", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        MongoUser mongoUser = new MongoUser("01", "testName", "testPassword", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
         Mockito.when(mongoUserRepository.findByUsername("testName"))
                 .thenReturn(Optional.of(mongoUser));
-        UserInfo expected = new UserInfo("testName", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        UserInfo expected = new UserInfo("testName", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
 
         //WHEN
         UserInfo actual = mongoUserService.findByUsername("testName");
@@ -73,7 +73,7 @@ class MongoUserServiceTest {
         //GIVEN
         Mockito.when(mongoUserRepository.findByUsername("testName"))
                 .thenReturn(Optional.empty());
-        UserInfo expected = new UserInfo("Anonymous User", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        UserInfo expected = new UserInfo("Anonymous User", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
 
         //WHEN
         UserInfo actual = mongoUserService.findByUsername("testName");
@@ -86,18 +86,18 @@ class MongoUserServiceTest {
     @Test
     void whenUpdateExistingUserInfo_returnUpdatedUserInfo() {
         //GIVEN
-        MongoUser before = new MongoUser("012", "test", "345", "testA", new ArrayList<>(List.of("testB")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")));
+        MongoUser before = new MongoUser("012", "test", "345", "testA", new ArrayList<>(List.of("testB")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")), "testSet");
         Mockito.when(mongoUserRepository.findByUsername("test"))
                 .thenReturn(Optional.of(before));
 
         //WHEN
-        MongoUser after = new MongoUser("012", "test", "345", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")));
+        MongoUser after = new MongoUser("012", "test", "345", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")), "testSet");
         Mockito.when(mongoUserRepository.save(after))
                 .thenReturn(after);
         Mockito.when(mongoUserRepository.findByUsername("test"))
                 .thenReturn(Optional.of(after));
-        UserInfo expected = new UserInfo("test", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")));
-        UserInfo actual = mongoUserService.updateUserInfo(new UserInfo("test", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small"))));
+        UserInfo expected = new UserInfo("test", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")), "testSet");
+        UserInfo actual = mongoUserService.updateUserInfo(new UserInfo("test", "testC",  new ArrayList<>(List.of("testD")), new ArrayList<>(List.of(false, false)), new ArrayList<>(List.of("small", "small", "small", "small")), "testSet"));
 
         //THEN
         verify(mongoUserRepository).save(after);

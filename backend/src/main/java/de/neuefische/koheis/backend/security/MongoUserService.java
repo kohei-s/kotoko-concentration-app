@@ -18,12 +18,12 @@ public class MongoUserService {
 
     public UserInfo findByUsername(String username) {
         if (mongoUserRepository.findByUsername(username).isEmpty()) {
-            return new UserInfo("Anonymous User", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+            return new UserInfo("Anonymous User", "", new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
         }
         MongoUser mongoUser = mongoUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username:" + username + " not found!"));
 
-        return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook(), mongoUser.diacritics(), mongoUser.levels());
+        return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook(), mongoUser.diacritics(), mongoUser.levels(), mongoUser.selectedCardSet());
     }
 
     public void registerUser(MongoUserCreation mongoUserWithoutId) {
@@ -33,7 +33,7 @@ public class MongoUserService {
 
         String encoderPassword = passwordEncoder.encode(mongoUserWithoutId.password());
 
-        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encoderPassword, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), "");
         mongoUserRepository.insert(newUser);
     }
 
@@ -48,11 +48,12 @@ public class MongoUserService {
                 userInfo.achievement(),
                 userInfo.wordbook(),
                 userInfo.diacritics(),
-                userInfo.levels()
+                userInfo.levels(),
+                userInfo.selectedCardSet()
         );
 
         MongoUser returnedMongoUser = mongoUserRepository.save(updatedMongoUser);
-        return new UserInfo(returnedMongoUser.username(), returnedMongoUser.achievement(), returnedMongoUser.wordbook(), returnedMongoUser.diacritics(), returnedMongoUser.levels());
+        return new UserInfo(returnedMongoUser.username(), returnedMongoUser.achievement(), returnedMongoUser.wordbook(), returnedMongoUser.diacritics(), returnedMongoUser.levels(), returnedMongoUser.selectedCardSet());
     }
 
 }
