@@ -1,46 +1,24 @@
 import {GameCard} from "../Game/GameCard.ts";
-import axios from "axios";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import GameCardFrame from "./GameCardFrame.tsx";
 import {IconButton, Modal} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
 import "./GameCardCollection.css"
 import NewGameCard from "./NewGameCard.tsx";
 
-export default function GameCardCollection() {
+type Props = {
+    allNonDefaultGameCards: GameCard[]
+    loadAllNonDefaultGameCards: () => void
+}
 
-    const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [, setAllCardSetNames] = useState<string[]>([]);
+export default function GameCardCollection(props: Props) {
+
+   /*
+    const [, setAllCardSetNames] = useState<string[]>([]);*/
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(
-        () => {
-            loadAllNonDefaultGameCards()
-            getAllSetNames()
-        }, []
-    )
-
-    if (!allNonDefaultGameCards) {
+    if (!props.allNonDefaultGameCards) {
         return "Loading cards..."
-    }
-
-    function loadAllNonDefaultGameCards() {
-        axios.get<GameCard[]>(
-            "/api/game_cards/all"
-        )
-            .then(response => response.data)
-            .then(data => {
-                const responseDataCardList = data.filter(card =>
-                    card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
-                responseDataCardList.reverse()
-                setAllNonDefaultGameCards(responseDataCardList)
-            }).catch(console.error)
-    }
-
-    function getAllSetNames() {
-        const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
-        const uniqueSetNames = new Set(listSetNames)
-        setAllCardSetNames(Array.from(uniqueSetNames))
     }
 
     function openModal() {
@@ -67,13 +45,13 @@ export default function GameCardCollection() {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeModal} onAddNewCard={loadAllNonDefaultGameCards}/>
+                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllNonDefaultGameCards}/>
                 </div>
             </Modal>
-            {allNonDefaultGameCards.map(card => <GameCardFrame
+            {props.allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
                 gameCard={card}
-                onGameCardChange={loadAllNonDefaultGameCards}
+                onGameCardChange={props.loadAllNonDefaultGameCards}
                 cardSetName={card.cardSetName}
                 title={card.title}
             ></GameCardFrame>)}

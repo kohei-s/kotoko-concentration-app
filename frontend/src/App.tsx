@@ -12,10 +12,11 @@ import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
 import "./App.css"
+import {GameCard} from "./Game/GameCard.ts";
 
 export default function App() {
 
-    const apptheme = createTheme({
+    const appTheme = createTheme({
         typography: {
             fontFamily: [
                 'Potta One',
@@ -28,10 +29,14 @@ export default function App() {
 
     const [userName, setUserName] = useState<string>("")
     const [userInfo, setUserInfo] = useState<UserInfo>()
+    const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
+    const [allCardSetNames, setAllCardSetNames] = useState<string[]>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
         me()
+        loadAllNonDefaultGameCards()
+        getAllSetNames()
     }, [userName])
 
     function login(username: string, password: string) {
@@ -91,9 +96,29 @@ export default function App() {
             .catch(console.error)
     }
 
+    function loadAllNonDefaultGameCards() {
+        axios.get<GameCard[]>(
+            "/api/game_cards/all"
+        )
+            .then(response => response.data)
+            .then(data => {
+                const responseDataCardList = data.filter(card =>
+                    card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
+                responseDataCardList.reverse()
+                setAllNonDefaultGameCards(responseDataCardList)
+            }).catch(console.error)
+    }
+
+    function getAllSetNames() {
+        const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
+        const uniqueSetNames = new Set(listSetNames)
+        setAllCardSetNames(Array.from(uniqueSetNames))
+    }
+
+
     return (
         <>
-            <ThemeProvider theme={apptheme}>
+            <ThemeProvider theme={appTheme}>
                 <Routes>
                     <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
                     <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
@@ -101,9 +126,9 @@ export default function App() {
                         <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
                         <Route path={"/game/:gameSize/:gameName"}
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
-                        <Route path={"/card-collection"} element={<GameCardCollection/>}></Route>
+                        <Route path={"/card-collection"} element={<GameCardCollection allNonDefaultGameCards={allNonDefaultGameCards} loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}/>}></Route>
                         <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
-                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}/>}></Route>
+                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update} allCardSetNames={allCardSetNames}/>}></Route>
                         <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                     </Route>
                 </Routes>

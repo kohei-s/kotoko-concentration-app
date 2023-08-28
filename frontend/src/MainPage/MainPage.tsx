@@ -18,6 +18,7 @@ export default function MainPage(props: Props) {
     let katakanaLevel: string;
     let playingCardLevel: string;
     let customLevel: string;
+    let selectedCardSet: string
 
     if (userData.levels.length===0) {
         hiraganaLevel = "small"
@@ -29,6 +30,12 @@ export default function MainPage(props: Props) {
         katakanaLevel = userData.levels[1]
         playingCardLevel = userData.levels[2]
         customLevel = userData.levels[3]
+    }
+
+    if (userData.selectedCardSet===undefined) {
+        selectedCardSet = "animal"
+    } else {
+        selectedCardSet = userData.selectedCardSet
     }
 
     return (
@@ -54,7 +61,7 @@ export default function MainPage(props: Props) {
                 </Tooltip>
                 <Tooltip title="Custom Card">
                     <Button variant="contained" sx={{background: "#508356", boxShadow: 0, borderRadius: '15px'}}>
-                        <Link to={"/game/" + customLevel + "/animal"}>★</Link>
+                        <Link to={"/game/" + customLevel + "/" + selectedCardSet}>★</Link>
                     </Button>
                 </Tooltip>
             </Stack>

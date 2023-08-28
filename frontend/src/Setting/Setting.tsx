@@ -12,9 +12,11 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import "./Setting.css"
 
+
 type Props = {
     userInfo: UserInfo | undefined
     update: (userInfo: UserInfo) => void
+    allCardSetNames: string[]
 }
 export default function Setting(props: Props) {
 
@@ -24,11 +26,13 @@ export default function Setting(props: Props) {
     const [katakanaLevel, setKatakanaLevel] = useState<string>("small");
     const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("small");
     const [customLevel, setCustomLevel] = useState<string>("small");
+    const [selectedCustomGame, setSelectedCustomGame] = useState<string>("animal")
 
     useEffect(() => {
         setUserData(props.userInfo)
         if (props.userInfo) {
             setUserLevels(props.userInfo.levels)
+            setSelectedCustomGame(props.userInfo.selectedCardSet)
         }
     }, [props.userInfo]);
 
@@ -46,6 +50,10 @@ export default function Setting(props: Props) {
 
     const changeCustomLevel = (event: SelectChangeEvent) => {
         setCustomLevel(event.target.value)
+    }
+
+    const changeSelectedCustomGame = (event: SelectChangeEvent) => {
+        setSelectedCustomGame(event.target.value)
     }
 
     function setUserLevelText(index: number) {
@@ -67,9 +75,24 @@ export default function Setting(props: Props) {
             achievement: userData?.achievement as string,
             wordbook: userData?.wordbook as string[],
             diacritics: userData?.diacritics as boolean[],
-            levels: newLevels
+            levels: newLevels,
+            selectedCardSet: userData?.selectedCardSet as string
         }
         props.update(updatedUserInfo)
+    }
+
+    function updateCustomGame() {
+        setSelectedCustomGame(selectedCustomGame)
+        const updatedUserInfo: UserInfo = {
+            username: userData?.username as string,
+            achievement: userData?.achievement as string,
+            wordbook: userData?.wordbook as string[],
+            diacritics: userData?.diacritics as boolean[],
+            levels: userData?.levels as string[],
+            selectedCardSet: selectedCustomGame
+        }
+        props.update(updatedUserInfo)
+
     }
 
 
@@ -80,7 +103,37 @@ export default function Setting(props: Props) {
                      alt={"setting-logo"}/>
             </div>
             <div className={"selector"}>
-                <FormControl sx={{m: 1, maxWidth: 230}}>
+                <h3>Custom Game</h3>
+                <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
+                    <InputLabel id="Custom-game">Card Set</InputLabel>
+                    <Select
+                        labelId="Custom-game"
+                        id="Custom-game"
+                        value={selectedCustomGame}
+                        label="Card set"
+                        onChange={changeSelectedCustomGame}
+                    >
+                        {props.allCardSetNames.map(setName => <MenuItem
+                            value={setName}
+                        >{setName}</MenuItem>)}
+                    </Select>
+                    <FormHelperText>current set: {selectedCustomGame}</FormHelperText>
+                </FormControl>
+                <IconButton id={"save"} size="small" disableRipple={true} sx={{
+                    maxWidth: 60,
+                    color: "#FDF6E1",
+                    background: "#508356",
+                    boxShadow: 0,
+                    borderRadius: '10px',
+                }} onClick={() => {
+                    updateCustomGame()
+                }}>
+                    <CheckIcon/>
+                </IconButton>
+            </div>
+            <div className={"selector"}>
+                <h3 id={"level"}>Game Level</h3>
+                <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
                     <InputLabel id="Hiragana-level">HIRAGANA</InputLabel>
                     <Select
                         labelId="Hiragana-level"
@@ -89,13 +142,13 @@ export default function Setting(props: Props) {
                         label="Hiargana"
                         onChange={changeHiraganaLevel}
                     >
-                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
-                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4)</MenuItem>
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(0)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 230}}>
+                <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
                     <InputLabel id="Katakana-level">KATAKANA</InputLabel>
                     <Select
                         labelId="Katakana-level"
@@ -104,13 +157,13 @@ export default function Setting(props: Props) {
                         label="Katakana"
                         onChange={changeKatakanaLevel}
                     >
-                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
-                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4)</MenuItem>
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(1)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 230}}>
+                <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
                     <InputLabel id="PlayingCards-level">CARDS</InputLabel>
                     <Select
                         labelId="PlayingCards-level"
@@ -119,13 +172,13 @@ export default function Setting(props: Props) {
                         label="PlayingCards"
                         onChange={changePlayingCardsLevel}
                     >
-                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
-                        <MenuItem value={"large"}>Advanced (4x4 cards) </MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4) </MenuItem>
                     </Select>
                     <FormHelperText>current level: {setUserLevelText(2)}</FormHelperText>
                 </FormControl>
-                <FormControl sx={{m: 1, maxWidth: 230}}>
+                <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
                     <InputLabel id="Cuctom-level">CUSTOM</InputLabel>
                     <Select
                         labelId="Custom-level"
@@ -134,9 +187,9 @@ export default function Setting(props: Props) {
                         label="Custom"
                         onChange={changeCustomLevel}
                     >
-                        <MenuItem value={"small"}>Beginner (3x3 cards)</MenuItem>
-                        <MenuItem value={"medium"}>Intermediate (3x4 cards)</MenuItem>
-                        <MenuItem value={"large"}>Advanced (4x4 cards)</MenuItem>
+                        <MenuItem value={"small"}>Beginner (3x3)</MenuItem>
+                        <MenuItem value={"medium"}>Intermediate (3x4)</MenuItem>
+                        <MenuItem value={"large"}>Advanced (4x4)</MenuItem>
                     </Select>
                     <FormHelperText>current
                         level: {setUserLevelText(3)}</FormHelperText>
@@ -146,7 +199,8 @@ export default function Setting(props: Props) {
                     color: "#FDF6E1",
                     background: "#508356",
                     boxShadow: 0,
-                    borderRadius: '10px'
+                    borderRadius: '10px',
+                    marginBottom: '50px'
                 }} onClick={() => {
                     updateLevels()
                 }}>

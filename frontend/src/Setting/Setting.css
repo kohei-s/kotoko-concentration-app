@@ -7,14 +7,23 @@
 
 .selector button {
     align-self: flex-end;
+}
 
+h3 {
+    color: #4D6A9A;
+    margin-top: 0;
+    margin-bottom: 30px;
 }
 
 #title {
     color: #213547;
 }
 
+#level {
+    margin-top: 50px;
+}
+
 #save {
-    margin-top: 40px;
-    margin-right: 55px;
+    margin-top: 20px;
+    margin-right: 20px;
 }
