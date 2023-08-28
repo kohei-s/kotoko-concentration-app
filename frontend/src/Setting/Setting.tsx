@@ -82,7 +82,6 @@ export default function Setting(props: Props) {
     }
 
     function updateCustomGame() {
-        setSelectedCustomGame(selectedCustomGame)
         const updatedUserInfo: UserInfo = {
             username: userData?.username as string,
             achievement: userData?.achievement as string,
@@ -114,6 +113,7 @@ export default function Setting(props: Props) {
                         onChange={changeSelectedCustomGame}
                     >
                         {props.allCardSetNames.map(setName => <MenuItem
+                            key={setName}
                             value={setName}
                         >{setName}</MenuItem>)}
                     </Select>
