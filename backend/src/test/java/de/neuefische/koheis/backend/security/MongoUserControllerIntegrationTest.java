@@ -69,7 +69,8 @@ class MongoUserControllerIntegrationTest {
                 "achievement": "testA",
                 "wordbook": ["testB"],
                 "diacritics": [false, false],
-                "levels": ["small", "medium", "large", "small"]
+                "levels": ["small", "medium", "large", "small"],
+                "selectedCardSet": "testSet"
                 }
                 """;
 

@@ -165,7 +165,8 @@ export default function FlipCard(props: Props) {
                 achievement: newAchievement,
                 wordbook: userWordbook,
                 diacritics: userData?.diacritics as boolean[],
-                levels: userData?.levels as string[]
+                levels: userData?.levels as string[],
+                selectedCardSet: userData?.selectedCardSet as string
             }
             props.update(updatedUserInfo)
         }

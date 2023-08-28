@@ -7,7 +7,8 @@ public record UserInfo (
     String achievement,
     List<String> wordbook,
     List<Boolean> diacritics,
-    List<String> levels
+    List<String> levels,
+    String selectedCardSet
 
 ){
 }

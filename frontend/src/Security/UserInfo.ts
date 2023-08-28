@@ -3,5 +3,6 @@ export type UserInfo = {
     achievement: string,
     wordbook: string[],
     diacritics: boolean[],
-    levels: string[]
+    levels: string[],
+    selectedCardSet: string
 }
