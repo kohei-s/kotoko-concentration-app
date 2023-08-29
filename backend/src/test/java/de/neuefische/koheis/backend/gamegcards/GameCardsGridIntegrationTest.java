@@ -46,9 +46,9 @@ class GameCardsGridIntegrationTest {
                 "testUsername",
                 "testPassword",
                 "achievement",
-                new ArrayList<String>(List.of("testWord")),
-                new ArrayList<Boolean>(List.of(true)),
-                new ArrayList<String>(List.of("testLevel")),
+                new ArrayList<>(List.of("testWord")),
+                new ArrayList<>(List.of(true)),
+                new ArrayList<>(List.of("testLevel")),
                 "testSet");
         mongoUserRepository.save(user);
     }

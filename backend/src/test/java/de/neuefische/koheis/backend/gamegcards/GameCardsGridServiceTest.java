@@ -2,7 +2,6 @@ package de.neuefische.koheis.backend.gamegcards;
 
 import de.neuefische.koheis.backend.idservice.IdService;
 import de.neuefische.koheis.backend.security.MongoUser;
-import de.neuefische.koheis.backend.security.MongoUserRepository;
 import de.neuefische.koheis.backend.security.MongoUserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,13 +9,10 @@ import org.mockito.Mockito;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -124,7 +120,6 @@ class GameCardsGridServiceTest {
     void whenGameCardAdded_thenReturnGameCard() {
         //GIVEN
         GameCardWithoutAuthorId gameCard = new GameCardWithoutAuthorId("testTitle", "testSet3");
-        MongoUser mongouser = new MongoUser("testId", "testName", "testPassword", "testAchievement", new ArrayList<String>(List.of("testWordBook")), new ArrayList<Boolean>(List.of(true)), new ArrayList<String>(List.of("small")), "testSet");
         GameCard gameCardAdded = new GameCard("012", "testTitle", "testSet3", "testId");
         GameCard expected = new GameCard("012", "testTitle", "testSet3", "testId");
 
