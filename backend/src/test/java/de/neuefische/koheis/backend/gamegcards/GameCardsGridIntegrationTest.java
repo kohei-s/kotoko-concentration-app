@@ -1,8 +1,11 @@
 package de.neuefische.koheis.backend.gamegcards;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.neuefische.koheis.backend.security.MongoUser;
+import de.neuefische.koheis.backend.security.MongoUserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,6 +15,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -30,6 +36,23 @@ class GameCardsGridIntegrationTest {
     @Autowired
     GameCardsRepository gameCardsRepository;
 
+    @Autowired
+    MongoUserRepository mongoUserRepository;
+
+    @BeforeEach
+    void setUpUsers() {
+        MongoUser user = new MongoUser(
+                "1",
+                "testUsername",
+                "testPassword",
+                "achievement",
+                new ArrayList<String>(List.of("testWord")),
+                new ArrayList<Boolean>(List.of(true)),
+                new ArrayList<String>(List.of("testLevel")),
+                "testSet");
+        mongoUserRepository.save(user);
+    }
+
     @DirtiesContext
     @Test
     @WithMockUser
@@ -45,13 +68,11 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().json("""
                         []
                         """));
-
     }
-
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenGetExistingGameCardById_thenReturnGameCardWithId() throws Exception {
         //GIVEN
         String actual = mockMvc.perform(
@@ -59,7 +80,7 @@ class GameCardsGridIntegrationTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
                                         {
-                                        "title": "test",
+                                        "title": "testTitle",
                                         "cardSetName": "testSet"
                                         }
                                         """)
@@ -68,7 +89,7 @@ class GameCardsGridIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json("""
                         {
-                        "title": "test",
+                        "title": "testTitle",
                         "cardSetName": "testSet"
                         }
                         """))
@@ -88,15 +109,16 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().json("""
                         {
                         "id": "<ID>",
-                        "title": "test",
-                        "cardSetName": "testSet"
-                        }
+                        "title": "testTitle",
+                        "cardSetName": "testSet",
+                        "authorId": "1"
+                       }
                         """.replaceFirst("<ID>", id)));
     }
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenGetNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
@@ -112,22 +134,22 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void expectTwoDimensionalArrayOfTwentyEightPlayingCards() throws Exception {
         //GIVEN
         String size = "small";
-        gameCardsRepository.save(new GameCard("01", "♥1", "playing-cards"));
-        gameCardsRepository.save(new GameCard("012", "♥2", "playing-cards"));
-        gameCardsRepository.save(new GameCard("03", "♥3", "playing-cards"));
-        gameCardsRepository.save(new GameCard("04", "♥4", "playing-cards"));
-        gameCardsRepository.save(new GameCard("05", "♥5", "playing-cards"));
-        gameCardsRepository.save(new GameCard("06", "♥6", "playing-cards"));
-        gameCardsRepository.save(new GameCard("07", "♥7", "playing-cards"));
-        gameCardsRepository.save(new GameCard("08", "♥8", "playing-cards"));
-        gameCardsRepository.save(new GameCard("09", "♥9", "playing-cards"));
-        gameCardsRepository.save(new GameCard("10", "♥10", "playing-cards"));
-        gameCardsRepository.save(new GameCard("11", "♥11", "playing-cards"));
-        gameCardsRepository.save(new GameCard("12", "♥12", "playing-cards"));
+        gameCardsRepository.save(new GameCard("01", "♥1", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("012", "♥2", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("03", "♥3", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("04", "♥4", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("05", "♥5", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("06", "♥6", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("07", "♥7", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("08", "♥8", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("09", "♥9", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("10", "♥10", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("11", "♥11", "playing-cards", "testId"));
+        gameCardsRepository.save(new GameCard("12", "♥12", "playing-cards", "testId"));
 
         //WHEN
         String result = mockMvc.perform(
@@ -150,7 +172,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenAddedGameCard_thenReturnGameCard() throws Exception {
         //WHEN
         mockMvc.perform(
@@ -169,12 +191,13 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("title").value("testTitle"))
-                .andExpect(jsonPath("cardSetName").value("testSet3"));
+                .andExpect(jsonPath("cardSetName").value("testSet3"))
+                .andExpect(jsonPath("authorId").isNotEmpty());
     }
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenUpdateExistingGameCard_thenReturnUpdatedGameCard() throws Exception {
         //GIVEN
         String existingGameCardWithoutId = mockMvc.perform(
@@ -209,7 +232,8 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "test_updated",
-                                        "cardSetName": "testSet"
+                                        "cardSetName": "testSet",
+                                        "authorId": "testId"
                                         }
                                         """)
                                 .with(csrf())
@@ -220,16 +244,17 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").value(id))
                 .andExpect(jsonPath("title").value("test_updated"))
-                .andExpect(jsonPath("cardSetName").value("testSet"));
+                .andExpect(jsonPath("cardSetName").value("testSet"))
+                .andExpect(jsonPath("authorId").value("testId"));
     }
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenUpdateNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "testId");
         String gameCardJson = objectMapper.writeValueAsString(gameCardWithoutId);
 
         //WHEN
@@ -246,7 +271,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenDeleteExistingGameCard_thenReturnEmptyList() throws Exception {
         //GIVEN
         String existingGameCardWithoutId = mockMvc.perform(
@@ -290,7 +315,7 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testUsername", password = "testPassword")
     void whenDeleteNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
@@ -306,4 +331,3 @@ class GameCardsGridIntegrationTest {
     }
 
 }
-

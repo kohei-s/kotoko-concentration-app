@@ -1,12 +1,22 @@
 package de.neuefische.koheis.backend.gamegcards;
 
 import de.neuefische.koheis.backend.idservice.IdService;
+import de.neuefische.koheis.backend.security.MongoUser;
+import de.neuefische.koheis.backend.security.MongoUserRepository;
+import de.neuefische.koheis.backend.security.MongoUserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -15,23 +25,27 @@ class GameCardsGridServiceTest {
 
     GameCardsRepository gameCardsRepository = mock(GameCardsRepository.class);
     IdService idService = mock(IdService.class);
-    GameCardsService gameCardsService = new GameCardsService(gameCardsRepository, idService);
+    MongoUserService mongoUserService =  mock(MongoUserService.class);
+    SecurityContext securityContext = mock(SecurityContext.class);
+    Authentication authentication = mock(Authentication.class);
+    GameCardsService gameCardsService = new GameCardsService(gameCardsRepository, idService, mongoUserService);
+
+    GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards", "testId");
+    GameCard gameCard2 = new GameCard("02", "♥2", "playing-cards", "testId");
+    GameCard gameCard3 = new GameCard("03", "♥3", "playing-cards", "testId");
+    GameCard gameCard4 = new GameCard("04", "♥4", "playing-cards", "testId");
+    GameCard gameCard5 = new GameCard("05", "♥5", "playing-cards", "testId");
+    GameCard gameCard6 = new GameCard("06", "♥6", "playing-cards", "testId");
+    GameCard gameCard7 = new GameCard("07", "♥7", "playing-cards", "testId");
+    GameCard gameCard8 = new GameCard("08", "♥8", "playing-cards", "testId");
+    GameCard gameCard9 = new GameCard("09", "♥9", "playing-cards", "testId");
+    GameCard gameCard10 = new GameCard("10", "♥10", "1playing-cards", "testId");
+    GameCard gameCard11 = new GameCard("11", "♥11", "1playing-cards", "testId");
+    GameCard gameCard12 = new GameCard("12", "♥12", "playing-cards", "testId");
 
     @Test
     void getAllGameCards_thenReturnListOfAllGameCards() {
         //Given
-        GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
-        GameCard gameCard2 = new GameCard("02","♥2", "playing-cards");
-        GameCard gameCard3 = new GameCard("03","♥3", "playing-cards");
-        GameCard gameCard4 = new GameCard("04","♥4", "playing-cards");
-        GameCard gameCard5 = new GameCard("05","♥5", "playing-cards");
-        GameCard gameCard6 = new GameCard("06","♥6", "playing-cards");
-        GameCard gameCard7 = new GameCard("07","♥7", "playing-cards");
-        GameCard gameCard8 = new GameCard("08","♥8", "playing-cards");
-        GameCard gameCard9 = new GameCard("09","♥9", "playing-cards");
-        GameCard gameCard10 = new GameCard("10","♥10", "1playing-cards");
-        GameCard gameCard11 = new GameCard("11","♥11", "1playing-cards");
-        GameCard gameCard12 = new GameCard("12","♥12", "playing-cards");
         List<GameCard> allGameCards = List.of(
                 gameCard1, gameCard2, gameCard3,
                 gameCard4, gameCard5, gameCard6,
@@ -55,7 +69,7 @@ class GameCardsGridServiceTest {
     @Test
     void getExistingGameCardWithId_thenReturnGameCardWithId() {
         //GIVEN
-        GameCard expected = new GameCard("012", "test", "testSet");
+        GameCard expected = new GameCard("012", "test", "testSet", "testId");
         Mockito.when(gameCardsRepository.findById("012"))
                 .thenReturn(Optional.of(expected));
 
@@ -86,19 +100,6 @@ class GameCardsGridServiceTest {
     void generateGameBoardSmallSize_thenReturnTwoDimensionalArrayOfTwelveGameCards() {
         //Given
         String id = "012";
-
-        GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
-        GameCard gameCard2 = new GameCard("02","♥2", "playing-cards");
-        GameCard gameCard3 = new GameCard("03","♥3", "playing-cards");
-        GameCard gameCard4 = new GameCard("04","♥4", "playing-cards");
-        GameCard gameCard5 = new GameCard("05","♥5", "playing-cards");
-        GameCard gameCard6 = new GameCard("06","♥6", "playing-cards");
-        GameCard gameCard7 = new GameCard("07","♥7", "playing-cards");
-        GameCard gameCard8 = new GameCard("08","♥8", "playing-cards");
-        GameCard gameCard9 = new GameCard("09","♥9", "playing-cards");
-        GameCard gameCard10 = new GameCard("10","♥10", "1playing-cards");
-        GameCard gameCard11 = new GameCard("11","♥11", "1playing-cards");
-        GameCard gameCard12 = new GameCard("12","♥12", "playing-cards");
         List<GameCard> allGameCards = List.of(
                 gameCard1, gameCard2, gameCard3,
                 gameCard4, gameCard5, gameCard6,
@@ -119,18 +120,26 @@ class GameCardsGridServiceTest {
         assertEquals(expectedColumn, actual[0].length);
     }
 
-    @Test
+   @Test
     void whenGameCardAdded_thenReturnGameCard() {
         //GIVEN
-        GameCardWithoutId gameCard = new GameCardWithoutId("testTitle", "testSet3");
-        GameCard gameCardAdded = new GameCard("012", "testTitle", "testSet3");
-        GameCard expected = new GameCard("012", "testTitle", "testSet3");
+        GameCardWithoutAuthorId gameCard = new GameCardWithoutAuthorId("testTitle", "testSet3");
+        MongoUser mongouser = new MongoUser("testId", "testName", "testPassword", "testAchievement", new ArrayList<String>(List.of("testWordBook")), new ArrayList<Boolean>(List.of(true)), new ArrayList<String>(List.of("small")), "testSet");
+        GameCard gameCardAdded = new GameCard("012", "testTitle", "testSet3", "testId");
+        GameCard expected = new GameCard("012", "testTitle", "testSet3", "testId");
 
         //WHEN
         Mockito.when(gameCardsRepository.insert(gameCardAdded))
                 .thenReturn(gameCardAdded);
         Mockito.when(idService.createRandomId())
                 .thenReturn("012");
+        Mockito.when(authentication.getName())
+                .thenReturn("testName");
+        Mockito.when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(mongoUserService.findUserIdByUsername("testName"))
+                .thenReturn("testId");
         GameCard actual = gameCardsService.addGameCard(gameCard);
 
         //THEN
@@ -138,24 +147,23 @@ class GameCardsGridServiceTest {
         verify(idService).createRandomId();
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
-
     }
 
     @Test
     void whenUpdateExistingGameCard_thenReturnGameCard() {
         //GIVEN
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "testId");
         String id = "012";
 
         //WHEN
-        when(gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName())))
-                .thenReturn(new GameCard("012", "test", "testSet"));
+        when(gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId())))
+                .thenReturn(new GameCard("012", "test", "testSet", "testId"));
         when(gameCardsRepository.existsById(id))
                 .thenReturn(true);
         GameCard actual = gameCardsService.updateGameCard(gameCardWithoutId, "012");
 
         //THEN
-        GameCard expected = new GameCard("012", "test", "testSet");
+        GameCard expected = new GameCard("012", "test", "testSet", "testId");
         verify(gameCardsRepository).save(expected);
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
@@ -165,7 +173,7 @@ class GameCardsGridServiceTest {
     void whenUpdateWithNotExistingId_thenThrowException() {
         //GIVEN
         String notExistingId = "012";
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "testId");
 
         //WHEN
         Mockito.when(gameCardsRepository.existsById("012"))
@@ -209,7 +217,7 @@ class GameCardsGridServiceTest {
     }
 
     @Test
-    void whenLargeGamSize_thenReturnIntegerArrayWithFourAndFour(){
+    void whenLargeGamSize_thenReturnIntegerArrayWithFourAndFour() {
         //WHEN
         int[] expected = {4, 4};
         int[] actual = gameCardsService.setIndexOfRowAndColumn("large");
@@ -223,18 +231,6 @@ class GameCardsGridServiceTest {
     void whenGenerateGameBoardWithMediumGameSize_thenReturnPairValueOfSix() {
         //WHEN
         int expected = 6 * 2;
-        GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards");
-        GameCard gameCard2 = new GameCard("02","♥2", "playing-cards");
-        GameCard gameCard3 = new GameCard("03","♥3", "playing-cards");
-        GameCard gameCard4 = new GameCard("04","♥4", "playing-cards");
-        GameCard gameCard5 = new GameCard("05","♥5", "playing-cards");
-        GameCard gameCard6 = new GameCard("06","♥6", "playing-cards");
-        GameCard gameCard7 = new GameCard("07","♥7", "playing-cards");
-        GameCard gameCard8 = new GameCard("08","♥8", "playing-cards");
-        GameCard gameCard9 = new GameCard("09","♥9", "playing-cards");
-        GameCard gameCard10 = new GameCard("10","♥10", "1playing-cards");
-        GameCard gameCard11 = new GameCard("11","♥11", "1playing-cards");
-        GameCard gameCard12 = new GameCard("12","♥12", "playing-cards");
         List<GameCard> cards = List.of(
                 gameCard1, gameCard2, gameCard3,
                 gameCard4, gameCard5, gameCard6,
@@ -246,7 +242,6 @@ class GameCardsGridServiceTest {
         //THEN
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
-
     }
 
 }

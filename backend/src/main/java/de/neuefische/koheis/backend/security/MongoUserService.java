@@ -26,6 +26,11 @@ public class MongoUserService {
         return new UserInfo(mongoUser.username(), mongoUser.achievement(), mongoUser.wordbook(), mongoUser.diacritics(), mongoUser.levels(), mongoUser.selectedCardSet());
     }
 
+    public String findUserIdByUsername(String username) {
+        MongoUser user = mongoUserRepository.findByUsername(username).orElseThrow();
+        return user.id();
+    }
+
     public void registerUser(MongoUserCreation mongoUserWithoutId) {
         if (mongoUserRepository.existsByUsername(mongoUserWithoutId.username())) {
             throw new IllegalArgumentException("User: " + mongoUserWithoutId.username() + " exists already!");

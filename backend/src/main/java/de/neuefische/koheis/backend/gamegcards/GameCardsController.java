@@ -24,6 +24,12 @@ public class GameCardsController {
         return gameCardsService.getAllGameCards();
     }
 
+    @GetMapping("/myAll")
+    List<GameCard> getAllMyGameCards() {
+
+        return gameCardsService.getAllMyGameCards();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GameCard> getGameCardById(@PathVariable("id") String id) {
         try {
@@ -42,9 +48,9 @@ public class GameCardsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    GameCard addGameCard(@Valid @RequestBody GameCardWithoutId gameCardWithoutId) {
+    GameCard addGameCard(@Valid @RequestBody GameCardWithoutAuthorId gameCardWithoutAuthorId) {
 
-        return gameCardsService.addGameCard(gameCardWithoutId);
+        return gameCardsService.addGameCard(gameCardWithoutAuthorId);
     }
 
     @PutMapping("/{id}")

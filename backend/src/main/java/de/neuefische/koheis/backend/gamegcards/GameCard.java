@@ -20,4 +20,6 @@ public class GameCard {
 
     @NotBlank
     private String cardSetName;
+
+    private String authorId;
 }

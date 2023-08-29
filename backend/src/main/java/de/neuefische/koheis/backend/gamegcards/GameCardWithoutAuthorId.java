@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameCardWithoutId {
+public class GameCardWithoutAuthorId {
     private String title;
     private String cardSetName;
-    private String authorId;
 }
