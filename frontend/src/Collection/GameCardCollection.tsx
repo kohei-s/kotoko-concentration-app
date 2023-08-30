@@ -9,6 +9,7 @@ import NewGameCard from "./NewGameCard.tsx";
 type Props = {
     allNonDefaultGameCards: GameCard[]
     loadAllNonDefaultGameCards: () => void
+    setCountCardSets: () => void
 }
 
 export default function GameCardCollection(props: Props) {
@@ -45,13 +46,14 @@ export default function GameCardCollection(props: Props) {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllNonDefaultGameCards}/>
+                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllNonDefaultGameCards} onAddNewSet={props.setCountCardSets}/>
                 </div>
             </Modal>
             {props.allNonDefaultGameCards.map(card => <GameCardFrame
                 key={card.id}
                 gameCard={card}
                 onGameCardChange={props.loadAllNonDefaultGameCards}
+                onCardSetChange={props.setCountCardSets}
                 cardSetName={card.cardSetName}
                 title={card.title}
             ></GameCardFrame>)}

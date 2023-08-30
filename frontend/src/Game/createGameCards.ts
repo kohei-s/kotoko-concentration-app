@@ -53,12 +53,14 @@ export function createGameCards(setName: string, gameSize: string) {
     }
 
     const kanaCards: GameCard[] = [];
+    const admin = "admin";
     let index = 1;
     listData.forEach((data: string) => {
         const gameCard: GameCard = {
             id: prefix + String(index),
             title: data,
-            cardSetName: setName
+            cardSetName: setName,
+            authorId: admin
         };
         index++;
         kanaCards.push(gameCard);
@@ -88,7 +90,7 @@ export function createGameCards(setName: string, gameSize: string) {
     const cardPairs: GameCard [] = kanaCards.splice(0, pairing);
     cardPairs.push(...cardPairs.map(card => ({...card})));
 
-    const emptyCard: GameCard = {id: prefix + "0", title: "empty", cardSetName: setName}
+    const emptyCard: GameCard = {id: prefix + "0", title: "empty", cardSetName: setName, authorId: admin}
     if (gameSize === "small") {
         cardPairs.push(emptyCard);
     }

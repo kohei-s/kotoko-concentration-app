@@ -97,6 +97,7 @@ export default function Setting(props: Props) {
 
     return (
         <>
+        {console.log(props.allCardSetNames)}
             <div>
                 <img width={"150px"} height={"150px"} src={"/logos/setting-logo.png"}
                      alt={"setting-logo"}/>

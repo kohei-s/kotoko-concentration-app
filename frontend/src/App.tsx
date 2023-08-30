@@ -11,8 +11,8 @@ import RegisterPage from "./Security/RegisterPage.tsx";
 import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
-import "./App.css"
 import {GameCard} from "./Game/GameCard.ts";
+import "./App.css"
 
 export default function App() {
 
@@ -30,13 +30,13 @@ export default function App() {
     const [userName, setUserName] = useState<string>("")
     const [userInfo, setUserInfo] = useState<UserInfo>()
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [allCardSetNames, setAllCardSetNames] = useState<string[]>([]);
+    const [countCardSets, setCountCardSets] = useState<{ [set: string]: number }>({});
     const navigate = useNavigate()
 
     useEffect(() => {
         me()
         loadAllNonDefaultGameCards()
-        getAllSetNames()
+        getAllSetNamesAndItsCount()
     }, [userName])
 
     function login(username: string, password: string) {
@@ -109,10 +109,14 @@ export default function App() {
             }).catch(console.error)
     }
 
-    function getAllSetNames() {
+    function getAllSetNamesAndItsCount() {
+        const newCount: { [set: string]: number } = {};
         const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
-        const uniqueSetNames = new Set(listSetNames)
-        setAllCardSetNames(Array.from(uniqueSetNames))
+        listSetNames.forEach(function (i) {
+            newCount[i] = (newCount[i] || 0) + 1;
+        });
+
+        return setCountCardSets(newCount);
     }
 
 
@@ -122,13 +126,18 @@ export default function App() {
                 <Routes>
                     <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
                     <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
-                    <Route element={<ProtectedRoutes user={userName} achievement={userInfo?.achievement} logout={logout}/>}>
+                    <Route element={<ProtectedRoutes user={userName} achievement={userInfo?.achievement}
+                                                     logout={logout}/>}>
                         <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
                         <Route path={"/game/:gameSize/:gameName"}
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
-                        <Route path={"/card-collection"} element={<GameCardCollection allNonDefaultGameCards={allNonDefaultGameCards} loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}/>}></Route>
+                        <Route path={"/card-collection"}
+                               element={<GameCardCollection allNonDefaultGameCards={allNonDefaultGameCards}
+                                                            loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}
+                                                            setCountCardSets={getAllSetNamesAndItsCount}/>}></Route>
                         <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
-                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update} allCardSetNames={allCardSetNames}/>}></Route>
+                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
+                                                                   allCardSetNames={Object.keys(countCardSets)}/>}></Route>
                         <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                     </Route>
                 </Routes>

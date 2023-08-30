@@ -21,6 +21,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 type Props = {
     gameCard: GameCard
     onGameCardChange: () => void
+    onCardSetChange: () => void
     title: string
     cardSetName: string
 }
@@ -39,6 +40,7 @@ export default function GameCardFrame(props: Props) {
                 "cardSetName": cardSetName
             } as GameCard)
             .then(props.onGameCardChange)
+            .then(props.onCardSetChange)
             .then(() => setIsOpenUpdate(false))
             .catch(console.error)
     }
@@ -46,6 +48,7 @@ export default function GameCardFrame(props: Props) {
     function deleteGameCard() {
         axios.delete("/api/game_cards/" + props.gameCard.id)
             .then(props.onGameCardChange)
+            .then(props.onCardSetChange)
             .catch(console.error)
     }
 

@@ -21,4 +21,5 @@ export default function GameBoard(props: Props) {
             return ("Invalid parameters!");
         }
     }
+
 }
