@@ -1,6 +1,6 @@
 
 #  KoToKo: Japanese concentration game app
-This mobile application is developed 🛠️ as my personal capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) from May to August 2023  (👉 [])
+This mobile application is developed 🛠️ as my personal capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) from May to August 2023  (👉 [Kotoko ver.1](https://kotoko.de))
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) \
 \

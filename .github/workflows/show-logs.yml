@@ -11,16 +11,13 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ec2-3-79-82-35.eu-central-1.compute.amazonaws.com
-          #Set App Name (replace "example" with "alpha"-"tango")
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
-          #Set App Name (replace "example" with "alpha"-"tango")
           script: |
-            sudo docker logs ec2-user
+            sudo docker logs kotokocontainer
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
-          #Set App Name (replace "example" with "alpha"-"tango")
           url: http://ec2-3-79-82-35.eu-central-1.compute.amazonaws.com
           max-attempts: 3
           retry-delay: 5s
