@@ -9,7 +9,6 @@ import "./NewGameCard.css"
 type Props = {
     onClose: () => void
     onAddNewCard: () => void
-    onAddNewSet: () => void
 }
 export default function NewGameCard(props: Props) {
 
@@ -35,7 +34,6 @@ export default function NewGameCard(props: Props) {
                 setCardSetName("")
                 props.onAddNewCard()
                 props.onClose()
-                props.onAddNewSet()
             }).catch(console.error)
     }
 

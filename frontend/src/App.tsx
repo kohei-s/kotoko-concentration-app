@@ -12,7 +12,9 @@ import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {GameCard} from "./Game/GameCard.ts";
+import {CardSet} from "./Setting/CardSet.ts";
 import "./App.css"
+
 
 export default function App() {
 
@@ -30,14 +32,13 @@ export default function App() {
     const [userName, setUserName] = useState<string>("")
     const [userInfo, setUserInfo] = useState<UserInfo>()
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [countCardSets, setCountCardSets] = useState<{ [set: string]: number }>({});
+    const [allCardSets, setAllCardSets] = useState<CardSet[]>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
         me()
         loadAllNonDefaultGameCards()
-        getAllSetNamesAndItsCount()
-    }, [userName])
+    }, [userName]);
 
     function login(username: string, password: string) {
         axios.post<string>
@@ -106,17 +107,28 @@ export default function App() {
                     card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
                 responseDataCardList.reverse()
                 setAllNonDefaultGameCards(responseDataCardList)
-            }).catch(console.error)
+                setAllCardSets(getUniqueSetNamesAndItsCount)
+            })
+            .catch(console.error)
     }
 
-    function getAllSetNamesAndItsCount() {
-        const newCount: { [set: string]: number } = {};
-        const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
-        listSetNames.forEach(function (i) {
-            newCount[i] = (newCount[i] || 0) + 1;
-        });
+    function getUniqueSetNamesAndItsCount() {
+        const listAllSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
+        const countList: { [key: string]: number } = {};
+        for (const item of listAllSetNames) {
+            if (countList[item]) {
+                countList[item] += 1;
+            } else {
+                countList[item] = 1;
+            }
+        }
+        const filteredList: CardSet[] = [];
+        for (const [key, value] of Object.entries(countList)) {
+            const newSet: CardSet = {name: key, count: value};
+            filteredList.push(newSet)
+        }
 
-        return setCountCardSets(newCount);
+        return filteredList
     }
 
 
@@ -133,11 +145,10 @@ export default function App() {
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
                         <Route path={"/card-collection"}
                                element={<GameCardCollection allNonDefaultGameCards={allNonDefaultGameCards}
-                                                            loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}
-                                                            setCountCardSets={getAllSetNamesAndItsCount}/>}></Route>
+                                                            loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}/>}></Route>
                         <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                         <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
-                                                                   allCardSetNames={Object.keys(countCardSets)}/>}></Route>
+                                                                   countCardSets={allCardSets}/>}></Route>
                         <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                     </Route>
                 </Routes>

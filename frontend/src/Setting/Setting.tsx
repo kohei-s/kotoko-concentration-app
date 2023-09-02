@@ -10,13 +10,14 @@ import {
     SelectChangeEvent
 } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
+import {CardSet} from "./CardSet.ts";
 import "./Setting.css"
 
 
 type Props = {
     userInfo: UserInfo | undefined
     update: (userInfo: UserInfo) => void
-    allCardSetNames: string[]
+    countCardSets:CardSet[]
 }
 export default function Setting(props: Props) {
 
@@ -26,15 +27,18 @@ export default function Setting(props: Props) {
     const [katakanaLevel, setKatakanaLevel] = useState<string>("small");
     const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("small");
     const [customLevel, setCustomLevel] = useState<string>("small");
-    const [selectedCustomGame, setSelectedCustomGame] = useState<string>("animal")
+    const [selectedCustomGame, setSelectedCustomGame] = useState<string>("");
+    const [countCardSets, setCountCardSets] = useState<CardSet[]>([]);
+
 
     useEffect(() => {
+        setCountCardSets(props.countCardSets)
         setUserData(props.userInfo)
         if (props.userInfo) {
             setUserLevels(props.userInfo.levels)
             setSelectedCustomGame(props.userInfo.selectedCardSet)
         }
-    }, [props.userInfo]);
+    }, [props.userInfo, props.countCardSets]);
 
     const changeHiraganaLevel = (event: SelectChangeEvent) => {
         setHiraganaLevel(event.target.value)
@@ -97,7 +101,7 @@ export default function Setting(props: Props) {
 
     return (
         <>
-        {console.log(props.allCardSetNames)}
+        {console.log(countCardSets)}
             <div>
                 <img width={"150px"} height={"150px"} src={"/logos/setting-logo.png"}
                      alt={"setting-logo"}/>
@@ -113,10 +117,10 @@ export default function Setting(props: Props) {
                         label="Card set"
                         onChange={changeSelectedCustomGame}
                     >
-                        {props.allCardSetNames.map(setName => <MenuItem
-                            key={setName}
-                            value={setName}
-                        >{setName}</MenuItem>)}
+                        {countCardSets.map(setName => <MenuItem
+                            key={setName.name}
+                            value={setName.name}
+                        >{setName.name}</MenuItem>)}
                     </Select>
                     <FormHelperText>current set: {selectedCustomGame}</FormHelperText>
                 </FormControl>
