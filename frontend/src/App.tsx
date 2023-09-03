@@ -36,8 +36,13 @@ export default function App() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        getUniqueSetNamesAndItsCount()
+    }, [allNonDefaultGameCards]);
+
+    useEffect(() => {
         me()
         loadAllNonDefaultGameCards()
+        getUniqueSetNamesAndItsCount()
     }, [userName]);
 
     function login(username: string, password: string) {
@@ -107,7 +112,6 @@ export default function App() {
                     card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
                 responseDataCardList.reverse()
                 setAllNonDefaultGameCards(responseDataCardList)
-                setAllCardSets(getUniqueSetNamesAndItsCount)
             })
             .catch(console.error)
     }
@@ -128,7 +132,7 @@ export default function App() {
             filteredList.push(newSet)
         }
 
-        return filteredList
+        setAllCardSets(filteredList)
     }
 
 

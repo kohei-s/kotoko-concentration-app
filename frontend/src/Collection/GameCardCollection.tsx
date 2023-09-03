@@ -13,8 +13,8 @@ type Props = {
 
 export default function GameCardCollection(props: Props) {
 
-   /*
-    const [, setAllCardSetNames] = useState<string[]>([]);*/
+    /*
+     const [, setAllCardSetNames] = useState<string[]>([]);*/
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (!props.allNonDefaultGameCards) {
@@ -45,7 +45,8 @@ export default function GameCardCollection(props: Props) {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllNonDefaultGameCards}/>
+                    <NewGameCard onClose={closeModal}
+                                 onAddNewCard={props.loadAllNonDefaultGameCards}/>
                 </div>
             </Modal>
             {props.allNonDefaultGameCards.map(card => <GameCardFrame

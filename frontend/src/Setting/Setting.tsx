@@ -1,23 +1,29 @@
 import {UserInfo} from "../Security/UserInfo.ts";
 import {useEffect, useState} from "react";
 import {
+    Box,
+    Button,
     FormControl,
     FormHelperText,
     IconButton,
     InputLabel,
-    MenuItem,
+    MenuItem, Modal,
     Select,
-    SelectChangeEvent
+    SelectChangeEvent, Typography
 } from "@mui/material";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
 import CheckIcon from '@mui/icons-material/Check';
 import {CardSet} from "./CardSet.ts";
 import "./Setting.css"
 
 
+
+
 type Props = {
     userInfo: UserInfo | undefined
     update: (userInfo: UserInfo) => void
-    countCardSets:CardSet[]
+    countCardSets: CardSet[]
 }
 export default function Setting(props: Props) {
 
@@ -29,6 +35,7 @@ export default function Setting(props: Props) {
     const [customLevel, setCustomLevel] = useState<string>("small");
     const [selectedCustomGame, setSelectedCustomGame] = useState<string>("");
     const [countCardSets, setCountCardSets] = useState<CardSet[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     useEffect(() => {
@@ -98,6 +105,14 @@ export default function Setting(props: Props) {
 
     }
 
+    function openModal() {
+        setIsModalOpen(true)
+    }
+
+    function closeModal() {
+        setIsModalOpen(false)
+    }
+
 
     return (
         <>
@@ -106,7 +121,35 @@ export default function Setting(props: Props) {
                      alt={"setting-logo"}/>
             </div>
             <div className={"selector"}>
-                <h3>Custom Game</h3>
+                <h3>Custom Game
+                    <IconButton disableRipple={true} size="small" className={"buttonAdd"}
+                                onClick={openModal} sx={{color: "#a5a7d7", boxShadow: 0}}>
+                        <HelpOutlineIcon fontSize={"small"}/>
+                    </IconButton>
+                </h3>
+                <Modal
+                    className={"modal-message"}
+                    open={isModalOpen}
+                    sx={{mt: 10, ml: 4, mr: 4, marginBottom: 35, backgroundColor: "#ffffff"}}
+                >
+                    <Box>
+                        <Button id={"close-modal"} onClick={closeModal}
+                                sx={{
+                                    mt: 5,
+                                    mb: 2,
+                                    color: "#ffffff",
+                                    boxShadow: 0
+                                }}><CancelIcon/></Button>
+                        <Typography sx={{ml: 3, color: "#ffffff"}}>
+                            Minimum number of cards
+                        </Typography>
+                        <Typography sx={{mr: 3, ml: 3, mt: 2, color: "#ffffff"}}>
+                            In order to play with your own cards, you must have
+                            at least 4 different cards each set for beginner level,
+                            6 for intermediate level and 8 for advanced level.
+                        </Typography>
+                    </Box>
+                </Modal>
                 <FormControl sx={{m: 1, width: 225, textAlign: "center"}}>
                     <InputLabel id="Custom-game">Card Set</InputLabel>
                     <Select
@@ -116,10 +159,11 @@ export default function Setting(props: Props) {
                         label="Card set"
                         onChange={changeSelectedCustomGame}
                     >
-                        {countCardSets.map(setName => <MenuItem
+                        {countCardSets.filter(setName => setName.count > 4)
+                            .map(setName => <MenuItem
                             key={setName.name}
                             value={setName.name}
-                        >{setName.name}</MenuItem>)}
+                        >{setName.name} ({setName.count})</MenuItem>)}
                     </Select>
                     <FormHelperText>current set: {selectedCustomGame}</FormHelperText>
                 </FormControl>
