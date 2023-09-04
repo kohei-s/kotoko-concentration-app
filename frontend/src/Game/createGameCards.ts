@@ -1,6 +1,6 @@
 import {GameCard} from "./GameCard.ts";
 
-export function createGameCards(setName: string, gameSize: string) {
+export function createGameCards(setName: string, gameSize: string, diacritics: boolean[]) {
 
     function shuffleArray(array: GameCard[]) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -22,6 +22,25 @@ export function createGameCards(setName: string, gameSize: string) {
         "wa", "wo", "n"
     ]
 
+    const diacriticsReading = [
+       "ga", "gi", "gu", "ge", "go",
+        "za", "ji", "zu", "ze", "zo",
+        "da", "zhi", "zhu", "de", "do",
+        "ba", "bi", "bu", "be", "bo",
+        "pa", "pi", "pu", "pe", "po",
+        "kya", "kyu", "kyo",
+        "sha", "shu", "sho",
+        "cha", "chu", "cho",
+        "nya", "nyu", "nyo",
+        "hya", "hyu", "hyo",
+        "mya", "myu", "myo",
+        "rya", "ryu", "ryo",
+        "gya", "gyu", "gyo",
+        "ja", "ju", "jo",
+        "bya", "byu", "byo",
+        "pya", "pyu", "pyo",
+    ]
+
     const playingCards = [
         "heart-1", "heart-2", "heart-3", "heart-4", "heart-5", "heart-6", "heart-7",
         "heart-8", "heart-9", "heart-10", "heart-11", "heart-12", "heart-13",
@@ -34,7 +53,9 @@ export function createGameCards(setName: string, gameSize: string) {
     ]
 
     let listData: string[];
-    if (setName === "hiragana" || setName === "katakana") {
+    if ((setName === "hiragana" && diacritics[0]) || (setName === "katakana" && diacritics[1])){
+        listData = alphabetReading.concat(diacriticsReading)
+    } else if ((setName === "hiragana" && (!diacritics[0])) || (setName === "katakana" && (!diacritics[1]))) {
         listData = alphabetReading;
     } else {
         listData = playingCards;
