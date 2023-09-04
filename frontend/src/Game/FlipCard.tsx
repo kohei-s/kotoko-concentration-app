@@ -56,7 +56,7 @@ export default function FlipCard(props: Props) {
                 )
                 .catch(console.error)
         }
-    }, [props.gameName, props.gameSize]);
+    }, [props.gameName, props.gameSize, userDiacritics]);
 
     useEffect(() => {
         if (!boardId) {
