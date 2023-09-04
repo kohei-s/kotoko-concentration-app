@@ -38,7 +38,7 @@ export function createGameCards(setName: string, gameSize: string, diacritics: b
         "gya", "gyu", "gyo",
         "ja", "ju", "jo",
         "bya", "byu", "byo",
-        "pya", "pyu", "pyo",
+        "pya", "pyu", "pyo"
     ]
 
     const playingCards = [
