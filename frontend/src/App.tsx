@@ -12,7 +12,7 @@ import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {GameCard} from "./Game/GameCard.ts";
-import {CardSet} from "./Setting/CardSet.ts";
+import {GameCardSet} from "./Collection/GameCardSet.ts";
 import "./App.css"
 
 
@@ -32,7 +32,7 @@ export default function App() {
     const [userName, setUserName] = useState<string>("")
     const [userInfo, setUserInfo] = useState<UserInfo>()
     const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [allCardSets, setAllCardSets] = useState<CardSet[]>([]);
+    const [allCardSets, setAllCardSets] = useState<GameCardSet[]>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -108,8 +108,7 @@ export default function App() {
         )
             .then(response => response.data)
             .then(data => {
-                const responseDataCardList = data.filter(card =>
-                    card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
+                const responseDataCardList = data
                 responseDataCardList.reverse()
                 setAllNonDefaultGameCards(responseDataCardList)
             })
@@ -126,9 +125,9 @@ export default function App() {
                 countList[item] = 1;
             }
         }
-        const filteredList: CardSet[] = [];
+        const filteredList: GameCardSet[] = [];
         for (const [key, value] of Object.entries(countList)) {
-            const newSet: CardSet = {name: key, count: value};
+            const newSet: GameCardSet = {name: key, count: value};
             filteredList.push(newSet)
         }
 

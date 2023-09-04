@@ -14,14 +14,14 @@ import {
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckIcon from '@mui/icons-material/Check';
-import {CardSet} from "./CardSet.ts";
+import {GameCardSet} from "../Collection/GameCardSet.ts";
 import "./Setting.css"
 
 
 type Props = {
     userInfo: UserInfo | undefined
     update: (userInfo: UserInfo) => void
-    countCardSets: CardSet[]
+    countCardSets: GameCardSet[]
 }
 export default function Setting(props: Props) {
 
@@ -33,7 +33,7 @@ export default function Setting(props: Props) {
     const [playingCardsLevel, setPlayingCardsLevel] = useState<string>("small");
     const [customLevel, setCustomLevel] = useState<string>("small");
     const [selectedCustomGame, setSelectedCustomGame] = useState<string>("");
-    const [countCardSets, setCountCardSets] = useState<CardSet[]>([]);
+    const [countCardSets, setCountCardSets] = useState<GameCardSet[]>([]);
     const [hiraganaDiacritics, setHiraganaDiacritics] = useState<boolean>(false);
     const [katakanaDiacritics, setKatakanaDiacritics] = useState<boolean>(false);
     const [isCustomGameModalOpen, setIsCustomGameModalOpen] = useState(false);
@@ -125,12 +125,7 @@ export default function Setting(props: Props) {
     }
 
     function setUserDiacriticsText(index: number) {
-        switch (userDiacritics[index]) {
-            case true:
-                return "on";
-            default:
-                return "off";
-        }
+        return ((userDiacritics[index])? "on" : "off");
     }
 
     function updateDiacritics() {
@@ -360,7 +355,7 @@ export default function Setting(props: Props) {
                             Diacritics of Hiragana and Katakana
                         </Typography>
                         <Typography sx={{mr: 3, ml: 3, mt: 2, color: "#ffffff"}}>
-                            You can expand your knowledge of Hiragana and Katakana with diacritics cards.
+                            You can expand your knowledge of Hiragana and Katakana with additional diacritics cards.
                         </Typography>
                     </Box>
                 </Modal>
