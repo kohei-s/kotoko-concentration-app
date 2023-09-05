@@ -72,6 +72,23 @@ class GameCardsGridIntegrationTest {
 
     @DirtiesContext
     @Test
+    @WithMockUser (username = "testUsername", password = "testPassword")
+    void whenMyListEmpty_thenReturnEmptyList() throws Exception {
+        //WHEN
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/game_cards/myAll")
+                                .with(csrf())
+                )
+
+                //THEN
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @DirtiesContext
+    @Test
     @WithMockUser(username = "testUsername", password = "testPassword")
     void whenGetExistingGameCardById_thenReturnGameCardWithId() throws Exception {
         //GIVEN

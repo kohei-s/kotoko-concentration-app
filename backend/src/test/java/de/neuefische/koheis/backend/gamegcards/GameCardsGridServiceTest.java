@@ -61,6 +61,38 @@ class GameCardsGridServiceTest {
     }
 
     @Test
+    void getAllMyGameCards_thenReturnListOfAllGameCards() {
+        //Given
+        List<GameCard> allMyGameCards = List.of(
+                gameCard1, gameCard2, gameCard3,
+                gameCard4, gameCard5, gameCard6,
+                gameCard7, gameCard8, gameCard9,
+                gameCard10, gameCard11, gameCard12);
+
+        //WHEN
+        Mockito.when(idService.createRandomId())
+                .thenReturn("012");
+        Mockito.when(authentication.getName())
+                .thenReturn("testName");
+        Mockito.when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        Mockito.when(mongoUserService.findUserIdByUsername("testName"))
+                .thenReturn("testId");
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(gameCardsRepository.findAllByAuthorId("testId"))
+                .thenReturn(allMyGameCards);
+        List<GameCard> expected = List.of(
+                gameCard1, gameCard2, gameCard3,
+                gameCard4, gameCard5, gameCard6,
+                gameCard7, gameCard8, gameCard9,
+                gameCard10, gameCard11, gameCard12);
+        List<GameCard> actual = gameCardsService.getAllMyGameCards();
+
+        //THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void getExistingGameCardWithId_thenReturnGameCardWithId() {
         //GIVEN
         GameCard expected = new GameCard("012", "test", "testSet", "testId");
