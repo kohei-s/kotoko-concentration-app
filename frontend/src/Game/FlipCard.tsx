@@ -28,10 +28,11 @@ export default function FlipCard(props: Props) {
     const [userData, setUserData] = useState<UserInfo>();
     const [userAchievement, setUserAchievement] = useState<string>("");
     const [userWordbook, setUserWordbook] = useState<string[]>([]);
+    const [userDiacritics, setUserDiacritics] = useState<boolean[]>([]);
 
     const loadGameCards = useCallback(() => {
         if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
-            const cardsData = createGameCards(props.gameName, props.gameSize);
+            const cardsData = createGameCards(props.gameName, props.gameSize, userDiacritics);
             const setId = cardsData.id
             const cardGridData = {cardsGrid: cardsData.cardGrid}
             const isMatchedData = {isMatched: cardsData.isMatched}
@@ -55,7 +56,7 @@ export default function FlipCard(props: Props) {
                 )
                 .catch(console.error)
         }
-    }, [props.gameName, props.gameSize]);
+    }, [props.gameName, props.gameSize, userDiacritics]);
 
     useEffect(() => {
         if (!boardId) {
@@ -65,6 +66,7 @@ export default function FlipCard(props: Props) {
         if (props.userInfo) {
             setUserAchievement(props.userInfo.achievement)
             setUserWordbook(props.userInfo.wordbook)
+            setUserDiacritics(props.userInfo.diacritics)
         }
     }, [loadGameCards, props.userInfo, boardId]);
 

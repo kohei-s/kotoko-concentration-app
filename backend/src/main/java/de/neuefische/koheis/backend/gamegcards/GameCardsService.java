@@ -1,6 +1,8 @@
 package de.neuefische.koheis.backend.gamegcards;
 
 import de.neuefische.koheis.backend.idservice.IdService;
+import de.neuefische.koheis.backend.security.MongoUserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,24 @@ public class GameCardsService {
     private final GameCardsRepository gameCardsRepository;
     private final IdService idService;
 
-    GameCardsService(GameCardsRepository gameCardsRepository, IdService idService) {
+    private final MongoUserService mongoUserService;
+
+    GameCardsService(GameCardsRepository gameCardsRepository, IdService idService, MongoUserService mongoUserService) {
         this.gameCardsRepository = gameCardsRepository;
         this.idService = idService;
+        this.mongoUserService = mongoUserService;
     }
 
     public List<GameCard> getAllGameCards(){
 
         return gameCardsRepository.findAll();
+    }
+
+    public List<GameCard> getAllMyGameCards() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String userId = mongoUserService.findUserIdByUsername(username);
+
+        return gameCardsRepository.findAllByAuthorId(userId);
     }
 
     public GameCard getGameCardById(String id){
@@ -77,7 +89,7 @@ public class GameCardsService {
         GameCard[][] gameCardGrid = new GameCard[rowAndColumn[0]][rowAndColumn[1]];
         List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, pairing));
         gameCards.addAll(List.copyOf(gameCards));
-        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty");
+        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty", "all");
         if (gameSize.equals("small")) {
             gameCards.add(emptyCard);
         }
@@ -93,15 +105,17 @@ public class GameCardsService {
         return gameCardGrid;
     }
 
-    public GameCard addGameCard (GameCardWithoutId gameCardWithoutId) {
+    public GameCard addGameCard (GameCardWithoutAuthorId gameCardWithoutAuthorId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String userId = mongoUserService.findUserIdByUsername(username);
 
-        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
+        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutAuthorId.getTitle(), gameCardWithoutAuthorId.getCardSetName(), userId));
     }
 
     public GameCard updateGameCard(GameCardWithoutId gameCardWithoutId, String id){
         if (!gameCardsRepository.existsById(id)) throw new NoSuchElementException();
 
-        return gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName()));
+        return gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId()));
     }
 
     public void deleteGameCard(String id){

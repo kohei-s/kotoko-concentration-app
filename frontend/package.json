@@ -10,14 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.4",
     "axios": "^1.4.0",
     "framer-motion": "^10.15.0",
-    "pure-rand": "^6.0.2",
     "random": "^4.1.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",

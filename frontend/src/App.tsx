@@ -11,8 +11,11 @@ import RegisterPage from "./Security/RegisterPage.tsx";
 import Setting from "./Setting/Setting.tsx";
 import LoginPage from "./Security/LoginPage.tsx";
 import {createTheme, ThemeProvider} from "@mui/material";
-import "./App.css"
 import {GameCard} from "./Game/GameCard.ts";
+import {GameCardSet} from "./Collection/GameCardSet.ts";
+import "./App.css"
+import EditGameCard from "./Edit/EditGameCard.tsx";
+
 
 export default function App() {
 
@@ -29,15 +32,24 @@ export default function App() {
 
     const [userName, setUserName] = useState<string>("")
     const [userInfo, setUserInfo] = useState<UserInfo>()
-    const [allNonDefaultGameCards, setAllNonDefaultGameCards] = useState<GameCard[]>([]);
-    const [allCardSetNames, setAllCardSetNames] = useState<string[]>([]);
+    const [allGameCards, setAllGameCards] = useState<GameCard[]>([]);
+    const [allCardSets, setAllCardSets] = useState<GameCardSet[]>([]);
+    const [allMyGameCards, setAllMyGameCards] = useState<GameCard[]>([]);
+    const [allMyCardSets, setMyAllCardSets] = useState<GameCardSet[]>([]);
     const navigate = useNavigate()
 
     useEffect(() => {
+        getAllSetNamesAndItsCount()
+        getAllMySetNamesAndItsCount()
+    }, [allGameCards, allMyGameCards]);
+
+    useEffect(() => {
         me()
-        loadAllNonDefaultGameCards()
-        getAllSetNames()
-    }, [userName])
+        loadAllGameCards()
+        getAllSetNamesAndItsCount()
+        loadAllMyGameCards()
+        getAllMySetNamesAndItsCount()
+    }, [userName]);
 
     function login(username: string, password: string) {
         axios.post<string>
@@ -96,23 +108,66 @@ export default function App() {
             .catch(console.error)
     }
 
-    function loadAllNonDefaultGameCards() {
+    function loadAllGameCards() {
         axios.get<GameCard[]>(
             "/api/game_cards/all"
         )
             .then(response => response.data)
             .then(data => {
-                const responseDataCardList = data.filter(card =>
-                    card.cardSetName !== "hiragana" && card.cardSetName !== "katakana" && card.cardSetName !== "playing-cards")
+                const responseDataCardList = data
                 responseDataCardList.reverse()
-                setAllNonDefaultGameCards(responseDataCardList)
-            }).catch(console.error)
+                setAllGameCards(responseDataCardList)
+            })
+            .catch(console.error)
     }
 
-    function getAllSetNames() {
-        const listSetNames = allNonDefaultGameCards.map((card) => card.cardSetName)
-        const uniqueSetNames = new Set(listSetNames)
-        setAllCardSetNames(Array.from(uniqueSetNames))
+    function getAllSetNamesAndItsCount() {
+        const listAllSetNames = allGameCards.map((card) => card.cardSetName)
+        const countList: { [key: string]: number } = {};
+        for (const item of listAllSetNames) {
+            if (countList[item]) {
+                countList[item] += 1;
+            } else {
+                countList[item] = 1;
+            }
+        }
+        const filteredList: GameCardSet[] = [];
+        for (const [key, value] of Object.entries(countList)) {
+            const newSet: GameCardSet = {name: key, count: value};
+            filteredList.push(newSet)
+        }
+        setAllCardSets(filteredList)
+    }
+
+    function loadAllMyGameCards() {
+        axios.get<GameCard[]>(
+            "/api/game_cards/myAll"
+        )
+            .then(response => response.data)
+            .then(data => {
+                const responseDataCardList = data
+                responseDataCardList.reverse()
+                setAllMyGameCards(responseDataCardList)
+            })
+            .catch(console.error)
+    }
+
+    function getAllMySetNamesAndItsCount() {
+        const listMyAllSetNames = allMyGameCards.map((card) => card.cardSetName)
+        const countMyList: { [key: string]: number } = {};
+        for (const item of listMyAllSetNames) {
+            if (countMyList[item]) {
+                countMyList[item] += 1;
+            } else {
+                countMyList[item] = 1;
+            }
+        }
+        const filteredMyList: GameCardSet[] = [];
+        for (const [key, value] of Object.entries(countMyList)) {
+            const newMySet: GameCardSet = {name: key, count: value, author: userName};
+            filteredMyList.push(newMySet)
+        }
+        setMyAllCardSets(filteredMyList)
     }
 
 
@@ -122,13 +177,24 @@ export default function App() {
                 <Routes>
                     <Route path={"/login"} element={<LoginPage onLogin={login}/>}></Route>
                     <Route path={"/register"} element={<RegisterPage onRegister={register}/>}></Route>
-                    <Route element={<ProtectedRoutes user={userName} achievement={userInfo?.achievement} logout={logout}/>}>
+                    <Route element={<ProtectedRoutes user={userName} achievement={userInfo?.achievement}
+                                                     logout={logout}/>}>
                         <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
                         <Route path={"/game/:gameSize/:gameName"}
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
-                        <Route path={"/card-collection"} element={<GameCardCollection allNonDefaultGameCards={allNonDefaultGameCards} loadAllNonDefaultGameCards={loadAllNonDefaultGameCards}/>}></Route>
-                        <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
-                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update} allCardSetNames={allCardSetNames}/>}></Route>
+                        <Route path={"/collection"}
+                               element={<GameCardCollection allGameCards={allGameCards}
+                                                            loadAllGameCards={loadAllGameCards}
+                                                            allCardSets={allCardSets}
+                                                            allMyGameCards={allMyGameCards}
+                                                            loadAllMyGameCards={loadAllMyGameCards}
+                                                            allMyCardSets={allMyCardSets}/>}></Route>
+                        <Route path={"/edit/:setName/:number"}
+                               element={<EditGameCard allMyGameCards={allMyGameCards}
+                                                      loadAllMyGameCards={loadAllMyGameCards}/>}></Route>
+                        <Route path={"/record"} element={<GameRecord userInfo={userInfo}/>}></Route>
+                        <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
+                                                                   countCardSets={allCardSets}/>}></Route>
                         <Route path={"/*"} element={<Navigate to={"/"}/>}/>
                     </Route>
                 </Routes>

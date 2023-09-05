@@ -25,8 +25,8 @@ export default function GameRecord(props: Props) {
     return (
         <>
             <div>
-                <img width={"150px"} height={"150px"} src={"/logos/records-logo.png"}
-                     alt={"records-logo"}/>
+                <img width={"150px"} height={"150px"} src={"/logos/record-logo.png"}
+                     alt={"record-logo"}/>
             </div>
             <div className={"records"}>
                 <Stack direction="row" spacing={1.5} justifyContent={"end"} paddingBottom={3}>

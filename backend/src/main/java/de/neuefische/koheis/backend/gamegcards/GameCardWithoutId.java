@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class GameCardWithoutId {
     private String title;
     private String cardSetName;
-
+    private String authorId;
 }

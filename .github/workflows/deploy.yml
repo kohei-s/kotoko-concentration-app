@@ -40,7 +40,6 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          #Set Java Version
           java-version: '20'
           distribution: 'adopt'
           cache: 'maven'
@@ -67,7 +66,6 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          #Set dockerhub username
           username: kokoyuyu
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
@@ -75,7 +73,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
           tags: kokoyuyu/kotoko-app:latest
           context: .
 
@@ -87,21 +84,17 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ec2-3-79-82-35.eu-central-1.compute.amazonaws.com
-          #Set App Name (replace "example" with your ssh user name)
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
-          #Set App Name (replace "example" with your ssh user name)
-          #Set dockerhub project (replace "bartfastiel/java-capstone-project.de-example-app")
           script: |
-            docker stop ec2-user
-            docker rm ec2-user
-            docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
+            docker stop kotokocontainer
+            docker rm kotokocontainer
+            docker run --pull=always --name kotokocontainer --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
             sleep 15s
-            docker logs ec2-user
+            docker logs kotokocontainer
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
-          #Set App Name (replace "example" with your ssh user name)
           url: http://ec2-3-79-82-35.eu-central-1.compute.amazonaws.com
           max-attempts: 3
           retry-delay: 5s
