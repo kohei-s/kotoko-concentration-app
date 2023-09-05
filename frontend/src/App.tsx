@@ -182,17 +182,17 @@ export default function App() {
                         <Route path={"/"} element={<MainPage userInfo={userInfo}/>}></Route>
                         <Route path={"/game/:gameSize/:gameName"}
                                element={<GameBoard userInfo={userInfo} update={update}/>}></Route>
-                        <Route path={"/card-collection"}
+                        <Route path={"/collection"}
                                element={<GameCardCollection allGameCards={allGameCards}
                                                             loadAllGameCards={loadAllGameCards}
                                                             allCardSets={allCardSets}
                                                             allMyGameCards={allMyGameCards}
                                                             loadAllMyGameCards={loadAllMyGameCards}
                                                             allMyCardSets={allMyCardSets}/>}></Route>
-                        <Route path={"/card-edit"}
+                        <Route path={"/edit/:setName/:number"}
                                element={<EditGameCard allMyGameCards={allMyGameCards}
                                                       loadAllMyGameCards={loadAllMyGameCards}/>}></Route>
-                        <Route path={"/game-record"} element={<GameRecord userInfo={userInfo}/>}></Route>
+                        <Route path={"/record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                         <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
                                                                    countCardSets={allCardSets}/>}></Route>
                         <Route path={"/*"} element={<Navigate to={"/"}/>}/>

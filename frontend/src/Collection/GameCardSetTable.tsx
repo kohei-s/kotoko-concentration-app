@@ -1,7 +1,7 @@
 import {IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {tableCellClasses} from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
 import {styled} from '@mui/material/styles';
 import {GameCardSet} from "./GameCardSet.ts";
 import {Link} from "react-router-dom";
@@ -18,7 +18,7 @@ export default function GameCardSetTable(props: Props) {
             color: theme.palette.common.white,
         },
         [`&.${tableCellClasses.body}`]: {
-            fontSize: 16,
+            fontSize: 18,
         },
     }));
 
@@ -35,7 +35,7 @@ export default function GameCardSetTable(props: Props) {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{mt: 2, boxShadow: 0}}>
+            <TableContainer component={Paper} sx={{maxWidth: 290, mt: 2, boxShadow: 0}}>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -55,12 +55,11 @@ export default function GameCardSetTable(props: Props) {
                                     {row.name}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">{row.count}</StyledTableCell>
-                                {/*<TableCell align="right">{row.author}</TableCell>*/}
                                 <StyledTableCell align="right">
-                                    <Link to={"/card-edit"}>
-                                        <IconButton disableRipple={true} size="small" className={"buttonAdd"}
+                                    <Link to={"/edit/" + row.name + "/" + row.count.toString()}>
+                                        <IconButton size="small" disableRipple={true} className={"buttonAdd"}
                                                     sx={{color: "#0c6b18", boxShadow: 0}}>
-                                            <MoreVertIcon/>
+                                            <EditIcon fontSize={"small"}/>
                                         </IconButton>
                                     </Link>
                                 </StyledTableCell>

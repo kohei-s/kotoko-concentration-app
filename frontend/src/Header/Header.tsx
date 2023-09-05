@@ -36,13 +36,13 @@ export default function Header(props: Props) {
                         <Tooltip title="Card Collection">
                             <IconButton size="small"
                                         sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} disableRipple={true}>
-                                <Link to="/card-collection"><MenuBookIcon/></Link>
+                                <Link to="/collection"><MenuBookIcon/></Link>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Game Record">
                             <IconButton size="small"
                                         sx={{background: "rgba(0,0,0,0.51)", boxShadow: 0, borderRadius: '50px'}} disableRipple={true}>
-                                <Link to="/game-record"><EmojiEventsIcon/></Link>
+                                <Link to="/record"><EmojiEventsIcon/></Link>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Setting">

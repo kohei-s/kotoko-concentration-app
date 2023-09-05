@@ -1,0 +1,17 @@
+.edit {
+    display: flex;
+    width: 290px;
+}
+
+.card-button {
+    display: flex;
+    justify-content: end;
+}
+
+.set-name {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.set-name span {
+    color: #69d1ca;
+}
