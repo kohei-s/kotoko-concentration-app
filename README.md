@@ -1,6 +1,6 @@
 
 #  KoToKo: Japanese concentration game app
-This mobile application is developed 🛠️ as my personal capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) from May to August 2023  (👉 [Kotoko ver.1](https://kotoko.de))
+This mobile application is developed 🛠️ as my personal capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) from May to August 2023  (try the latest version 👉 [Kotoko](https://kotoko.de))
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=kohei-s_kotoko-concentration-app-frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=kohei-s_kotoko-concentration-app-frontend) \
 \
@@ -18,8 +18,8 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
   🪄 Personalize game contents with your favorite Japanese characters \
   📖 Add new characters you're about to learn \
   🗻 Show game records you achieved \
+  📚 Expand your Hiragana & Katakana knowledge with additional diacritics cards \
   🛝 Child friendly design \
   🔎 Search Japanese character in your strongest language e.g. English or German** \
   ❤️ Praise your kids for their achievements and keep cheering them (feature for parents)** \
-  📚 Expand your Hiragana & Katakana knowledge with Diacritics Cards** \
   (** upcoming features)
