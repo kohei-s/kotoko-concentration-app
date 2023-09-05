@@ -1,14 +1,19 @@
 import {GameCard} from "../Game/GameCard.ts";
 import {useState} from "react";
-import GameCardFrame from "./GameCardFrame.tsx";
 import {IconButton, Modal} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
 import "./GameCardCollection.css"
 import NewGameCard from "./NewGameCard.tsx";
+import GameCardSetTable from "./GameCardSetTable.tsx";
+import {GameCardSet} from "./GameCardSet.ts";
 
 type Props = {
-    allNonDefaultGameCards: GameCard[]
-    loadAllNonDefaultGameCards: () => void
+    allGameCards: GameCard[]
+    loadAllGameCards: () => void
+    allCardSets: GameCardSet[]
+    allMyGameCards: GameCard[]
+    loadAllMyGameCards: () => void
+    allMyCardSets: GameCardSet[]
 }
 
 export default function GameCardCollection(props: Props) {
@@ -17,7 +22,7 @@ export default function GameCardCollection(props: Props) {
      const [, setAllCardSetNames] = useState<string[]>([]);*/
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    if (!props.allNonDefaultGameCards) {
+    if (!props.allGameCards) {
         return "Loading cards..."
     }
 
@@ -45,17 +50,10 @@ export default function GameCardCollection(props: Props) {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeModal}
-                                 onAddNewCard={props.loadAllNonDefaultGameCards}/>
+                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllMyGameCards}/>
                 </div>
             </Modal>
-            {props.allNonDefaultGameCards.map(card => <GameCardFrame
-                key={card.id}
-                gameCard={card}
-                onGameCardChange={props.loadAllNonDefaultGameCards}
-                cardSetName={card.cardSetName}
-                title={card.title}
-            ></GameCardFrame>)}
+            <GameCardSetTable allCardSets={props.allCardSets} allMyCardSets={props.allMyCardSets}></GameCardSetTable>
         </>
     )
 
