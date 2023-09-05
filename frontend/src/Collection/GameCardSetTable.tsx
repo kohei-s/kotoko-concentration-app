@@ -15,10 +15,11 @@ export default function GameCardSetTable(props: Props) {
     const StyledTableCell = styled(TableCell)(({theme}) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: "rgb(109,117,124)",
-            color: theme.palette.common.white,
+            color: theme.palette.common.white
         },
         [`&.${tableCellClasses.body}`]: {
-            fontSize: 18,
+            color: "#404040",
+            fontSize: 18
         },
     }));
 
@@ -41,7 +42,6 @@ export default function GameCardSetTable(props: Props) {
                         <TableRow>
                             <StyledTableCell>Set name</StyledTableCell>
                             <StyledTableCell align="right">Number of cards</StyledTableCell>
-                            {/*<TableCell align="right">Author</TableCell>*/}
                             <StyledTableCell align="right"></StyledTableCell>
                         </TableRow>
                     </TableHead>

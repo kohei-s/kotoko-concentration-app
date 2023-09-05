@@ -37,7 +37,7 @@ export default function EditGameCard(props: Props) {
             <div className={"set-name"}>
                 Name: <span>{setName}</span> <br/> Number: <span>{number}</span>
                 <IconButton disableRipple={true} size="small" className={"buttonAdd"}
-                            onClick={openAddModal} sx={{color: "#4D6A9A", boxShadow: 0, ml: 15}}>
+                            onClick={openAddModal} sx={{color: "#4D6A9A", boxShadow: 0, ml: 12}}>
                     <AddCircle fontSize={"large"}/>
                 </IconButton>
             </div>
