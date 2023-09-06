@@ -18,12 +18,6 @@ public class GameCardsController {
         this.gameCardsService = gameCardsService;
     }
 
-    @GetMapping("/all")
-    List<GameCard> getAllGameCards() {
-
-        return gameCardsService.getAllGameCards();
-    }
-
     @GetMapping("/myAll")
     List<GameCard> getAllMyGameCards() {
 
