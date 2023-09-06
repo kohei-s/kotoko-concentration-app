@@ -8,9 +8,6 @@ import GameCardSetTable from "./GameCardSetTable.tsx";
 import {GameCardSet} from "./GameCardSet.ts";
 
 type Props = {
-    allGameCards: GameCard[]
-    loadAllGameCards: () => void
-    allCardSets: GameCardSet[]
     allMyGameCards: GameCard[]
     loadAllMyGameCards: () => void
     allMyCardSets: GameCardSet[]
@@ -18,11 +15,9 @@ type Props = {
 
 export default function GameCardCollection(props: Props) {
 
-    /*
-     const [, setAllCardSetNames] = useState<string[]>([]);*/
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    if (!props.allGameCards) {
+    if (!props.allMyGameCards) {
         return "Loading cards..."
     }
 
@@ -53,7 +48,7 @@ export default function GameCardCollection(props: Props) {
                     <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllMyGameCards}/>
                 </div>
             </Modal>
-            <GameCardSetTable allCardSets={props.allCardSets} allMyCardSets={props.allMyCardSets}></GameCardSetTable>
+            <GameCardSetTable allMyCardSets={props.allMyCardSets}></GameCardSetTable>
         </>
     )
 

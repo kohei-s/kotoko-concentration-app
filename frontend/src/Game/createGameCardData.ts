@@ -1,4 +1,5 @@
 import {GameCard} from "./GameCard.ts";
+import setPrefix from "./setPrefix.ts";
 
 export default function createGameCardData(setName: string, diacritics: boolean[]) {
 
@@ -45,26 +46,29 @@ export default function createGameCardData(setName: string, diacritics: boolean[
         "club-8", "club-9", "club-10", "club-11", "club-12", "club-13"
     ]
 
+    const kanjiReading: string[] = [
+        "ha", "ko", "ie", "inu", "mori", "mizu", "toki", "hi", "hana", "hito", "sora"
+    ]
+
+    const animalReading: string[] = [
+        "inu", "hato", "kirin", "neko", "pengin", "raion", "tora", "zou"
+    ]
+
+
     let listData: string[];
     if ((setName === "hiragana" && diacritics[0]) || (setName === "katakana" && diacritics[1])){
         listData = alphabetReading.concat(diacriticsReading)
     } else if ((setName === "hiragana" && (!diacritics[0])) || (setName === "katakana" && (!diacritics[1]))) {
         listData = alphabetReading;
+    } else if (setName === "kanji") {
+        listData = kanjiReading;
+    } else if (setName === "animal") {
+        listData = animalReading;
     } else {
         listData = playingCards;
     }
 
-    let prefix: string;
-    switch (setName) {
-        case "hiragana":
-            prefix = "h";
-            break;
-        case "katakana":
-            prefix = "k";
-            break;
-        default:
-            prefix = "c";
-    }
+    const prefix: string = setPrefix(setName);
 
     const kanaCards: GameCard[] = [];
     let index = 1;
