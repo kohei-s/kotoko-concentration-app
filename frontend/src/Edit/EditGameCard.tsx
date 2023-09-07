@@ -6,9 +6,11 @@ import NewGameCard from "../Collection/NewGameCard.tsx";
 import {useState} from "react";
 import "./EditGameCard.css"
 import {useParams} from "react-router-dom";
+import {GameCardSet} from "../Collection/GameCardSet.ts";
 
 type Props = {
     allMyGameCards: GameCard[]
+    allMyCardSets: GameCardSet[]
     loadAllMyGameCards: () => void
 }
 
@@ -17,6 +19,8 @@ export default function EditGameCard(props: Props) {
     const params = useParams()
     const setName: string = params.setName as string
     const number: string = params.number as string
+    const actualCardSet: GameCardSet = props.allMyCardSets.find(cardSet => cardSet.name === setName) as GameCardSet
+    const actualNumber: string = actualCardSet.count.toString()
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -28,6 +32,7 @@ export default function EditGameCard(props: Props) {
         setIsAddModalOpen(false)
     }
 
+
     return (
         <>
             <div className={"edit"}>
@@ -35,7 +40,8 @@ export default function EditGameCard(props: Props) {
                      alt={"edit-logo"}/>
             </div>
             <div className={"set-name"}>
-                Name: <span>{setName}</span> <br/> Number: <span>{number}</span>
+                Name: <span>{setName}</span>
+                <br/> Number: <span> {(actualNumber === number) ? number : actualNumber} </span>
                 <IconButton disableRipple={true} size="small" className={"buttonAdd"}
                             onClick={openAddModal} sx={{color: "#4D6A9A", boxShadow: 0, ml: 12}}>
                     <AddCircle fontSize={"large"}/>

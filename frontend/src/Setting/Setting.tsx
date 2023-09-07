@@ -212,7 +212,7 @@ export default function Setting(props: Props) {
                             .map(setName => <MenuItem
                                 key={setName.name}
                                 value={setName.name}
-                            >{setName.name} {((setName.name === "kanji")||(setName.name === "animal"))? "(sample)" : "(" + setName.count.toString() + ")"}</MenuItem>)}
+                            >{setName.name} {"(" + setName.count.toString() + ")"}</MenuItem>)}
                     </Select>
                     <FormHelperText>current set: {selectedCustomGame}</FormHelperText>
                 </FormControl>

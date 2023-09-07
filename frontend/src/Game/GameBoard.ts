@@ -3,8 +3,8 @@ import {useParams} from "react-router-dom";
 import {UserInfo} from "../Security/UserInfo.ts";
 
 type Props = {
-    userInfo: UserInfo| undefined
-    update: (userInfo:UserInfo) => void
+    userInfo: UserInfo | undefined
+    update: (userInfo: UserInfo) => void
 }
 export default function GameBoard(props: Props) {
 
@@ -12,14 +12,11 @@ export default function GameBoard(props: Props) {
     const size: string = params.gameSize as string;
     const name: string = params.gameName as string;
 
-    if ((size === "small") || (size === "medium") || (size === "large")) {
-        if ((name === "hiragana") || (name === "katakana") || (name === "playing-cards") || (name === "animal") || (name === "kanji")) {
-
-            return createGameBoard({gameSize: size, gameName: name, userInfo: props.userInfo, update: props.update});
-        } else {
-
-            return ("Invalid parameters!");
-        }
+    try {
+        return createGameBoard({gameSize: size, gameName: name, userInfo: props.userInfo, update: props.update});
+    } catch (e) {
+        console.log(e)
+        return ("Invalid parameters!");
     }
 
 }

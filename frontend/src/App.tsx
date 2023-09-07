@@ -156,6 +156,7 @@ export default function App() {
                                                             allMyCardSets={allMyCardSets}/>}></Route>
                         <Route path={"/edit/:setName/:number"}
                                element={<EditGameCard allMyGameCards={allMyGameCards}
+                                                      allMyCardSets={allMyCardSets}
                                                       loadAllMyGameCards={loadAllMyGameCards}/>}></Route>
                         <Route path={"/record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                         <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
