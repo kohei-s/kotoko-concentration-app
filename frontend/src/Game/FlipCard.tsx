@@ -31,7 +31,9 @@ export default function FlipCard(props: Props) {
     const [userDiacritics, setUserDiacritics] = useState<boolean[]>([]);
 
     const loadGameCards = useCallback(() => {
-        if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")) {
+        if ((props.gameName === "hiragana") || (props.gameName === "katakana") || (props.gameName === "playing-cards")
+            || (props.gameName === "kanji") || (props.gameName === "animal"))
+        {
             const cardsData = createGameCards(props.gameName, props.gameSize, userDiacritics);
             const setId = cardsData.id
             const cardGridData = {cardsGrid: cardsData.cardGrid}
@@ -125,17 +127,10 @@ export default function FlipCard(props: Props) {
     function renderCardImage(card: GameCard) {
         if (card.title === "empty") {
             return <img src="/logos/kotoko-logo.png" alt="start"/>;
-        } else if (props.gameName === "hiragana" || props.gameName === "katakana" || props.gameName === "playing-cards") {
+        } else if (props.gameName === "hiragana" || props.gameName === "katakana" || props.gameName === "playing-cards"
+         || props.gameName === "kanji" || props.gameName === "animal") {
             const src = `/${props.gameName}-images/${props.gameName}-${card.title}.png`;
             const alt = `${props.gameName}${card.title}${card.cardSetName}`;
-            return <img src={src} alt={alt}/>;
-        } else if (props.gameName === "kanji") {
-            const src = `/${props.gameName}-images/${props.gameName}-${card.title.slice(2)}.png`;
-            const alt = `${props.gameName}${card.title.slice(2)}${card.cardSetName}`;
-            return <img src={src} alt={alt}/>;
-        } else if (props.gameName === "animal") {
-            const src = `/${props.gameName}-images/${props.gameName}-${card.title.split(" ")[1]}.png`;
-            const alt = `${props.gameName}${card.title.split(" ")[1]}${card.cardSetName}`;
             return <img src={src} alt={alt}/>;
         } else {
             return card.title;

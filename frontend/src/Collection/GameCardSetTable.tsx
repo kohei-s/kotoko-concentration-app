@@ -7,7 +7,6 @@ import {GameCardSet} from "./GameCardSet.ts";
 import {Link} from "react-router-dom";
 
 type Props = {
-    allCardSets: GameCardSet[],
     allMyCardSets: GameCardSet[]
 }
 export default function GameCardSetTable(props: Props) {
@@ -52,16 +51,18 @@ export default function GameCardSetTable(props: Props) {
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
                                 <StyledTableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.name} {((row.name === "kanji")||(row.name === "animal"))? "(sample)": ""}
                                 </StyledTableCell>
                                 <StyledTableCell align="right">{row.count}</StyledTableCell>
                                 <StyledTableCell align="right">
-                                    <Link to={"/edit/" + row.name + "/" + row.count.toString()}>
-                                        <IconButton size="small" disableRipple={true} className={"buttonAdd"}
-                                                    sx={{color: "#0c6b18", boxShadow: 0}}>
-                                            <EditIcon fontSize={"small"}/>
-                                        </IconButton>
-                                    </Link>
+                                    {(row.author === "sample") ? "" :
+                                        <Link to={"/edit/" + row.name + "/" + row.count.toString()}>
+                                            <IconButton size="small" disableRipple={true} className={"buttonAdd"}
+                                                        sx={{color: "#0c6b18", boxShadow: 0}}>
+                                                <EditIcon fontSize={"small"}/>
+                                            </IconButton>
+                                        </Link>
+                                    }
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

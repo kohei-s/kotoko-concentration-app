@@ -23,11 +23,6 @@ public class GameCardsService {
         this.mongoUserService = mongoUserService;
     }
 
-    public List<GameCard> getAllGameCards(){
-
-        return gameCardsRepository.findAll();
-    }
-
     public List<GameCard> getAllMyGameCards() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String userId = mongoUserService.findUserIdByUsername(username);
@@ -42,7 +37,7 @@ public class GameCardsService {
     }
 
     public List<GameCard> findByCardSetName(String cardSetName){
-        List<GameCard> gameCardList = gameCardsRepository.findAll();
+        List<GameCard> gameCardList = getAllMyGameCards();
 
         return gameCardList.stream().filter(card -> cardSetName.equals(card.getCardSetName())).toList();
     }

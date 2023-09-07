@@ -1,5 +1,6 @@
 import {GameCard} from "./GameCard.ts";
 import createGameCardData from "./createGameCardData.ts";
+import setPrefix from "./setPrefix.ts";
 
 export function createGameCards(setName: string, gameSize: string, diacritics: boolean[]) {
 
@@ -32,17 +33,7 @@ export function createGameCards(setName: string, gameSize: string, diacritics: b
             pairing = 8;
     }
 
-    let prefix: string;
-    switch (setName) {
-        case "hiragana":
-            prefix = "h";
-            break;
-        case "katakana":
-            prefix = "k";
-            break;
-        default:
-            prefix = "c";
-    }
+    const prefix: string = setPrefix(setName);
 
     const cardPairs: GameCard [] = kanaCards.splice(0, pairing);
     cardPairs.push(...cardPairs.map(card => ({...card})));

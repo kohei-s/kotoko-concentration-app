@@ -121,7 +121,6 @@ export default function Setting(props: Props) {
             selectedCardSet: selectedCustomGame
         }
         props.update(updatedUserInfo)
-
     }
 
     function setUserDiacriticsText(index: number) {
@@ -213,7 +212,7 @@ export default function Setting(props: Props) {
                             .map(setName => <MenuItem
                                 key={setName.name}
                                 value={setName.name}
-                            >{setName.name} ({setName.count})</MenuItem>)}
+                            >{setName.name} {"(" + setName.count.toString() + ")"}</MenuItem>)}
                     </Select>
                     <FormHelperText>current set: {selectedCustomGame}</FormHelperText>
                 </FormControl>

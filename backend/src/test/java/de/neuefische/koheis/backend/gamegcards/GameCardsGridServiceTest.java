@@ -38,29 +38,6 @@ class GameCardsGridServiceTest {
     GameCard gameCard12 = new GameCard("12", "♥12", "playing-cards", "testId");
 
     @Test
-    void getAllGameCards_thenReturnListOfAllGameCards() {
-        //Given
-        List<GameCard> allGameCards = List.of(
-                gameCard1, gameCard2, gameCard3,
-                gameCard4, gameCard5, gameCard6,
-                gameCard7, gameCard8, gameCard9,
-                gameCard10, gameCard11, gameCard12);
-
-        //WHEN
-        Mockito.when(gameCardsRepository.findAll())
-                .thenReturn(allGameCards);
-        List<GameCard> expected = List.of(
-                gameCard1, gameCard2, gameCard3,
-                gameCard4, gameCard5, gameCard6,
-                gameCard7, gameCard8, gameCard9,
-                gameCard10, gameCard11, gameCard12);
-        List<GameCard> actual = gameCardsService.getAllGameCards();
-
-        //THEN
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void getAllMyGameCards_thenReturnListOfAllGameCards() {
         //Given
         List<GameCard> allMyGameCards = List.of(
@@ -126,20 +103,27 @@ class GameCardsGridServiceTest {
     void generateGameBoardSmallSize_thenReturnTwoDimensionalArrayOfTwelveGameCards() {
         //Given
         String id = "012";
-        List<GameCard> allGameCards = List.of(
+        List<GameCard> allMyGameCards = List.of(
                 gameCard1, gameCard2, gameCard3,
                 gameCard4, gameCard5, gameCard6,
                 gameCard7, gameCard8, gameCard9,
                 gameCard10, gameCard11, gameCard12);
 
         //WHEN
-        Mockito.when(gameCardsRepository.findAll())
-                .thenReturn(allGameCards);
         Mockito.when(idService.createRandomId())
                 .thenReturn(id);
+        Mockito.when(authentication.getName())
+                .thenReturn("testName");
+        Mockito.when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        Mockito.when(mongoUserService.findUserIdByUsername("testName"))
+                .thenReturn("testId");
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(gameCardsRepository.findAllByAuthorId("testId"))
+                .thenReturn(allMyGameCards);
         int expectedRow = 3;
         int expectedColumn = 3;
-        GameCard[][] actual = gameCardsService.generateGameBoard("small", allGameCards);
+        GameCard[][] actual = gameCardsService.generateGameBoard("small", allMyGameCards);
 
         //THEN
         assertEquals(expectedRow, actual.length);
