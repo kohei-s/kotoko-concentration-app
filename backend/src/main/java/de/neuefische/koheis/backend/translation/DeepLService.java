@@ -1,7 +1,6 @@
 package de.neuefische.koheis.backend.translation;
 
 import com.deepl.api.DeepLException;
-import com.deepl.api.DocumentTranslationException;
 import com.deepl.api.TextResult;
 import com.deepl.api.Translator;
 import org.springframework.stereotype.Service;
