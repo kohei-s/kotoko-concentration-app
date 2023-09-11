@@ -89,7 +89,7 @@ jobs:
           script: |
             docker stop kotokocontainer
             docker rm kotokocontainer
-            docker run --pull=always --name kotokocontainer --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
+            docker run --pull=always --name kotokocontainer --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} --env DEEPL_API_KEY=${{ secrets.DEEPL_API_KEY }} kokoyuyu/kotoko-app:latest
             sleep 15s
             docker logs kotokocontainer
       - name: Check the deployed service URL

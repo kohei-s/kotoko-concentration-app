@@ -14,13 +14,13 @@ public class DeepLService {
         this.deepLConfig = deepLConfig;
     }
 
-    public Translation getJapaneseTranslation(String text, String language) throws Exception {
+    public Translation getJapaneseTranslation(String text, String language) throws DeepLException, InterruptedException {
         String authKey = deepLConfig.getKey();
         translator = new Translator(authKey);
-        TextResult result = translator.translateText(text, language, "jp");
+        TextResult result = translator.translateText(text, language, "JA");
 
         if (result != null) {
-            return new Translation(text, result.toString());
+            return new Translation(text, result.getText());
         } else {
             throw new DeepLException("An error occurs during translation!");
         }

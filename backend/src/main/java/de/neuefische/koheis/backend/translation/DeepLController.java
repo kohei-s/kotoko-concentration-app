@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/deepl")
+@RequestMapping("api/translation")
 public class DeepLController {
 
     private final DeepLService deepLService;

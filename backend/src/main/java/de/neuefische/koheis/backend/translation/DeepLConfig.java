@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Component
 public class DeepLConfig {
 
-    @Value("${DEEPL_API_KEY}")
+    @Value("${deepl.api.key}")
     private String apiKey;
 
     public String getKey() {
