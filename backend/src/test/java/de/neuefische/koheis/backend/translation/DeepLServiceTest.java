@@ -10,11 +10,8 @@ import static org.mockito.Mockito.*;
 class DeepLServiceTest {
 
     Translator translator = mock(Translator.class);
-
     DeepLConfig deepLConfig = mock(DeepLConfig.class);
-
     DeepLService deepLService = new DeepLService(deepLConfig);
-
 
     @Test
     void expectKeyString_whenGetKeyCalled() {
