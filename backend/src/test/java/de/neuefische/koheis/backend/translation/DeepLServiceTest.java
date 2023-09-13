@@ -1,8 +1,5 @@
 package de.neuefische.koheis.backend.translation;
 
-import com.deepl.api.DeepLException;
-import com.deepl.api.TextResult;
-import com.deepl.api.Translator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,7 +8,6 @@ import static org.mockito.Mockito.*;
 
 class DeepLServiceTest {
 
-    Translator translator = mock(Translator.class);
     DeepLConfig deepLConfig = mock(DeepLConfig.class);
     DeepLService deepLService = new DeepLService(deepLConfig);
 
