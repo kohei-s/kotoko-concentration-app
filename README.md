@@ -24,3 +24,26 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
   🔎 Search Japanese character in your strongest language e.g. English or German** \
   ❤️ Praise your kids for their achievements and keep cheering them (feature for parents)** \
   (** upcoming features)
+## 6. Tech Stack
+### Backend
+- Java
+- Spring Boot
+- Maven
+- Lombok
+- REST
+- DeepL API
+### Frontend
+- JavaScript
+- TypeScript
+- React
+- Vite
+- MUI
+### Data Bank
+- MongoDB
+### TDD
+- JUnit
+- SonarCloud
+### CI/CD
+- GitHub Actions
+- Docker
+- AWS

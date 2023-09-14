@@ -1,5 +1,9 @@
 package de.neuefische.koheis.backend.translation;
 
+import com.deepl.api.DeepLException;
+import com.deepl.api.Translator;
+import com.deepl.api.TranslatorOptions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,9 +11,14 @@ import static org.mockito.Mockito.*;
 
 
 class DeepLServiceTest {
-
     DeepLConfig deepLConfig = mock(DeepLConfig.class);
-    DeepLService deepLService = new DeepLService(deepLConfig);
+    Translator translator;
+    DeepLService deepLService;
+
+    @BeforeEach
+    void setUp() {
+        deepLService = new DeepLService(deepLConfig);
+    }
 
     @Test
     void expectKeyString_whenGetKeyCalled() {
@@ -35,6 +44,26 @@ class DeepLServiceTest {
 
         //THEN
         assertThrows(Exception.class, () -> deepLService.getJapaneseTranslation(originalText, originalLanguage));
+    }
+
+    @Test
+    void expectTranslation_whenGetJapaneseTranslationCalled() throws DeepLException, InterruptedException {
+        //GIVEN
+        String originalWord = "proton beam";
+        String translatedWord = "陽子ビーム";
+        String originalLanguage = "EN";
+        String authKey = "test:fx";
+        Translation expected = new Translation(originalWord, translatedWord);
+        TranslatorOptions options = new TranslatorOptions()
+                .setServerUrl("http://localhost:3000");
+
+        //WHEN
+        when(deepLConfig.getKey()).thenReturn(authKey);
+        translator = new Translator(authKey, options);
+        Translation actual = new Translation(originalWord, translator.translateText(originalWord, originalLanguage, "JA").getText());
+
+        //THEN
+        assertEquals(expected, actual);
     }
 
 }
