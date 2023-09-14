@@ -5,6 +5,8 @@ import com.deepl.api.Translator;
 import com.deepl.api.TranslatorOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.HashMap;
+import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -47,15 +49,19 @@ class DeepLServiceTest {
     }
 
     @Test
-    void expectTranslation_whenGetTranslateTextAndGetTextCalled() throws DeepLException, InterruptedException {
+    void expectTranslation_whenTranslateTextCalled() throws DeepLException, InterruptedException {
         //GIVEN
         String originalWord = "proton beam";
         String translatedWord = "陽子ビーム";
         String originalLanguage = "EN";
         String authKey = "test:fx";
+        Map<String, String> headers = new HashMap<>();
+        headers.put("mock-server-session-allow-missing-user-agent", "5");
+        headers.put("mock-server-session-allow-reconnections", "5");
         Translation expected = new Translation(originalWord, translatedWord);
         TranslatorOptions options = new TranslatorOptions()
-                .setServerUrl("http://localhost:3000");
+                .setServerUrl("http://localhost:3000")
+                .setHeaders(headers);
 
         //WHEN
         when(deepLConfig.getKey()).thenReturn(authKey);
