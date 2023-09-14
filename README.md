@@ -35,14 +35,19 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
 ### Frontend
 - JavaScript
 - TypeScript
+- CSS
+- HTML
 - React
 - Vite
+- Axios
 - MUI
 ### Data Bank
 - MongoDB
 ### TDD
 - JUnit
+- Mockito
 - SonarCloud
+- DeepL API mock server
 ### CI/CD
 - GitHub Actions
 - Docker
