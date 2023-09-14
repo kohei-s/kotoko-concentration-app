@@ -47,7 +47,7 @@ class DeepLServiceTest {
     }
 
     @Test
-    void expectTranslation_whenGetJapaneseTranslationCalled() throws DeepLException, InterruptedException {
+    void expectTranslation_whenGetTranslateTextAndGetTextCalled() throws DeepLException, InterruptedException {
         //GIVEN
         String originalWord = "proton beam";
         String translatedWord = "陽子ビーム";
