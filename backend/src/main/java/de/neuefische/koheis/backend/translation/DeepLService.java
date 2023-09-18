@@ -8,20 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class DeepLService {
 
-    Translator translator;
     private final DeepLConfig deepLConfig;
 
     public DeepLService(DeepLConfig deepLConfig) {
         this.deepLConfig = deepLConfig;
     }
 
-    public String getKey() {
-        return deepLConfig.getKey();
-    }
-
     public Translation getJapaneseTranslation(String text, String language) throws DeepLException, InterruptedException {
-        String authKey = deepLConfig.getKey();
-        translator = new Translator(authKey);
+        Translator translator = deepLConfig.getTranslator();
         TextResult result = translator.translateText(text, language, "JA");
 
         if (result != null) {
