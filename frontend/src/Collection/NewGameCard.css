@@ -17,3 +17,10 @@
 #new-card-button {
     margin: 0;
 }
+
+#translate-button {
+    padding-top: 5px;
+    padding-bottom: 12px;
+    display: flex;
+    justify-content: flex-end;
+}

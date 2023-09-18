@@ -35,7 +35,7 @@ export default function GameCardSetTable(props: Props) {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{maxWidth: 290, mt: 2, boxShadow: 0}}>
+            <TableContainer component={Paper} sx={{maxWidth: 290, mt: 2, boxShadow: 0, borderRadius: 3}}>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
