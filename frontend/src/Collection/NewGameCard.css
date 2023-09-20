@@ -18,9 +18,16 @@
     margin: 0;
 }
 
+#link-translation {
+    width: 22px;
+    height: 22px;
+    font-weight: 100;
+    align-items: center;
+}
+
 #translate-button {
-    padding-top: 5px;
-    padding-bottom: 12px;
     display: flex;
     justify-content: flex-end;
+    padding-top: 5px;
+    padding-bottom: 12px;
 }

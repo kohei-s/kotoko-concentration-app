@@ -15,6 +15,7 @@ import {GameCard} from "./Game/GameCard.ts";
 import {GameCardSet} from "./Collection/GameCardSet.ts";
 import "./App.css"
 import EditGameCard from "./Edit/EditGameCard.tsx";
+import TranslationCard from "./Translation/TranslationCard.tsx";
 
 
 export default function App() {
@@ -158,6 +159,7 @@ export default function App() {
                                element={<EditGameCard allMyGameCards={allMyGameCards}
                                                       allMyCardSets={allMyCardSets}
                                                       loadAllMyGameCards={loadAllMyGameCards}/>}></Route>
+                        <Route path={"translation"} element={<TranslationCard/>}></Route>
                         <Route path={"/record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                         <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
                                                                    countCardSets={allMyCardSets}/>}></Route>

@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {GameCard} from "../Game/GameCard.ts";
-import {Button, Card, CardActions, CardContent, Stack, TextField, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, IconButton, Stack, TextField, Typography} from "@mui/material";
 import TranslateIcon from '@mui/icons-material/Translate';
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import "./NewGameCard.css"
+import {Link} from "react-router-dom";
 
 type Props = {
     onClose: () => void
@@ -54,13 +55,13 @@ export default function NewGameCard(props: Props) {
                         Create new game card
                     </Typography>
                     <div id={"translate-button"}>
-                        <Button  size={"small"} onClick={saveGameCard} sx={{
-                            padding: 0.3,
+                        <IconButton  size={"small"} sx={{
+                            mr: 1,
                             color: "#ffffff",
                             backgroundColor: "#3c7ee8",
                             boxShadow: 0,
                             borderRadius: '10px'
-                        }}><TranslateIcon fontSize={"small"}/></Button>
+                        }}><Link id={"link-translation"} to="/translation"><TranslateIcon fontSize={"small"}/></Link></IconButton>
                     </div>
                     <Typography variant="h5" component="div">
                         <TextField id="title" label="card title?" onInput={inputTitle}/>

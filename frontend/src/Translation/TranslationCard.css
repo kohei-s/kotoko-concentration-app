@@ -1,0 +1,14 @@
+.translation {
+    display: flex;
+    flex-direction: column;
+    width: 290px;
+}
+
+.translation-card {
+    width: 290px;
+    margin: 0;
+    background: #FDF6E1;
+    border: 1px;
+    borderColor: "rgba(122,119,119,0.3)";
+    borderRadius: '15px'
+}
