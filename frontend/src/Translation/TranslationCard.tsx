@@ -35,7 +35,8 @@ export default function TranslationCard() {
                      alt={"translation-logo"}/>
             </div>
             <div className={"translation"}>
-                <Card className="translation-card" sx={{boxShadow: 0}}>
+                <Card className="translation-card" sx={{boxShadow: 0,  borderColor: "rgba(122,119,119,0.3)",
+                    borderRadius: '15px'}}>
                     <CardContent>
                         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
                             Translate into Japanese
