@@ -1,9 +1,17 @@
 import axios from "axios";
 import {Translation} from "./Translation.ts";
 import React, {useState} from "react";
-import {Button, Card, CardActions, CardContent, Stack, TextField, Typography} from "@mui/material";
-import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent, IconButton,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import "./TranslationCard.css"
 
 export default function TranslationCard() {
@@ -35,17 +43,24 @@ export default function TranslationCard() {
                      alt={"translation-logo"}/>
             </div>
             <div className={"translation"}>
-                <Card className="translation-card" sx={{boxShadow: 0,  borderColor: "rgba(122,119,119,0.3)",
-                    borderRadius: '15px'}}>
+                <Card className="translation-card" sx={{
+                    boxShadow: 0, borderColor: "rgba(122,119,119,0.3)",
+                    borderRadius: '15px'
+                }}>
                     <CardContent>
-                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom component="div">
-                            Translate into Japanese
+                        <Typography sx={{fontSize: 15, paddingBottom: 1}} color="text.secondary" gutterBottom component="div">
+                            What is the japanese word for
                         </Typography>
                         <Typography variant="h5" component="div">
                             <TextField id="original" label="your favorite word?" onInput={inputOriginalWord}/>
                         </Typography>
-                        <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
-                            Japanese translation: {translation?.japanese}
+                        <div className={"translate-button"}>
+                            <IconButton id={"translate-button"} onClick={displayTranslation} sx={{boxShadow: 0}}>
+                                <ChangeCircleIcon/>
+                            </IconButton>
+                        </div>
+                        <Typography sx={{mb: 1.5, fontSize: 20}} color="text.secondary" component="div">
+                            {translation?.japanese}
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -61,7 +76,7 @@ export default function TranslationCard() {
                                 color: "#D05F5F",
                                 boxShadow: 0,
                                 borderRadius: '15px'
-                            }}><DoDisturbOnIcon/></Button>
+                            }}><LibraryAddIcon/></Button>
                         </Stack>
                     </CardActions>
                 </Card>

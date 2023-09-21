@@ -6,7 +6,19 @@
 
 .translation-card {
     width: 290px;
+    height: 300px;
     margin: 0;
     background: #FDF6E1;
     border: 1px;
 }
+
+.translate-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#translate-button {
+    padding: 8px;
+    color: #3c7ee8;
+}
+
