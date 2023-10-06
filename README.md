@@ -26,29 +26,10 @@ Children between 5-15 years old learning Japanese as (one of) their home languag
   (** upcoming features)
 ## 6. Tech Stack
 ### Backend
-- Java
-- Spring Boot
-- Maven
-- Lombok
-- REST
-- DeepL API
+Java, Spring Boot, Maven, REST, MongoDB, DeepL API, goo API
 ### Frontend
-- JavaScript
-- TypeScript
-- CSS
-- HTML
-- React
-- Vite
-- Axios
-- MUI
-### Data Bank
-- MongoDB
+JavaScript, TypeScript, CSS, HTML, React, Vite, MUI
 ### TDD
-- JUnit
-- Mockito
-- SonarCloud
-- DeepL API mock server
-### CI/CD
-- GitHub Actions
-- Docker
-- AWS
+JUnit, Mockito, SonarLint, SonarCloud
+### DevOps, CI/CD
+Docker, GitHub Actions, AWS
