@@ -3,6 +3,7 @@ package de.neuefische.koheis.backend.converter;
 import de.neuefische.koheis.backend.translation.Translation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Objects;
@@ -26,12 +27,16 @@ public class ConvertService {
     }
 
     public String convertKanjiToKana(GooRequest gooRequest) {
-        return Objects.requireNonNull(webClient.post()
+        ResponseEntity<GooResponse> responseEntity = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(gooRequest)
                 .retrieve()
                 .toEntity(GooResponse.class)
-                .block()).getBody().converted();
+                .block();
+
+        assert responseEntity != null;
+
+        return Objects.requireNonNull(responseEntity.getBody()).converted();
     }
 
     public String convertKanaToAlphabet(String kana) {
