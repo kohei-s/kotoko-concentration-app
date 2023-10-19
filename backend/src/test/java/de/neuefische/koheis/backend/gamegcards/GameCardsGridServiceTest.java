@@ -24,18 +24,18 @@ class GameCardsGridServiceTest {
     Authentication authentication = mock(Authentication.class);
     GameCardsService gameCardsService = new GameCardsService(gameCardsRepository, idService, mongoUserService);
 
-    GameCard gameCard1 = new GameCard("01", "♥1", "playing-cards", "testId");
-    GameCard gameCard2 = new GameCard("02", "♥2", "playing-cards", "testId");
-    GameCard gameCard3 = new GameCard("03", "♥3", "playing-cards", "testId");
-    GameCard gameCard4 = new GameCard("04", "♥4", "playing-cards", "testId");
-    GameCard gameCard5 = new GameCard("05", "♥5", "playing-cards", "testId");
-    GameCard gameCard6 = new GameCard("06", "♥6", "playing-cards", "testId");
-    GameCard gameCard7 = new GameCard("07", "♥7", "playing-cards", "testId");
-    GameCard gameCard8 = new GameCard("08", "♥8", "playing-cards", "testId");
-    GameCard gameCard9 = new GameCard("09", "♥9", "playing-cards", "testId");
-    GameCard gameCard10 = new GameCard("10", "♥10", "1playing-cards", "testId");
-    GameCard gameCard11 = new GameCard("11", "♥11", "1playing-cards", "testId");
-    GameCard gameCard12 = new GameCard("12", "♥12", "playing-cards", "testId");
+    GameCard gameCard1 = new GameCard("01", "♥1", "empty",  "playing-cards", "testId");
+    GameCard gameCard2 = new GameCard("02", "♥2", "empty", "playing-cards", "testId");
+    GameCard gameCard3 = new GameCard("03", "♥3", "empty", "playing-cards", "testId");
+    GameCard gameCard4 = new GameCard("04", "♥4", "empty", "playing-cards", "testId");
+    GameCard gameCard5 = new GameCard("05", "♥5", "empty", "playing-cards", "testId");
+    GameCard gameCard6 = new GameCard("06", "♥6", "empty", "playing-cards", "testId");
+    GameCard gameCard7 = new GameCard("07", "♥7", "empty", "playing-cards", "testId");
+    GameCard gameCard8 = new GameCard("08", "♥8", "empty", "playing-cards", "testId");
+    GameCard gameCard9 = new GameCard("09", "♥9", "empty", "playing-cards", "testId");
+    GameCard gameCard10 = new GameCard("10", "♥10", "empty", "1playing-cards", "testId");
+    GameCard gameCard11 = new GameCard("11", "♥11", "empty", "1playing-cards", "testId");
+    GameCard gameCard12 = new GameCard("12", "♥12", "empty", "playing-cards", "testId");
 
     @Test
     void getAllMyGameCards_thenReturnListOfAllGameCards() {
@@ -72,7 +72,7 @@ class GameCardsGridServiceTest {
     @Test
     void getExistingGameCardWithId_thenReturnGameCardWithId() {
         //GIVEN
-        GameCard expected = new GameCard("012", "test", "testSet", "testId");
+        GameCard expected = new GameCard("012", "test", "testReading", "testSet", "testId");
         Mockito.when(gameCardsRepository.findById("012"))
                 .thenReturn(Optional.of(expected));
 
@@ -133,9 +133,9 @@ class GameCardsGridServiceTest {
    @Test
     void whenGameCardAdded_thenReturnGameCard() {
         //GIVEN
-        GameCardWithoutAuthorId gameCard = new GameCardWithoutAuthorId("testTitle", "testSet3");
-        GameCard gameCardAdded = new GameCard("012", "testTitle", "testSet3", "testId");
-        GameCard expected = new GameCard("012", "testTitle", "testSet3", "testId");
+        GameCardWithoutAuthorId gameCard = new GameCardWithoutAuthorId("testTitle", "testReading", "testSet3");
+        GameCard gameCardAdded = new GameCard("012", "testTitle", "testReading", "testSet3", "testId");
+        GameCard expected = new GameCard("012", "testTitle", "testReading", "testSet3", "testId");
 
         //WHEN
         Mockito.when(gameCardsRepository.insert(gameCardAdded))
@@ -161,18 +161,18 @@ class GameCardsGridServiceTest {
     @Test
     void whenUpdateExistingGameCard_thenReturnGameCard() {
         //GIVEN
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "testId");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testReading", "testSet", "testId");
         String id = "012";
 
         //WHEN
-        when(gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId())))
-                .thenReturn(new GameCard("012", "test", "testSet", "testId"));
+        when(gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getReading(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId())))
+                .thenReturn(new GameCard("012", "test", "testReading", "testSet", "testId"));
         when(gameCardsRepository.existsById(id))
                 .thenReturn(true);
         GameCard actual = gameCardsService.updateGameCard(gameCardWithoutId, "012");
 
         //THEN
-        GameCard expected = new GameCard("012", "test", "testSet", "testId");
+        GameCard expected = new GameCard("012", "test", "testReading", "testSet", "testId");
         verify(gameCardsRepository).save(expected);
         Assertions.assertThat(actual)
                 .isEqualTo(expected);
@@ -182,7 +182,7 @@ class GameCardsGridServiceTest {
     void whenUpdateWithNotExistingId_thenThrowException() {
         //GIVEN
         String notExistingId = "012";
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "testId");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testReading", "testSet", "testId");
 
         //WHEN
         Mockito.when(gameCardsRepository.existsById("012"))
