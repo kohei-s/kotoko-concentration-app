@@ -38,7 +38,7 @@ export function createGameCards(setName: string, gameSize: string, diacritics: b
     const cardPairs: GameCard [] = kanaCards.splice(0, pairing);
     cardPairs.push(...cardPairs.map(card => ({...card})));
 
-    const emptyCard: GameCard = {id: prefix + "0", title: "empty", cardSetName: setName}
+    const emptyCard: GameCard = {id: prefix + "0", title: "empty", reading: "empty", cardSetName: setName}
     if (gameSize === "small") {
         cardPairs.push(emptyCard);
     }

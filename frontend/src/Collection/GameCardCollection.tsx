@@ -3,9 +3,9 @@ import {useState} from "react";
 import {IconButton, Modal} from "@mui/material";
 import {AddCircle} from "@mui/icons-material";
 import "./GameCardCollection.css"
-import NewGameCard from "./NewGameCard.tsx";
 import GameCardSetTable from "./GameCardSetTable.tsx";
 import {GameCardSet} from "./GameCardSet.ts";
+import NewGameCardSet from "./NewGameCardSet.tsx";
 
 type Props = {
     allMyGameCards: GameCard[]
@@ -45,7 +45,7 @@ export default function GameCardCollection(props: Props) {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeModal} onAddNewCard={props.loadAllMyGameCards}/>
+                    <NewGameCardSet onClose={closeModal} onAddNewCard={props.loadAllMyGameCards}/>
                 </div>
             </Modal>
             <GameCardSetTable allMyCardSets={props.allMyCardSets}></GameCardSetTable>

@@ -76,6 +76,7 @@ export default function createGameCardData(setName: string, diacritics: boolean[
         const gameCard: GameCard = {
             id: prefix + String(index),
             title: data,
+            reading: data,
             cardSetName: setName,
         };
         index++;

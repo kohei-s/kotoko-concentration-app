@@ -5,7 +5,7 @@ import {AddCircle} from "@mui/icons-material";
 import NewGameCard from "../Collection/NewGameCard.tsx";
 import {useState} from "react";
 import "./EditGameCard.css"
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import {GameCardSet} from "../Collection/GameCardSet.ts";
 
 type Props = {
@@ -19,10 +19,14 @@ export default function EditGameCard(props: Props) {
     const params = useParams()
     const setName: string = params.setName as string
     const number: string = params.number as string
-    const actualCardSet: GameCardSet = props.allMyCardSets.find(cardSet => cardSet.name === setName) as GameCardSet
-    const actualNumber: string = actualCardSet.count.toString()
-
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const actualCardSet: GameCardSet = props.allMyCardSets.find(cardSet => cardSet.name === setName) as GameCardSet
+
+    if (!actualCardSet) {
+        return <Navigate to={"/collection"}/>
+    }
+
+    const actualNumber: string = actualCardSet.count.toString()
 
     function openAddModal() {
         setIsAddModalOpen(true)
@@ -31,7 +35,6 @@ export default function EditGameCard(props: Props) {
     function closeAddModal() {
         setIsAddModalOpen(false)
     }
-
 
     return (
         <>
@@ -53,6 +56,7 @@ export default function EditGameCard(props: Props) {
                 onGameCardChange={props.loadAllMyGameCards}
                 cardSetName={card.cardSetName}
                 title={card.title}
+                number={number}
             ></GameCardFrame>)}
             <Modal
                 className={"modal-new-card"}
@@ -60,7 +64,8 @@ export default function EditGameCard(props: Props) {
                 sx={{mt: 20, ml: 6}}
             >
                 <div>
-                    <NewGameCard onClose={closeAddModal} onAddNewCard={props.loadAllMyGameCards}/>
+                    <NewGameCard cardSetName={setName} onClose={closeAddModal} onSaveCard={closeAddModal}
+                                 onAddNewCard={props.loadAllMyGameCards}/>
                 </div>
             </Modal>
         </>
