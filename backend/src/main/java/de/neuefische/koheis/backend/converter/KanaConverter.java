@@ -9,7 +9,6 @@ public class KanaConverter {
     public String convertHiraganaToAlphabet(String hiragana) {
         Transliterator trans = Transliterator.getInstance("Hiragana-Latin");
         return trans.transliterate(hiragana);
-
     }
 
     public String convertKatakanaToAlphabet(String katakana) {
