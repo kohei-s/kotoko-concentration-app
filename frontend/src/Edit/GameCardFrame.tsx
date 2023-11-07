@@ -23,6 +23,7 @@ type Props = {
     onGameCardChange: () => void
     title: string
     cardSetName: string
+    number: string
 }
 
 export default function GameCardFrame(props: Props) {
@@ -86,7 +87,6 @@ export default function GameCardFrame(props: Props) {
         closeModal()
     }
 
-
     return (
         <div>
             <Card sx={{
@@ -103,14 +103,14 @@ export default function GameCardFrame(props: Props) {
                         {(isOpenUpdate) ? "Edit card" : "Game card"}
                     </Typography>
                     <Typography variant="h5" component="div">
-                            {(isOpenUpdate) ?
-                                <TextField value={title} onInput={changeTitle}
-                                           placeholder={props.title}/> : props.title}
+                        {(isOpenUpdate) ?
+                            <TextField value={title} onInput={changeTitle}
+                                       placeholder={props.title}/> : props.title}
                     </Typography>
                     <Typography sx={{mb: 1.5}} color="text.secondary" component="div">
-                            {(isOpenUpdate) ?
-                                <TextField value={cardSetName} onInput={changeCardSetName}
-                                           placeholder={props.cardSetName}/> : props.cardSetName}
+                        {(isOpenUpdate) ?
+                            <TextField value={cardSetName} onInput={changeCardSetName}
+                                       placeholder={props.cardSetName}/> : props.cardSetName}
                     </Typography>
                 </CardContent>
                 <CardActions className={"card-button"}>

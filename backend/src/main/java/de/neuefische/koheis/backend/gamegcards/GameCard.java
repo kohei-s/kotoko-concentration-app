@@ -17,6 +17,7 @@ public class GameCard {
 
     @NotBlank
     private String title;
+    private String reading;
 
     @NotBlank
     private String cardSetName;

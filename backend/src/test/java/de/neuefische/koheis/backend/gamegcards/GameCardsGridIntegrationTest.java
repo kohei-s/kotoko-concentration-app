@@ -15,10 +15,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -81,6 +79,7 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "testTitle",
+                                        "reading": "testReading",
                                         "cardSetName": "testSet"
                                         }
                                         """)
@@ -90,6 +89,7 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().json("""
                         {
                         "title": "testTitle",
+                        "reading": "testReading",
                         "cardSetName": "testSet"
                         }
                         """))
@@ -110,6 +110,7 @@ class GameCardsGridIntegrationTest {
                         {
                         "id": "<ID>",
                         "title": "testTitle",
+                        "reading": "testReading",
                         "cardSetName": "testSet",
                         "authorId": "1"
                        }
@@ -138,18 +139,18 @@ class GameCardsGridIntegrationTest {
     void expectTwoDimensionalArrayOfTwentyEightPlayingCards() throws Exception {
         //GIVEN
         String size = "small";
-        gameCardsRepository.save(new GameCard("01", "♥1", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("02", "♥2", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("03", "♥3", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("04", "♥4", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("05", "♥5", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("06", "♥6", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("07", "♥7", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("08", "♥8", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("09", "♥9", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("10", "♥10", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("11", "♥11", "playing-cards", "1"));
-        gameCardsRepository.save(new GameCard("12", "♥12", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("01", "♥1", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("02", "♥2", "empty","playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("03", "♥3", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("04", "♥4", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("05", "♥5", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("06", "♥6", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("07", "♥7", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("08", "♥8", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("09", "♥9", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("10", "♥10", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("11", "♥11", "empty", "playing-cards", "1"));
+        gameCardsRepository.save(new GameCard("12", "♥12", "empty", "playing-cards", "1"));
 
         //WHEN
         String result = mockMvc.perform(
@@ -181,6 +182,7 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "testTitle",
+                                        "reading": "testReading",
                                         "cardSetName": "testSet3"
                                         }
                                         """)
@@ -191,6 +193,7 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
                 .andExpect(jsonPath("title").value("testTitle"))
+                .andExpect(jsonPath("reading").value("testReading"))
                 .andExpect(jsonPath("cardSetName").value("testSet3"))
                 .andExpect(jsonPath("authorId").value("1"));
     }
@@ -206,6 +209,7 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "test",
+                                        "reading": "testReading",
                                         "cardSetName": "testSet"
                                         }
                                         """)
@@ -215,6 +219,7 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().json("""
                         {
                         "title": "test",
+                        "reading": "testReading",
                         "cardSetName": "testSet"
                         }
                         """))
@@ -232,6 +237,7 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "test_updated",
+                                        "reading": "test_updatedReading",
                                         "cardSetName": "testSet",
                                         "authorId": "1"
                                         }
@@ -244,6 +250,7 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").value(id))
                 .andExpect(jsonPath("title").value("test_updated"))
+                .andExpect(jsonPath("reading").value("test_updatedReading"))
                 .andExpect(jsonPath("cardSetName").value("testSet"))
                 .andExpect(jsonPath("authorId").value("1"));
     }
@@ -254,7 +261,7 @@ class GameCardsGridIntegrationTest {
     void whenUpdateNotExistingGameCard_thenReturnNotFoundErrorMessage() throws Exception {
         //GIVEN
         String idOfNotExistingGameCard = "012";
-        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testSet", "1");
+        GameCardWithoutId gameCardWithoutId = new GameCardWithoutId("test", "testReading", "testSet", "1");
         String gameCardJson = objectMapper.writeValueAsString(gameCardWithoutId);
 
         //WHEN
@@ -280,7 +287,8 @@ class GameCardsGridIntegrationTest {
                                 .content("""
                                         {
                                         "title": "test",
-                                        "cardSetName": "setTest"
+                                        "reading": "testReading",
+                                        "cardSetName": "testSet"
                                         }
                                         """)
                                 .with(csrf())
@@ -289,7 +297,8 @@ class GameCardsGridIntegrationTest {
                 .andExpect(content().json("""
                         {
                         "title": "test",
-                        "cardSetName": "setTest"
+                        "reading": "testReading",
+                        "cardSetName": "testSet"
                         }
                         """))
                 .andReturn()

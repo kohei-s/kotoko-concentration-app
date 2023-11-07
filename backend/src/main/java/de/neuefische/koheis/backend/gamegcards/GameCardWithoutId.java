@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameCardWithoutId {
     private String title;
+    private String reading;
     private String cardSetName;
     private String authorId;
 }

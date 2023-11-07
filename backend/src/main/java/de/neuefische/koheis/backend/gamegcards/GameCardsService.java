@@ -84,7 +84,7 @@ public class GameCardsService {
         GameCard[][] gameCardGrid = new GameCard[rowAndColumn[0]][rowAndColumn[1]];
         List<GameCard> gameCards = new ArrayList<>(allGameCards.subList(0, pairing));
         gameCards.addAll(List.copyOf(gameCards));
-        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "empty", "all");
+        GameCard emptyCard = new GameCard(idService.createRandomId(), "empty", "emptyReading", "empty", "all");
         if (gameSize.equals("small")) {
             gameCards.add(emptyCard);
         }
@@ -104,13 +104,13 @@ public class GameCardsService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String userId = mongoUserService.findUserIdByUsername(username);
 
-        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutAuthorId.getTitle(), gameCardWithoutAuthorId.getCardSetName(), userId));
+        return gameCardsRepository.insert(new GameCard(idService.createRandomId(), gameCardWithoutAuthorId.getTitle(), gameCardWithoutAuthorId.getReading(), gameCardWithoutAuthorId.getCardSetName(), userId));
     }
 
     public GameCard updateGameCard(GameCardWithoutId gameCardWithoutId, String id){
         if (!gameCardsRepository.existsById(id)) throw new NoSuchElementException();
 
-        return gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId()));
+        return gameCardsRepository.save(new GameCard(id, gameCardWithoutId.getTitle(), gameCardWithoutId.getReading(), gameCardWithoutId.getCardSetName(), gameCardWithoutId.getAuthorId()));
     }
 
     public void deleteGameCard(String id){

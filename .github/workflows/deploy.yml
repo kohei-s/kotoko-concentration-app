@@ -87,11 +87,11 @@ jobs:
           username: ec2-user
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker stop kotokocontainer
-            docker rm kotokocontainer
-            docker run --pull=always --name kotokocontainer --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} kokoyuyu/kotoko-app:latest
+            docker stop ec2-user
+            docker rm ec2-user
+            docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} --env DEEPL_API_KEY=${{ secrets.DEEPL_API_KEY }} kokoyuyu/kotoko-app:latest
             sleep 15s
-            docker logs kotokocontainer
+            docker logs ec2-user
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:

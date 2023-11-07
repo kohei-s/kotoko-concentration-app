@@ -1,0 +1,24 @@
+.translation {
+    display: flex;
+    flex-direction: column;
+    width: 290px;
+}
+
+.translation-card {
+    width: 290px;
+    height: 550px;
+    margin: 0;
+    background: #FDF6E1;
+    border: 1px;
+}
+
+.translate-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#translate-button {
+    padding: 8px;
+    color: #3c7ee8;
+}
+

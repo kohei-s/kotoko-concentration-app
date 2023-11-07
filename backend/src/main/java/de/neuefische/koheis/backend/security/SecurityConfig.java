@@ -41,6 +41,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/game_cards/**").authenticated()
                                 .requestMatchers("/api/game_cards/**").authenticated()
                                 .requestMatchers("/api/users/me").authenticated()
+                                .requestMatchers("/api/translation").authenticated()
+                                .requestMatchers("/api/converter").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .build();
