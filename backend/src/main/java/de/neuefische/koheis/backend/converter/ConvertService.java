@@ -32,6 +32,7 @@ public class ConvertService {
                 .bodyValue(gooRequest)
                 .retrieve()
                 .toEntity(GooResponse.class)
+                .retry(3)
                 .block();
 
         assert responseEntity != null;
@@ -51,15 +52,19 @@ public class ConvertService {
 
     public Conversion convertTranslationToConversion(Translation translation) {
         String translated = translation.getJapanese();
-        if (translated.matches("^[\\u4E00-\\u9FFF]+$")) {
-            String kana = convertKanjiToKana(getGooRequest(translated, "hiragana"));
-            String alphabet = convertKanaToAlphabet(kana);
-            return new Conversion(translated, kana, alphabet);
-        } else if ((translated.matches("^[\\u3040-\\u309F]+$")) || (translation.getJapanese().matches("^[\\u30A0-\\u30FF]+$"))) {
-            String alphabet = convertKanaToAlphabet(translated);
-            return new Conversion("", translated, alphabet);
+        if (translated != null) {
+            if (translated.matches("^[\\u4E00-\\u9FFF]+$")) {
+                String kana = convertKanjiToKana(getGooRequest(translated, "hiragana"));
+                String alphabet = convertKanaToAlphabet(kana);
+                return new Conversion(translated, kana, alphabet);
+            } else if ((translated.matches("^[\\u3040-\\u309F]+$")) || (translation.getJapanese().matches("^[\\u30A0-\\u30FF]+$"))) {
+                String alphabet = convertKanaToAlphabet(translated);
+                return new Conversion("", translated, alphabet);
+            } else {
+                return new Conversion("", "", "");
+            }
         } else {
-            return new Conversion("", "", "");
+            return new Conversion("could not be translated", "", "");
         }
     }
 
