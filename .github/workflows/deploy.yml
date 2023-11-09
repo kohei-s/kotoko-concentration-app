@@ -89,7 +89,7 @@ jobs:
           script: |
             docker stop ec2-user
             docker rm ec2-user
-            docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} --env DEEPL_API_KEY=${{ secrets.DEEPL_API_KEY }} kokoyuyu/kotoko-app:latest
+            docker run --pull=always --name ec2-user --publish 80:8080 --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} --env DEEPL_API_KEY=${{ secrets.DEEPL_API_KEY }} --env GOO_API_ID=${{ secrets.GOO_API_ID }} --env GOO_API_URL=${{ secrets.GOO_API_URL }} kokoyuyu/kotoko-app:latest
             sleep 15s
             docker logs ec2-user
       - name: Check the deployed service URL
