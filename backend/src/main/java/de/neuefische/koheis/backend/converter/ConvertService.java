@@ -1,11 +1,15 @@
 package de.neuefische.koheis.backend.converter;
 
 import de.neuefische.koheis.backend.translation.Translation;
+import io.netty.resolver.DefaultAddressResolverGroup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
+
 import java.util.Objects;
 
 @Service
@@ -17,8 +21,14 @@ public class ConvertService {
 
     public ConvertService(GooConfig gooConfig, @Value("${goo.api.url}") String url, KanaConverter kanaConverter) {
         this.gooConfig = gooConfig;
-        this.webClient = WebClient.create(url);
         this.kanaConverter = kanaConverter;
+        this.webClient = WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create()
+                                .resolver(DefaultAddressResolverGroup.INSTANCE)
+                ))
+                .baseUrl(url)
+                .build();
     }
 
     public GooRequest getGooRequest(String original, String kanaType) {
