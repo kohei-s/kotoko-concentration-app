@@ -159,7 +159,7 @@ export default function App() {
                                element={<EditGameCard allMyGameCards={allMyGameCards}
                                                       allMyCardSets={allMyCardSets}
                                                       loadAllMyGameCards={loadAllMyGameCards}/>}></Route>
-                        <Route path={"translation"} element={<TranslationCard onSaveCard={loadAllMyGameCards}/>}></Route>
+                        <Route path={"translation/:setName"} element={<TranslationCard onSaveCard={loadAllMyGameCards}/>}></Route>
                         <Route path={"/record"} element={<GameRecord userInfo={userInfo}/>}></Route>
                         <Route path={"/setting"} element={<Setting userInfo={userInfo} update={update}
                                                                    countCardSets={allMyCardSets}/>}></Route>

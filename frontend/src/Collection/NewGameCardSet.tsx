@@ -99,7 +99,6 @@ export default function NewGameCardSet(props: Props) {
                             boxShadow: 0,
                             borderRadius: '15px'
                         }}><CheckBoxIcon/></Button>
-
                         <Modal
                             className={"modal-new-card"}
                             open={isNewCardModalOpen}
@@ -109,7 +108,6 @@ export default function NewGameCardSet(props: Props) {
                                 <NewGameCard cardSetName={cardSetName} onClose={closeNewCardModal} onSaveCard={props.onClose} onAddNewCard={props.onAddNewCard}/>
                             </div>
                         </Modal>
-
                         <Button id={"new-card-button"} onClick={props.onClose} sx={{
                             m: 5,
                             color: "#D05F5F",

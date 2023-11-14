@@ -18,6 +18,8 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import "./TranslationCard.css"
 import {Conversion} from "./Conversion.ts";
 import {GameCard} from "../Game/GameCard.ts";
+import {useParams} from "react-router-dom";
+
 
 type Props = {
     onSaveCard: () => void
@@ -25,6 +27,8 @@ type Props = {
 
 export default function TranslationCard(props: Props) {
 
+    const params = useParams()
+    const setName: string = params.setName as string
     const [translation, setTranslation] = useState<Translation>();
     const [originalWord, setOriginalWord] = useState<string>("");
     const [conversion, setConversion] = useState<Conversion>();
@@ -83,7 +87,7 @@ export default function TranslationCard(props: Props) {
             "/api/game_cards", {
                 "title": title,
                 "reading": conversion?.alphabet,
-                "cardSetName": "new words"
+                "cardSetName": setName
             } as GameCard)
             .then(()=> {
                 closeSelectModal()

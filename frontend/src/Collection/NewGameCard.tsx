@@ -16,6 +16,7 @@ type Props = {
 }
 export default function NewGameCard(props: Props) {
 
+    const path = "/translation/" + `${props.cardSetName}`
     const [title, setTitle] = useState<string>("");
     const [reading, setReading] = useState<string>("");
 
@@ -108,7 +109,7 @@ export default function NewGameCard(props: Props) {
                         backgroundColor: "#3c7ee8",
                         boxShadow: 0,
                         borderRadius: '10px'
-                    }}><Link id={"link-translation"} to="/translation"><TranslateIcon fontSize={"small"}/></Link></IconButton>
+                    }}><Link id={"link-translation"} to={path}><TranslateIcon fontSize={"small"}/></Link></IconButton>
                 </CardActions>
             </Card>
         </>
