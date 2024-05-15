@@ -19,27 +19,31 @@ export default function LoginPage(props: Props) {
 
 
     return (
-        <>
-            <div className={"login-form"}>
-                <Typography component="div">
-                    <TextField id="login-username" label="username" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setUsername(event.target.value)}}
-                               placeholder={"Username"}/>
-                </Typography>
-                <Typography component="div">
-                    <TextField id="login-passwort" label="passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
-                               placeholder={"Password"} type={"password"}/>
-                </Typography>
-                <Button variant="contained" onClick={onLogin}  disableRipple={true} sx={{
-                    maxWidth: 100,
-                    margin: 5,
-                    background: "#69d1ca",
-                    boxShadow: 0,
-                    borderRadius: '15px'
-                }}>Login</Button>
-                <div>
-                    <Link to="/register" className="link">☺︎ Not registered yet?</Link>
-                </div>
+        <div className={"login-form"}>
+            <Typography component="div">
+                <TextField id="login-username" label="username"
+                           onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
+                               setUsername(event.target.value)
+                           }}
+                           placeholder={"Username"}/>
+            </Typography>
+            <Typography component="div">
+                <TextField id="login-password" label="password"
+                           onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
+                               setPassword(event.target.value)
+                           }}
+                           placeholder={"Password"} type={"password"}/>
+            </Typography>
+            <Button variant="contained" onClick={onLogin} disableRipple={true} sx={{
+                maxWidth: 100,
+                margin: 5,
+                background: "#69d1ca",
+                boxShadow: 0,
+                borderRadius: '15px'
+            }}>Login</Button>
+            <div>
+                <Link to="/register" className="link">☺︎ Not registered yet?</Link>
             </div>
-        </>
+        </div>
     )
 }
