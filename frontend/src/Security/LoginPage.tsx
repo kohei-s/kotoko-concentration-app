@@ -26,7 +26,7 @@ export default function LoginPage(props: Props) {
                                placeholder={"Username"}/>
                 </Typography>
                 <Typography component="div">
-                    <TextField id="login-passwort" label="passwort" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
+                    <TextField id="login-password" label="password" onInput={(event: React.ChangeEvent<HTMLInputElement>) => {setPassword(event.target.value)}}
                                placeholder={"Password"} type={"password"}/>
                 </Typography>
                 <Button variant="contained" onClick={onLogin}  disableRipple={true} sx={{
