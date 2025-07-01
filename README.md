@@ -1,6 +1,6 @@
 
 #  KoToKo: Japanese concentration game app
-This mobile application is originally developed as my Fullstack capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) 2023 (try the latest version 👉 [Kotoko](https://kotoko.de))
+This mobile application is originally developed as my Fullstack capstone project for [Java Development Bootcamp at neue fische](https://www.neuefische.de/en/bootcamp/java-development) 2023.
 
 ![KoToKo_ver1](https://github.com/kohei-s/kotoko-concentration-app/assets/82062401/b4132c77-a729-490f-ac6c-150da692cf4d)
 (device pixel ratio: 390x844)
