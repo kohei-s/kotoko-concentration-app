@@ -6,7 +6,7 @@ This mobile application is originally developed as my Fullstack capstone project
 (device pixel ratio: 390x844)
 ---
 ## 1. Concept 📱
-New concentration game app aims to support learning Japanese for so called [third culture kids](https://en.wikipedia.org/wiki/Third_culture_kid) growing up speaking a different language in kindergarten or school (👉 [references & sources in research](https://github.com/kohei-s/kotoko-concentration-app/wiki/References-&-Internet-Sourcese)). The name of the app *KoToKO (言と言)* is a neologism that could mean *Word & Word*. 
+New concentration game app aims to support learning Japanese for so called [third culture kids](https://en.wikipedia.org/wiki/Third_culture_kid) growing up speaking a different language in kindergarten or school (👉 [references & sources in research](https://github.com/kohei-s/kotoko-concentration-app/wiki/References-&-Internet-Sources)). The name of the app *KoToKO (言と言)* is a neologism that could mean *Word & Word*. 
 ## 2. Problem 😦
 - Difficulty of staying motivated to learn the Japanese language in non-Japanese speaking countries
 - Frustration of not being properly understood in Japanese by their own families
